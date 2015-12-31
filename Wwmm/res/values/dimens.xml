@@ -1,0 +1,23 @@
+<resources>
+
+    <dimen name="radius">5dp</dimen>
+    <!-- ****************全局统一字体大小 ************ -->
+    <!-- 全局统一大号字体 -->
+    <dimen name="font_size_big">18sp</dimen>
+    <!-- 全局统一中号字体 -->
+    <dimen name="font_size_middle">16sp</dimen>
+    <!-- 全局统一正文号字体 -->
+    <dimen name="font_size_normal">14sp</dimen>
+    <!-- 全局统一小号字体 -->
+    <dimen name="font_size_little">12sp</dimen>
+    <!-- 全局统一最小号字体 -->
+    <dimen name="font_size_least">10sp</dimen>
+    <!-- 线条的高度 -->
+    <dimen name="line_view">0.8dp</dimen>
+    <!-- 公共. -->
+    <!-- 普通条目的水平方向的margin -->
+    <dimen name="item_margin_hor">15dp</dimen>
+    <dimen name="base_item_height">40dp</dimen>
+    <dimen name="base_item_width">80dp</dimen>
+
+</resources>
