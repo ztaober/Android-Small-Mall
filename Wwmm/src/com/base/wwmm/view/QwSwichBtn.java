@@ -15,7 +15,7 @@ import com.base.wwmm.R;
 /**
  * 
  * @Description
- * @author 綦巍
+ * @author qw
  * @date 2015-7-31
  * @Copyright: Copyright (c) 2015 Shenzhen Tentinet Technology Co., Ltd. Inc. All rights reserved.
  */

@@ -34,6 +34,9 @@
     <color name="all_txt_f5">#f5f5f5</color>
     <color name="all_txt_hint1">#cccccc</color>
     
+    <color name="defult_btn_pressed">#A4B4D5</color>
+    <color name="defult_btn_enabled">#30868686</color>
+    <color name="defult_btn">#4653A2</color>
     <!-- ******其他色****** -->
     <!-- 浅灰色透明 -->
     <color name="title_transparent_grey">#66222266</color>

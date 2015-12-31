@@ -51,6 +51,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >
         </activity>
+        <!-- 登录页面 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
         <!-- =========================================特殊Act部分======================================== -->
 
 

@@ -37,7 +37,7 @@ public class BaseBiz {
 	protected <T> ResponseBean<T> sendPost(String path, int timeout, HashMap<String, String> attribute, TypeToken<ResponseBean<T>> type) {
 		ResponseBean<T> bean = ResponseBean.getErrorBean();
 		try {
-			String body = new NetUtil().sendPost(path, 5000, attribute);
+			String body = new NetUtil().sendPost(path, timeout, attribute);
 			bean = new Gson().fromJson(body, type.getType());
 		} catch (IOException e) {
 			e.printStackTrace();

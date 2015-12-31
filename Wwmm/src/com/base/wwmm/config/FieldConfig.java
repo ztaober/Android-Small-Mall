@@ -8,12 +8,6 @@ package com.base.wwmm.config;
  * @date 2015-6-22
  */
 public class FieldConfig {
-	/** ***********所有Activity RequeseCode 1000~2000 *********** */
-	public static final int REQUESE_CLIP = 1000;
-	public static final int REQUESE_PHOTO = 1001;
-	public static final int REQUESE_CAMERA_PIC = 1002;
-	/** ***********所有Activity ResultCode 2000~3000 *********** */
-
 	/** ***********简单的Intent的传参key *********** */
 	/** 字符串数据1 */
 	public static final String intent_str = "intent_str";

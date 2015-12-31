@@ -28,10 +28,6 @@ public class SpUtil {
 	public static final String FIRST_INTO = "first_into";
 	/** 应用是否在运行 */
 	public static final String IS_APPRUNING = "isAppRuning";
-	/** 选择的储油模式 -1:未选择 0:云储油 1:大众储油 */
-	public static final String OIL_MODE = "oil_mode";
-	/** 购物车未读数量 */
-	public static final String READNUM = "read_num";
 
 	/**
 	 * 获取一个操作sp数据的实例

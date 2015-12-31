@@ -1,20 +1,21 @@
 package com.base.wwmm.activity;
 
-import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.support.v4.app.Fragment;
 
 import com.base.wwmm.R;
 
 public class MainActivity extends BaseFragmentActivity {
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.a_main);
-	}
+	/** fragment模块集合 */
+	private List<Fragment> fragments = new ArrayList<Fragment>();
+	/** 上次按退出的时间 */
+	private long lastExitTime = 0;
 
 	@Override
 	protected int getContentViewId() {
-		return 0;
+		return R.layout.a_main;
 	}
 
 	@Override

@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/login_btn_login"
-        style="@style/default_textview_btn"
-        android:text="Login" />
+    <View
+        android:id="@+id/view_guide"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </LinearLayout>
