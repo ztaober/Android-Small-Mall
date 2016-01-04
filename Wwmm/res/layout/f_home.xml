@@ -9,4 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.base.wwmm.view.pullview.PullToRefreshListView
+        xmlns:app="http://schemas.android.com/apk/res/com.base.wwmm"
+        android:id="@+id/home_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@null"
+        android:listSelector="@drawable/item_default_selector"
+        app:mode="both" />
+
 </LinearLayout>

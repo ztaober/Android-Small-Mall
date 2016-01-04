@@ -7,7 +7,7 @@ import com.base.wwmm.activity.BaseActivity;
  * 下单界面
  * 
  * @Description
- * @author 
+ * @author
  * @date 2016-1-4
  */
 public class PlaceOrderActivity extends BaseActivity {
@@ -24,12 +24,12 @@ public class PlaceOrderActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("下单界面");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

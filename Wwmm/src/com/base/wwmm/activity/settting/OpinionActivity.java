@@ -24,12 +24,12 @@ public class OpinionActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("意见反馈");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

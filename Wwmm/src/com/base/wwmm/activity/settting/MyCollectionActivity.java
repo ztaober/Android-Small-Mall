@@ -24,12 +24,12 @@ public class MyCollectionActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("我的收藏");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

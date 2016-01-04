@@ -24,12 +24,12 @@ public class MyOrderActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("我的订单");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

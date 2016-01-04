@@ -23,11 +23,12 @@ public class LoginProbActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("帮助提示");
 	}
 
 	@Override
 	protected void setListener() {
+		titleView.setBackBtn();
 	}
 
 	@Override

@@ -24,12 +24,12 @@ public class AddrDetailActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("收货地址详情");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

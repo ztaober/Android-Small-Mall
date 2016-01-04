@@ -7,7 +7,7 @@ import com.base.wwmm.activity.BaseActivity;
  * 确认订单界面
  * 
  * @Description
- * @author 
+ * @author
  * @date 2016-1-4
  */
 public class SureOrderActivity extends BaseActivity {
@@ -24,12 +24,12 @@ public class SureOrderActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("确认订单");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

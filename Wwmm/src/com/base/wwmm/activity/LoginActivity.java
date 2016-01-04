@@ -2,6 +2,9 @@ package com.base.wwmm.activity;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.base.wwmm.R;
 import com.base.wwmm.utils.IntentUtil;
@@ -14,6 +17,14 @@ import com.base.wwmm.utils.IntentUtil;
  * @date 2015-12-30
  */
 public class LoginActivity extends BaseActivity {
+	/** 头像 */
+	private ImageView login_img_head;
+	/** 昵称 */
+	private TextView login_txt_nike;
+	/** 帐号 */
+	private EditText login_edit_uesrname;
+	/** 密码 */
+	private EditText login_edit_password;
 
 	@Override
 	protected int getContentViewId() {
@@ -22,7 +33,10 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void findViews() {
-
+		login_img_head = (ImageView) findViewById(R.id.login_img_head);
+		login_txt_nike = (TextView) findViewById(R.id.login_txt_nike);
+		login_edit_uesrname = (EditText) findViewById(R.id.login_edit_uesrname);
+		login_edit_password = (EditText) findViewById(R.id.login_edit_password);
 	}
 
 	@Override
@@ -32,10 +46,16 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void setListener() {
-		findViewById(R.id.login_btn_login).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.login_txt_login).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				IntentUtil.gotoActivityAndFinish(context, MainActivity.class);
+			}
+		});
+		findViewById(R.id.login_txt_prob).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				IntentUtil.gotoActivity(context, LoginProbActivity.class);
 			}
 		});
 	}

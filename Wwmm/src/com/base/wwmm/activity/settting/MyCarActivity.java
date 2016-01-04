@@ -24,12 +24,12 @@ public class MyCarActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("购物车");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

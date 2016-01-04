@@ -7,7 +7,7 @@ import com.base.wwmm.activity.BaseActivity;
  * 商品详情
  * 
  * @Description
- * @author 
+ * @author
  * @date 2016-1-4
  */
 public class GoodsDetailActivity extends BaseActivity {
@@ -24,12 +24,12 @@ public class GoodsDetailActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("商品详情");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

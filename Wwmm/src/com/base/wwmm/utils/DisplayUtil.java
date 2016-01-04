@@ -3,6 +3,8 @@ package com.base.wwmm.utils;
 import java.lang.reflect.Field;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.LinearLayout.LayoutParams;
 
 public class DisplayUtil {
 
@@ -83,4 +85,22 @@ public class DisplayUtil {
 		return context.getResources().getDisplayMetrics().heightPixels;
 	}
 
+	/**
+	 * 将View的宽变成屏幕的宽,高按比例给
+	 * 
+	 * @version 1.0
+	 * @createTime 2015-4-30,下午5:28:01
+	 * @updateTime 2015-4-30,下午5:28:01
+	 * @createAuthor 綦巍
+	 * @updateAuthor 綦巍
+	 * @updateInfo (此处输入修改内容,若无修改可不写.)
+	 * @param context
+	 * @param view
+	 * @param l
+	 */
+	public static void setViewWH(Context context, View view, float l) {
+		int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+		int height = (int) (screenWidth * l);
+		view.setLayoutParams(new LayoutParams(screenWidth, height));
+	}
 }

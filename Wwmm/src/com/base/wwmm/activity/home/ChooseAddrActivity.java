@@ -24,12 +24,12 @@ public class ChooseAddrActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("选择收货地址");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

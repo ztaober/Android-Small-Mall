@@ -24,12 +24,12 @@ public class AddrHandActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("管理收货地址");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

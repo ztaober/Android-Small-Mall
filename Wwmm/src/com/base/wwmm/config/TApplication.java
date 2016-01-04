@@ -6,6 +6,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.base.wwmm.database.DataBaseManage;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 /**
  * 应用入口
@@ -34,6 +36,7 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 		DataBaseManage.createPulibicDataBase();
 		// defaultUncaught = Thread.getDefaultUncaughtExceptionHandler();
 		// Thread.setDefaultUncaughtExceptionHandler(this);
+		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 	}
 
 	@Override

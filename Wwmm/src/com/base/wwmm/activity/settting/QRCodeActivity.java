@@ -24,12 +24,12 @@ public class QRCodeActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("二维码");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override

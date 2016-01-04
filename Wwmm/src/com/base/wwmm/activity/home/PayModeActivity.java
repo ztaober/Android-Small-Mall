@@ -24,12 +24,12 @@ public class PayModeActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("选择支付方式");
 	}
 
 	@Override
 	protected void setListener() {
-
+		titleView.setBackBtn();
 	}
 
 	@Override
