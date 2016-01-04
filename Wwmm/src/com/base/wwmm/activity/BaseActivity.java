@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.base.wwmm.R;
 import com.base.wwmm.utils.SystemBarTintManager;
 import com.base.wwmm.utils.Util;
+import com.base.wwmm.view.TitleView;
 
 import de.greenrobot.event.EventBus;
 
@@ -31,7 +32,10 @@ public abstract class BaseActivity extends Activity {
 	public static boolean isBack = false;
 	/** 4.4版本以上的沉浸式 */
 	protected SystemBarTintManager mTintManager;
+	/** 标题 */
+	protected TitleView titleView;
 
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +45,7 @@ public abstract class BaseActivity extends Activity {
 			view.setFitsSystemWindows(true);
 		}
 		setContentView(view);
+		titleView = (TitleView) findViewById(R.id.view_title);
 		findViews();
 		initData();
 		setListener();
@@ -124,11 +129,19 @@ public abstract class BaseActivity extends Activity {
 	}
 
 	public void finishNoAnim() {
-		if (getCurrentFocus() != null) {
-			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), 0);
-		}
+		closeKeyboard();
 		super.finish();
+		overridePendingTransition(R.anim.activity_close_enter, R.anim.activity_close_exit);
+	}
+
+	public void closeKeyboard() {
+		try {
+			if (getCurrentFocus() != null && getCurrentFocus().getApplicationWindowToken() != null) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), 0);
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void setStatusBarState() {

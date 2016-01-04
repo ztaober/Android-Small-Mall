@@ -1,21 +1,20 @@
-package com.base.wwmm.fragment;
+package com.base.wwmm.activity.settting;
 
 import com.base.wwmm.R;
-
-import android.view.View;
+import com.base.wwmm.activity.BaseActivity;
 
 /**
- * 自选
+ * 我的收藏
  * 
  * @Description
  * @author
- * @date 2015-12-31
+ * @date 2016-1-4
  */
-public class OptionalFragment extends BaseFragment {
+public class MyCollectionActivity extends BaseActivity {
 
 	@Override
-	protected View getViews() {
-		return View.inflate(context, R.layout.f_optional, null);
+	protected int getContentViewId() {
+		return R.layout.a_my_collection;
 	}
 
 	@Override
@@ -25,7 +24,7 @@ public class OptionalFragment extends BaseFragment {
 
 	@Override
 	protected void initData() {
-		titleView.setTitle("自选");
+
 	}
 
 	@Override

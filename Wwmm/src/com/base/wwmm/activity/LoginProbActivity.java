@@ -1,21 +1,19 @@
-package com.base.wwmm.fragment;
+package com.base.wwmm.activity;
 
 import com.base.wwmm.R;
 
-import android.view.View;
-
 /**
- * 设置
+ * 登录帮助提示
  * 
  * @Description
  * @author
- * @date 2015-12-31
+ * @date 2015-12-30
  */
-public class SettingFragment extends BaseFragment {
+public class LoginProbActivity extends BaseActivity {
 
 	@Override
-	protected View getViews() {
-		return View.inflate(context, R.layout.f_setting, null);
+	protected int getContentViewId() {
+		return R.layout.a_login_probl;
 	}
 
 	@Override
@@ -25,12 +23,11 @@ public class SettingFragment extends BaseFragment {
 
 	@Override
 	protected void initData() {
-		titleView.setTitle("设置");
+
 	}
 
 	@Override
 	protected void setListener() {
-
 	}
 
 	@Override

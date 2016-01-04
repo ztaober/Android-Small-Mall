@@ -1,21 +1,20 @@
-package com.base.wwmm.fragment;
+package com.base.wwmm.activity.home;
 
 import com.base.wwmm.R;
-
-import android.view.View;
+import com.base.wwmm.activity.BaseActivity;
 
 /**
- * 自选
+ * 选择收货地址
  * 
  * @Description
  * @author
- * @date 2015-12-31
+ * @date 2016-1-4
  */
-public class OptionalFragment extends BaseFragment {
+public class ChooseAddrActivity extends BaseActivity {
 
 	@Override
-	protected View getViews() {
-		return View.inflate(context, R.layout.f_optional, null);
+	protected int getContentViewId() {
+		return R.layout.a_choose_addr;
 	}
 
 	@Override
@@ -25,7 +24,7 @@ public class OptionalFragment extends BaseFragment {
 
 	@Override
 	protected void initData() {
-		titleView.setTitle("自选");
+
 	}
 
 	@Override

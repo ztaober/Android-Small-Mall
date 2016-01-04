@@ -1,12 +1,16 @@
 package com.base.wwmm.fragment;
 
-import de.greenrobot.event.EventBus;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.base.wwmm.R;
+import com.base.wwmm.view.TitleView;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 基类Fragment
@@ -16,15 +20,24 @@ import android.view.ViewGroup;
  * @date 2015-12-30
  */
 public abstract class BaseFragment extends Fragment {
+	/** Standard activity result: operation canceled. */
+	protected final int RESULT_CANCELED = 0;
+	/** Standard activity result: operation succeeded. */
+	protected final int RESULT_OK = -1;
+	/** Start of user-defined activity results. */
+	protected final int RESULT_FIRST_USER = 1;
 	protected Context context;
 	/** 父视图 */
 	protected View view_Parent;
+	/** 标题 */
+	protected TitleView titleView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		context = getActivity();
 		view_Parent = getViews();
+		titleView = findViewById(R.id.view_title);
 		findViews();
 		initData();
 		setListener();

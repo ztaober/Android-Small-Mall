@@ -5,6 +5,7 @@ import com.base.wwmm.R;
 import android.view.View;
 
 /**
+ * 热区
  * 
  * @Description
  * @author
@@ -24,7 +25,7 @@ public class HomeFragment extends BaseFragment {
 
 	@Override
 	protected void initData() {
-
+		titleView.setTitle("热区");
 	}
 
 	@Override
