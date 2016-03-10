@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.qws.nypp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="23"
+        tools:ignore="OldTargetApi" />
+
+    <application
+        android:name=".config.TApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- =========================================基础Act部分======================================== -->
+        <activity
+            android:name=".activity.LoadingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 引导页面 -->
+        <activity
+            android:name=".activity.SplashActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 主页面 -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 登录页面 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 登录帮助提示 -->
+        <activity
+            android:name=".activity.LoginProbActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 选择收货地址 -->
+        <activity
+            android:name=".activity.home.ChooseAddrActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 商品详情 -->
+        <activity
+            android:name=".activity.home.GoodsDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 选择支付方式-->
+        <activity
+            android:name=".activity.home.PayModeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 下单界面-->
+        <activity
+            android:name=".activity.home.PlaceOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 确认订单界面-->
+        <activity
+            android:name=".activity.home.SureOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 收货地址详情-->
+        <activity
+            android:name=".activity.settting.AddrDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 修改收货地址-->
+        <activity
+            android:name=".activity.settting.AddrEditActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 管理收货地址-->
+        <activity
+            android:name=".activity.settting.AddrHandActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 购物车-->
+        <activity
+            android:name=".activity.settting.MyCarActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 我的收藏-->
+        <activity
+            android:name=".activity.settting.MyCollectionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 我的订单-->
+        <activity
+            android:name=".activity.settting.MyOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 意见反馈-->
+        <activity
+            android:name=".activity.settting.OpinionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 订单详情-->
+        <activity
+            android:name=".activity.settting.OrderDetaiActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 二维码-->
+        <activity
+            android:name=".activity.settting.QRCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- =========================================特殊Act部分======================================== -->
+        <!-- 分享界面-->
+        <activity
+            android:name=".activity.home.ShareActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/TransStyle" >
+        </activity>
+
+
+        <!-- =========================================广播部分=========================================== -->
+        <!-- 监听网络状态的广播 -->
+        <receiver android:name=".receiver.NetworkReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <!-- =========================================服务部分=========================================== -->
+        <!-- <service -->
+        <!-- android:name=".service.UpdateService" -->
+        <!-- android:enabled="true" /> -->
+    </application>
+
+</manifest>

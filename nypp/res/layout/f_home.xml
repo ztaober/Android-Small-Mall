@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.qws.nypp.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.qws.nypp.view.pullview.PullToRefreshListView       
+		xmlns:app="http://schemas.android.com/apk/res/com.qws.nypp"
+        android:id="@+id/home_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@null"
+        android:listSelector="@drawable/item_default_selector"
+        app:mode="both" />
+
+</LinearLayout>
