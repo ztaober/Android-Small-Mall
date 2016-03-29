@@ -9,6 +9,7 @@ public class LogUtil {
 	public static void i(Object object) {
 		if (SHOW_LOG) {
 			Log.i("qw", object.toString());
+			Log.i("taotao", object.toString());
 		}
 	}
 }

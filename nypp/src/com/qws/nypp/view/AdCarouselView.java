@@ -205,7 +205,7 @@ public class AdCarouselView extends RelativeLayout {
 			View inflate = View.inflate(getContext(), R.layout.item_ad_carousel, null);
 			DisplayUtil.setViewWH(getContext(), inflate, 256f / 640f);
 			ImageView ad_img_item = (ImageView) inflate.findViewById(R.id.ad_img_item);
-			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).url, ad_img_item);
+			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).url, ad_img_item, options);
 			viewPage.addView(inflate);
 			return inflate;
 		}

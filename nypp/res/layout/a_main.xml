@@ -43,6 +43,15 @@
             tab:img0="@drawable/ic_launcher"
             tab:img1="@drawable/ic_launcher"
             tab:text="自选" />
+        
+        <com.qws.nypp.view.MyRadioView
+            android:id="@+id/main_radio_order"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            tab:img0="@drawable/ic_launcher"
+            tab:img1="@drawable/ic_launcher"
+            tab:text="进货单" />
 
         <com.qws.nypp.view.MyRadioView
             android:id="@+id/main_radio_setting"

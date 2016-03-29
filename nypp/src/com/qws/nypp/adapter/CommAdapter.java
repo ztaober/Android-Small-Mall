@@ -154,4 +154,9 @@ public abstract class CommAdapter<T> extends BaseAdapter {
 			}
 		});
 	}
+	
+	public void refreshList(List<T> list) {
+		this.list = list;
+		notifyDataSetChanged();
+	}
 }
