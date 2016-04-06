@@ -1,6 +1,9 @@
 package com.qws.nypp.view;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,13 +19,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.qws.nypp.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
-import com.qws.nypp.bean.InformationBean;
+import com.qws.nypp.bean.BannerBean;
+import com.qws.nypp.bean.CommonJson4List;
+import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
+import com.qws.nypp.utils.LogUtil;
+import com.yolanda.nohttp.Headers;
+import com.yolanda.nohttp.OnResponseListener;
+import com.yolanda.nohttp.Request;
+import com.yolanda.nohttp.Response;
 
 /**
  * 
@@ -31,7 +43,7 @@ import com.qws.nypp.utils.IntentUtil;
  * @date 2016-1-4
  */
 public class AdCarouselView extends RelativeLayout {
-	private ArrayList<InformationBean> adList;
+	private List<BannerBean> adList;
 	/** ViewPager */
 	private ViewPager viewpager_ad;
 	/** 点 */
@@ -91,28 +103,77 @@ public class AdCarouselView extends RelativeLayout {
 		addView(view);
 		viewpager_ad = (ViewPager) findViewById(R.id.viewpager_ad);
 		ll_ad = (LinearLayout) findViewById(R.id.ll_ad);
-		queryInformations();
+//		queryInformations();
 	}
 
 	private void queryInformations() {
 		if (!isGetNet) {
 			isGetNet = true;
-			adList = new ArrayList<InformationBean>();
-			InformationBean object = new InformationBean();
-			object.url = "http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg";
-			adList.add(object);
-			object = new InformationBean();
-			object.url = "http://staticlive.douyutv.com/upload/signs/201512311333458232.jpg";
-			adList.add(object);
-			object = new InformationBean();
-			object.url = "http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg";
-			adList.add(object);
-			object = new InformationBean();
-			object.url = "http://staticlive.douyutv.com/upload/signs/201512311333458232.jpg";
-			adList.add(object);
-			initAd(getContext());
+			adList = new ArrayList<BannerBean>();
+			Request<JSONObject> request = new NyppJsonRequest(ServerConfig.BANNER_PATH);
+			CallServer.getRequestInstance().add(0, request,  new OnResponseListener<JSONObject>() {
+
+				@Override
+				public void onStart(int what) {
+					
+				}
+
+				@Override
+				public void onSucceed(int what, Response<JSONObject> response) {
+					 if (what == 0) {
+		                // 请求成功
+		                JSONObject result = response.get();// 响应结果
+
+//			            Object tag = response.getTag();// 拿到请求时设置的tag
+//			            byte[] responseBody = response.getByteArray();// 如果需要byteArray
+		                CommonJson4List<BannerBean> bannerList = CommonJson4List.fromJson(result.toString(), BannerBean.class);
+		                LogUtil.i(bannerList.toJson(BannerBean.class));
+		                // 响应头
+		                Headers headers = response.getHeaders();
+
+		                StringBuilder headBuild = new StringBuilder("响应码: ");
+		                headBuild.append(headers.getResponseCode());// 响应码
+		                headBuild.append("\n请求花费时间: ");
+		                headBuild.append(response.getNetworkMillis()).append("毫秒"); // 请求花费的时间
+		                LogUtil.i(headBuild.toString());
+		                
+		                
+		    			adList.addAll(bannerList.getData());
+		    			initAd(getContext());
+			            }
+				}
+
+				@Override
+				public void onFailed(int what, String url, Object tag,
+						Exception exception, int responseCode,
+						long networkMillis) {
+					LogUtil.i("请求失败: " + exception.getMessage());
+					BannerBean object = new BannerBean();
+					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
+					adList.add(object);
+					object = new BannerBean();
+					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311333458232.jpg");
+					adList.add(object);
+					object = new BannerBean();
+					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
+					adList.add(object);
+					object = new BannerBean();
+					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
+					adList.add(object);
+	    			initAd(getContext());
+				}
+
+				@Override
+				public void onFinish(int what) {
+					
+				}
+			});
+			
+
 		}
 	}
+	
+	
 
 	/** 重新开始 */
 	public void resetRun() {
@@ -205,7 +266,7 @@ public class AdCarouselView extends RelativeLayout {
 			View inflate = View.inflate(getContext(), R.layout.item_ad_carousel, null);
 			DisplayUtil.setViewWH(getContext(), inflate, 256f / 640f);
 			ImageView ad_img_item = (ImageView) inflate.findViewById(R.id.ad_img_item);
-			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).url, ad_img_item, options);
+			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).getBannerPicture(), ad_img_item, options);
 			viewPage.addView(inflate);
 			return inflate;
 		}

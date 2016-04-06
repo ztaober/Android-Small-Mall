@@ -1,6 +1,9 @@
 package com.qws.nypp.utils;
 
+import com.qws.nypp.config.TApplication;
+
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -20,6 +23,18 @@ public class ToastUtil {
 		}
 		if (toast == null) {
 			toast = Toast.makeText(context, text.toString(), Toast.LENGTH_SHORT);
+		} else {
+			toast.setText(text.toString());
+		}
+		toast.show();
+	}
+	
+	public static void show(Object text) {
+		if(text == null){
+			return;
+		}
+		if (toast == null) {
+			toast = Toast.makeText(TApplication.context, text.toString(), Toast.LENGTH_SHORT);
 		} else {
 			toast.setText(text.toString());
 		}

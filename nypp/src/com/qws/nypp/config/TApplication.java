@@ -8,6 +8,7 @@ import android.content.Context;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.qws.nypp.database.DataBaseManage;
+import com.yolanda.nohttp.NoHttp;
 
 /**
  * 应用入口
@@ -37,6 +38,7 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 		// defaultUncaught = Thread.getDefaultUncaughtExceptionHandler();
 		// Thread.setDefaultUncaughtExceptionHandler(this);
 		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
+		NoHttp.init(this);
 	}
 
 	@Override
