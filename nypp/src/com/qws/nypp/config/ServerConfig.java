@@ -22,6 +22,8 @@ public class ServerConfig {
 	public static final String BASE_DOWNLOAD = base + "/download?filename=";
 	
 	
+	/**	 登录接口*/
+	public static final String LOGIN_PATH = base + "/login";
 	/**	 热区Banner获取*/
 	public static final String BANNER_PATH = base + "/findBannerALL";
 

@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 
-public class CommonJson4List<T> extends BaseBean{
+public class CommonResult4List<T> extends BaseBean{
 
 	/**
 	 * 状态码
@@ -65,15 +65,15 @@ public class CommonJson4List<T> extends BaseBean{
 		this.data = data;
 	}
 
-    public static CommonJson4List fromJson(String json, Class clazz) {
+    public static CommonResult4List fromJson(String json, Class clazz) {
         Gson gson = new Gson();
-        Type objectType = type(CommonJson4List.class, clazz);
+        Type objectType = type(CommonResult4List.class, clazz);
         return gson.fromJson(json, objectType);
     }
 
     public String toJson(Class<T> clazz) {
         Gson gson = new Gson();
-        Type objectType = type(CommonJson4List.class, clazz);
+        Type objectType = type(CommonResult4List.class, clazz);
         return gson.toJson(this, objectType);
     }
 

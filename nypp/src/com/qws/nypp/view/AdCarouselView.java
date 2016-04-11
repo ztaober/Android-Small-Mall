@@ -24,7 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.bean.BannerBean;
-import com.qws.nypp.bean.CommonJson4List;
+import com.qws.nypp.bean.CommonResult4List;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -103,7 +103,7 @@ public class AdCarouselView extends RelativeLayout {
 		addView(view);
 		viewpager_ad = (ViewPager) findViewById(R.id.viewpager_ad);
 		ll_ad = (LinearLayout) findViewById(R.id.ll_ad);
-//		queryInformations();
+		queryInformations();
 	}
 
 	private void queryInformations() {
@@ -126,8 +126,8 @@ public class AdCarouselView extends RelativeLayout {
 
 //			            Object tag = response.getTag();// 拿到请求时设置的tag
 //			            byte[] responseBody = response.getByteArray();// 如果需要byteArray
-		                CommonJson4List<BannerBean> bannerList = CommonJson4List.fromJson(result.toString(), BannerBean.class);
-		                LogUtil.i(bannerList.toJson(BannerBean.class));
+		                CommonResult4List<BannerBean> bannerList = CommonResult4List.fromJson(result.toString(), BannerBean.class);
+		                LogUtil.t(bannerList.toJson(BannerBean.class));
 		                // 响应头
 		                Headers headers = response.getHeaders();
 
@@ -135,7 +135,7 @@ public class AdCarouselView extends RelativeLayout {
 		                headBuild.append(headers.getResponseCode());// 响应码
 		                headBuild.append("\n请求花费时间: ");
 		                headBuild.append(response.getNetworkMillis()).append("毫秒"); // 请求花费的时间
-		                LogUtil.i(headBuild.toString());
+		                LogUtil.t(headBuild.toString());
 		                
 		                
 		    			adList.addAll(bannerList.getData());
@@ -158,7 +158,7 @@ public class AdCarouselView extends RelativeLayout {
 					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
 					adList.add(object);
 					object = new BannerBean();
-					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
+					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311333458232.jpg");
 					adList.add(object);
 	    			initAd(getContext());
 				}

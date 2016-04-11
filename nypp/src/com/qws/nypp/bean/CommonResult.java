@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class CommonJson<T> extends BaseBean {
+public class CommonResult<T> extends BaseBean {
 
 	/**
 	 * 状态码
@@ -56,9 +56,9 @@ public class CommonJson<T> extends BaseBean {
 		this.data = data;
 	}
 	
-	public static CommonJson fromJson(String json, Class clazz) {  
+	public static CommonResult fromJson(String json, Class clazz) {  
         Gson gson = new Gson();  
-        Type objectType = new TypeToken<CommonJson>() {}.getType();  
+        Type objectType = new TypeToken<CommonResult>() {}.getType();  
         return gson.fromJson(json, objectType);  
     }  
 
@@ -71,7 +71,7 @@ public class CommonJson<T> extends BaseBean {
 	public String toJson(Class<T> clazz) {
 		Gson gson = new Gson();
 //		Type objectType = type(CommonJson.class, clazz);
-		Type objectType = new TypeToken<CommonJson>() {}.getType();  
+		Type objectType = new TypeToken<CommonResult>() {}.getType();  
 		return gson.toJson(this, objectType);
 	}
 
