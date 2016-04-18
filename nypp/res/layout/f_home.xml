@@ -9,13 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.qws.nypp.view.pullview.PullToRefreshListView       
-		xmlns:app="http://schemas.android.com/apk/res/com.qws.nypp"
-        android:id="@+id/home_listview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:divider="@null"
-        android:listSelector="@drawable/item_default_selector"
-        app:mode="both" />
+    <com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyclerView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_refresh_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"  
+        android:fadingEdge="none"  
+        android:fastScrollEnabled="false"  
+        android:footerDividersEnabled="false"  
+        android:headerDividersEnabled="false"  
+        android:smoothScrollbar="true"  
+        ptr:ptrMode="both"
+        ptr:ptrAnimationStyle="flip"  
+        ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium" />
 
 </LinearLayout>

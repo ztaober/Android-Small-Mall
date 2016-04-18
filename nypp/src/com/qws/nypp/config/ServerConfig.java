@@ -26,5 +26,9 @@ public class ServerConfig {
 	public static final String LOGIN_PATH = base + "/login";
 	/**	 热区Banner获取*/
 	public static final String BANNER_PATH = base + "/findBannerALL";
+	/**	 热区产品列表获取*/
+	public static final String HOT_PRODUCT_PATH = base + "/getHotspotProductList";
+	/**	 产品详情获取*/
+	public static final String PRODUCT_DETAIL_PATH = base + "/getProductDetail";
 
 }

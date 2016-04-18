@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/item_home_goods_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/item_home_goods_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/item_home_goods_img"
+        android:ellipsize="end"
+        android:maxLines="2" />
+
+    <RelativeLayout
+        android:id="@+id/sold_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/item_home_goods_tv" >
+        
+        <TextView 
+            android:id="@+id/sold_tv"
+            android:layout_alignParentLeft="true"
+            android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:textColor="@color/gray"/>
+        
+        <TextView 
+            android:id="@+id/stock_tv"
+            android:gravity="right"
+            android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:textColor="@color/red"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/price_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sold_rl" >
+        
+        <TextView 
+            android:id="@+id/new_price_tv"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="@color/red"/>
+        
+        <TextView 
+            android:id="@+id/old_price_tv"
+            android:layout_toRightOf="@+id/new_price_tv"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="@color/gray"/>
+    </RelativeLayout>
+    
+    <TextView 
+        android:visibility="visible"
+       	android:id="@+id/sale"
+       	android:layout_below="@+id/price_rl"
+       	android:layout_width="wrap_content"
+   	   	android:layout_height="wrap_content"
+   	   	android:text="优惠"
+   	   	android:textColor="@color/red"/>
+
+</RelativeLayout>
