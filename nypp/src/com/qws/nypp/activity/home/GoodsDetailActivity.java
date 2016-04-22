@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
-import com.qws.nypp.bean.CommonResult4List;
-import com.qws.nypp.bean.GoodsBean;
+import com.qws.nypp.bean.CommonResult;
+import com.qws.nypp.bean.GoodsDetailBean;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -65,6 +65,7 @@ public class GoodsDetailActivity extends BaseActivity {
 				 if (what == 0) {
 	                // 请求成功
 	                JSONObject result = response.get();// 响应结果
+	                CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
 	                LogUtil.t("PRODUCT_DETAIL_PATH="+result);
 	             }
 			}

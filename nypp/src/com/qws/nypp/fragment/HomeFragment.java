@@ -40,6 +40,7 @@ import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
+import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AdCarouselView;
 import com.qws.nypp.view.pullview.DividerGridItemDecoration;
 import com.qws.nypp.view.pullview.PullToRefreshBase.OnRefreshListener;
@@ -156,12 +157,13 @@ public class HomeFragment extends BaseFragment {
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
-				
+				ToastUtil.show("请求失败");
+				mPullRefreshRecyclerView.onRefreshComplete();
 			}
 
 			@Override
 			public void onFinish(int what) {
-				
+				LogUtil.t("onFinish");
 			}
 		});
 	}

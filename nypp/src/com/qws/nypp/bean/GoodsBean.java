@@ -1,5 +1,13 @@
 package com.qws.nypp.bean;
 
+/**
+ * 列表商品信息
+ * 
+ * @Description
+ * @author Troy
+ * @date 2016-4-19 下午4:27:04
+ * @Copyright:
+ */
 public class GoodsBean extends BaseBean {
 	/**
 	 * 

@@ -1,5 +1,6 @@
 package com.qws.nypp.bean;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
@@ -55,40 +56,33 @@ public class CommonResult<T> extends BaseBean {
 	public void setData(T data) {
 		this.data = data;
 	}
-	
-	public static CommonResult fromJson(String json, Class clazz) {  
-        Gson gson = new Gson();  
-        Type objectType = new TypeToken<CommonResult>() {}.getType();  
-        return gson.fromJson(json, objectType);  
-    }  
 
-//	public static CommonJson fromJson(String json, Class clazz) {
-//		Gson gson = new Gson();
-//		Type objectType = type(CommonJson.class, clazz);
-//		return gson.fromJson(json, objectType);
-//	}
-
-	public String toJson(Class<T> clazz) {
+	public static CommonResult fromJson(String json, Class... clazz) {
 		Gson gson = new Gson();
-//		Type objectType = type(CommonJson.class, clazz);
-		Type objectType = new TypeToken<CommonResult>() {}.getType();  
+		Type objectType = type(CommonResult.class, clazz);
+		return gson.fromJson(json, objectType);
+	}
+
+	public String toJson(Class<T>... clazz) {
+		Gson gson = new Gson();
+		Type objectType = type(CommonResult.class, clazz);
 		return gson.toJson(this, objectType);
 	}
 
-//	static ParameterizedType type(final Class raw, final Type... args) {
-//		return new ParameterizedType() {
-//			public Type getRawType() {
-//				return raw;
-//			}
-//
-//			public Type[] getActualTypeArguments() {
-//				return args;
-//			}
-//
-//			public Type getOwnerType() {
-//				return null;
-//			}
-//		};
-//	}
+	static ParameterizedType type(final Class raw, final Type... args) {
+		return new ParameterizedType() {
+			public Type getRawType() {
+				return raw;
+			}
+
+			public Type[] getActualTypeArguments() {
+				return args;
+			}
+
+			public Type getOwnerType() {
+				return null;
+			}
+		};
+	}
 
 }

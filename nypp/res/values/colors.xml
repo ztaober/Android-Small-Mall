@@ -41,5 +41,10 @@
     <color name="title_transparent_grey">#66222266</color>
     <!-- 灰色 透明 -->
     <color name="bg_gray_30">#30868686</color>
+    
+    <!-- nypp -->
+    <color name="light_red">#ff2727</color>
+    <color name="light_gray">#eaeaea</color>
+    <color name="nypp_gray">#777</color>
 
 </resources>
