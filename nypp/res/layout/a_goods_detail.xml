@@ -34,6 +34,7 @@
                 android:maxLines="2"
                 android:padding="11dip"
                 android:text="我if骄傲耳机发哦风景奥尔夫i骄傲二纺机哦啊附件"
+                android:textColor="@color/nypp_black"
                 android:textSize="@dimen/font_size_big" />
 
             <RelativeLayout
@@ -46,7 +47,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="成交XX笔"
+                    android:text="成交666笔"
+                    android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/nypp_gray" />
 
                 <TextView
@@ -54,7 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="库存X件"
+                    android:text="库存666件"
+                    android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/nypp_gray" />
 
                 <TextView
@@ -62,7 +65,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="X件起批"
+                    android:text="6件起批"
+                    android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/light_red" />
             </RelativeLayout>
 
@@ -76,31 +80,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Yxx"
-                    android:textColor="@color/gray" />
+                    android:text="￥100.00"
+                    android:textSize="@dimen/font_size_big"
+                    android:textColor="@color/light_red" />
 
                 <TextView
                     android:id="@+id/goods_detail_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/goods_detail_pre_price"
-                    android:text="BBB"
-                    android:textColor="@color/gray" />
+                    android:text="￥166.00"
+                    android:textSize="@dimen/font_size_normal"
+                    android:textColor="@color/nypp_gray" />
 
                 <TextView
                     android:id="@+id/goods_detail_logistics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="快递XX元"
-                    android:textColor="@color/gray" />
+                    android:text="快递66元"
+                    android:textSize="@dimen/font_size_normal"
+                    android:textColor="@color/nypp_gray" />
 
                 <TextView
                     android:id="@+id/goods_detail_harbour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="X北京"
+                    android:text="北京"
+                    android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/light_red" />
             </RelativeLayout>
 
@@ -113,6 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="优惠"
+                    android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/light_red" />
             </RelativeLayout>
 

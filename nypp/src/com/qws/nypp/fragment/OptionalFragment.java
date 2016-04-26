@@ -1,10 +1,12 @@
 package com.qws.nypp.fragment;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -12,16 +14,29 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qws.nypp.R;
 import com.qws.nypp.adapter.CommAdapter;
 import com.qws.nypp.bean.CategoryBean;
+import com.qws.nypp.bean.CommonResult4List;
 import com.qws.nypp.bean.GoodsBean;
+import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.LogUtil;
-import com.qws.nypp.view.HorizontalListView;
+import com.qws.nypp.utils.ToastUtil;
+import com.yolanda.nohttp.OnResponseListener;
+import com.yolanda.nohttp.Request;
+import com.yolanda.nohttp.Response;
 
 /**
  * 自选
@@ -40,12 +55,20 @@ public class OptionalFragment extends BaseFragment {
 	private GridView categoryGv;
 	/** 控件 */
 	private LinearLayout categoryLl;
+	/** 控件 */
+	private PullToRefreshListView mPullRefreshListView;
 	/** 适配器 */
 	private CommAdapter<String> adapterGv;
+	/** 适配器 */
+	private CommAdapter<GoodsBean> goodsAdapter;
 	/** 数据 */
 	private ArrayList<CategoryBean> list = new ArrayList<CategoryBean>();
 	/** 数据 */
 	private ArrayList<String> typeList = new ArrayList<String>();
+	/** 数据 */
+	private ArrayList<GoodsBean> goodsList = new ArrayList<GoodsBean>();
+	/** 当前页 */
+	private int page = 1;
 
 	@Override
 	protected View getViews() {
@@ -66,6 +89,8 @@ public class OptionalFragment extends BaseFragment {
 				closeChoser();
 			}
 		});
+		
+		mPullRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_listview);
 	}
 
 	@Override
@@ -141,17 +166,19 @@ public class OptionalFragment extends BaseFragment {
 		};
 		
 		categoryGv.setAdapter(adapterGv);
-		categoryGv.setOnItemClickListener(new OnItemClickListener() {
-
+		
+		
+		goodsAdapter = new CommAdapter<GoodsBean>(context, goodsList, R.layout.item_optional_list_goods) {
+			
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				LogUtil.i(""+position);
-				String category = typeList.get(position);
-				list.get(choseIndex).setSelectedType(category);
-				closeChoser();
+			public void onGetView(int position, View convertView, GoodsBean data) {
+				Log.i("taotao", goodsList.size()+"==="+position+ "----");
+//				setText(convertView, R.id.item_optional_goods_tv, data.getTitle());
 			}
-		});
+		};
+		
+		
+		mPullRefreshListView.setAdapter(goodsAdapter);
 		
 	}
 
@@ -189,19 +216,86 @@ public class OptionalFragment extends BaseFragment {
 		list.add(new CategoryBean("款型", q1));
 		list.add(new CategoryBean("颜色", q2));
 		list.add(new CategoryBean("尺码", q3));
-//		list.add(new CategoryBean("厚度"));
-//		list.add(new CategoryBean("袖长"));
-//		list.add(new CategoryBean("裤长"));
 		typeList = (ArrayList<String>) list.get(0).getCategroys();
 	}
 
 	@Override
 	protected void setListener() {
+		categoryGv.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				LogUtil.i(""+position);
+				String category = typeList.get(position);
+				list.get(choseIndex).setSelectedType(category);
+				closeChoser();
+			}
+		});
+		
+		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+				Toast.makeText(context, "Pull Down!", Toast.LENGTH_SHORT).show();
+				page = 1;
+				goodsList.clear();
+				getData(page);
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				Toast.makeText(context, "Pull Up!", Toast.LENGTH_SHORT).show();
+				page++;
+				getData(page);
+			}
+		});
 	}
 
 	@Override
 	protected void getData() {
+		getData(page);
+	}
+	
+	private void getData(int i){
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.OPT_PRODUCT_PATH);
+		Map<String, String> postData = new HashMap<String, String>();
+		postData.put("page", i+"");
+		postData.put("rows", "4");
+		postData.put("sign", "test");
+		request.setRequestBody(new Gson().toJson(postData));
+		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>() {
 
+			@Override
+			public void onStart(int what) {
+			}
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+				 if (what == 0) {
+	                // 请求成功
+	                JSONObject result = response.get();// 响应结果
+	                CommonResult4List<GoodsBean> dataList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
+	                goodsList.addAll(dataList.getData());
+//	                goodsApter.notifyDataSetChanged();
+	                goodsAdapter.refreshList(goodsList);
+	                mPullRefreshListView.onRefreshComplete();
+	                LogUtil.t("goodsList="+result);
+	                LogUtil.t("goodsList size="+list.size());
+	             }
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				ToastUtil.show("请求失败");
+				mPullRefreshListView.onRefreshComplete();
+			}
+
+			@Override
+			public void onFinish(int what) {
+				LogUtil.t("onFinish");
+			}
+		});
 	}
 }

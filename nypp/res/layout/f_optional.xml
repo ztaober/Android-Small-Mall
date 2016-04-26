@@ -61,4 +61,50 @@
         </GridView>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/categroy_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_hs"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="综合" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="价格" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="销量" />
+    </LinearLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_refresh_listview"
+        android:layout_below="@+id/categroy_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000"  
+        android:fadingEdge="none"  
+        android:fastScrollEnabled="false"  
+        android:footerDividersEnabled="false"  
+        android:headerDividersEnabled="false"  
+        android:smoothScrollbar="true"  
+        ptr:ptrMode="both"
+        ptr:ptrAnimationStyle="flip"  
+        ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium" />
+
 </RelativeLayout>
