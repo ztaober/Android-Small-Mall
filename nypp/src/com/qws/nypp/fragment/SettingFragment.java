@@ -3,6 +3,7 @@ package com.qws.nypp.fragment;
 import java.util.Arrays;
 
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 import com.qws.nypp.R;
@@ -15,6 +16,7 @@ import com.qws.nypp.activity.settting.QRCodeActivity;
 import com.qws.nypp.adapter.CommAdapter;
 import com.qws.nypp.adapter.CommAdapter.AdapterListener;
 import com.qws.nypp.utils.IntentUtil;
+import com.qws.nypp.utils.LogUtil;
 
 /**
  * 设置
@@ -41,6 +43,13 @@ public class SettingFragment extends BaseFragment implements AdapterListener {
 	@Override
 	protected void initData() {
 		titleView.setTitle("设置");
+		titleView.setRightBtn("个人中心", new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			}
+		}, 0);
+		titleView.setRightEnabled(false);
 		adapter = new CommAdapter<String>(context, Arrays.asList(items), R.layout.item_setting, this) {
 
 			@Override

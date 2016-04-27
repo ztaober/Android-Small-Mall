@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -18,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -34,6 +37,8 @@ import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
+import com.qws.nypp.view.TabIndicator;
+import com.qws.nypp.view.TabIndicator.OnTabChangeListener;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
@@ -69,6 +74,8 @@ public class OptionalFragment extends BaseFragment {
 	private ArrayList<GoodsBean> goodsList = new ArrayList<GoodsBean>();
 	/** 当前页 */
 	private int page = 1;
+	/** 切换进度条 */
+	private TabIndicator view_tab;
 
 	@Override
 	protected View getViews() {
@@ -90,8 +97,11 @@ public class OptionalFragment extends BaseFragment {
 			}
 		});
 		
+		view_tab = findViewById(R.id.view_tab);
+		view_tab.initData(new String[] {"综合","价格","销量"});
 		mPullRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_listview);
 	}
+	
 
 	@Override
 	protected void initData() {
@@ -172,8 +182,7 @@ public class OptionalFragment extends BaseFragment {
 			
 			@Override
 			public void onGetView(int position, View convertView, GoodsBean data) {
-				Log.i("taotao", goodsList.size()+"==="+position+ "----");
-//				setText(convertView, R.id.item_optional_goods_tv, data.getTitle());
+				setText(convertView, R.id.item_optional_goods_tv, data.getTitle());
 			}
 		};
 		
@@ -237,7 +246,6 @@ public class OptionalFragment extends BaseFragment {
 
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-				Toast.makeText(context, "Pull Down!", Toast.LENGTH_SHORT).show();
 				page = 1;
 				goodsList.clear();
 				getData(page);
@@ -245,9 +253,16 @@ public class OptionalFragment extends BaseFragment {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-				Toast.makeText(context, "Pull Up!", Toast.LENGTH_SHORT).show();
 				page++;
 				getData(page);
+			}
+		});
+		
+		view_tab.setTabListener(new OnTabChangeListener() {
+			
+			@Override
+			public void OnTabChange(int position) {
+				LogUtil.t("OnTabChange="+position);
 			}
 		});
 	}

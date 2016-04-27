@@ -2,8 +2,8 @@
 <resources>
 
     <!-- ******基本色****** -->
-    <!-- 基本色 -->
-    <color name="comm_color">#169BD5</color>
+    <!-- 基本色 #169BD5 -->
+    <color name="comm_color">#844aeb</color>
     <!-- 透明色 -->
     <color name="trans">#00000000</color>
     <!-- 透明色(50) -->
@@ -46,6 +46,7 @@
     <color name="light_white">#ffffff</color>
     <color name="light_red">#ff2727</color>
     <color name="light_gray">#eaeaea</color>
+    <color name="opt_gray">#999</color>
     <color name="nypp_gray">#777</color>
     <color name="nypp_black">#000</color>
 

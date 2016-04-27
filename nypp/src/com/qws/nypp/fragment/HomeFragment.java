@@ -105,7 +105,6 @@ public class HomeFragment extends BaseFragment {
 
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<WrapRecyclerView> refreshView) {
-				Toast.makeText(context, "Pull Down!", Toast.LENGTH_SHORT).show();
 				page = 1;
 				list.clear();
 				getData(page);
@@ -113,7 +112,6 @@ public class HomeFragment extends BaseFragment {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<WrapRecyclerView> refreshView) {
-				Toast.makeText(context, "Pull Up!", Toast.LENGTH_SHORT).show();
 				page++;
 				getData(page);
 			}

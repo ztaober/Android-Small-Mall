@@ -211,6 +211,18 @@ public class TitleView extends RelativeLayout {
 		txt_Right.setText(text);
 		view_RightBtn.setOnClickListener(listener);
 	}
+	/**
+	 * 设置右边按钮
+	 * 
+	 * @param text 按钮文本内容
+	 * @param listener 按钮监听事件
+	 */
+	public void setRightBtn(String text, OnClickListener listener, int id) {
+		txt_Right.setVisibility(View.VISIBLE);
+		txt_Right.setText(text);
+		view_RightBtn.setOnClickListener(listener);
+		view_RightBtn.setBackgroundResource(id);
+	}
 
 	/**
 	 * 设置右边点击事件
