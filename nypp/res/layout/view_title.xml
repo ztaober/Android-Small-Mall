@@ -3,12 +3,12 @@
     android:layout_height="wrap_content"
     android:background="@color/comm_color"
     android:gravity="center_vertical" >
-
+<!-- android:background="@drawable/selector_bg_btn_title" -->
     <LinearLayout
         android:id="@+id/view_left"
         style="@style/view_title_btn_style"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/selector_bg_btn_title"
+        android:background="@color/trans"
         android:orientation="horizontal" >
 
         <View
@@ -20,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@drawable/img_title_go_left"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_nav_back"
             android:visibility="gone" />
 
         <TextView

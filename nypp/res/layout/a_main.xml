@@ -15,6 +15,7 @@
     <View style="@style/line_view" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/view_slider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -31,17 +32,19 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            tab:img0="@drawable/ic_launcher"
-            tab:img1="@drawable/ic_launcher"
-            tab:text="热区" />
+            android:padding="3dp"
+            tab:img0="@drawable/ic_bottom_hot_unchose"
+            tab:img1="@drawable/ic_bottom_hot_chose" 
+            tab:text="热区"/>
 
         <com.qws.nypp.view.MyRadioView
             android:id="@+id/main_radio_optional"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            tab:img0="@drawable/ic_launcher"
-            tab:img1="@drawable/ic_launcher"
+            android:padding="3dp"
+            tab:img0="@drawable/ic_bottom_self_unchose"
+            tab:img1="@drawable/ic_bottom_self_chose"
             tab:text="自选" />
         
         <com.qws.nypp.view.MyRadioView
@@ -49,8 +52,9 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            tab:img0="@drawable/ic_launcher"
-            tab:img1="@drawable/ic_launcher"
+            android:padding="3dp"
+            tab:img0="@drawable/ic_bottom_income_unchose"
+            tab:img1="@drawable/ic_bottom_income_chose"
             tab:text="进货单" />
 
         <com.qws.nypp.view.MyRadioView
@@ -58,8 +62,9 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            tab:img0="@drawable/ic_launcher"
-            tab:img1="@drawable/ic_launcher"
+            android:padding="3dp"
+            tab:img0="@drawable/ic_bottom_setting_unchose"
+            tab:img1="@drawable/ic_bottom_setting_chose"
             tab:text="设置" />
     </LinearLayout>
 

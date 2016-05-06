@@ -6,6 +6,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.qws.nypp.R;
@@ -17,6 +21,7 @@ import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.LogUtil;
+import com.qws.nypp.view.DetailSelectPopupWindow;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
@@ -28,9 +33,11 @@ import com.yolanda.nohttp.Response;
  * @author
  * @date 2016-1-4
  */
-public class GoodsDetailActivity extends BaseActivity {
+public class GoodsDetailActivity extends BaseActivity implements OnClickListener {
 
 	private GoodsBean currentGoods;
+	private Button addCart;
+	private DetailSelectPopupWindow selectPpw;
 	@Override
 	protected int getContentViewId() {
 		return R.layout.a_goods_detail;
@@ -44,12 +51,34 @@ public class GoodsDetailActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 		titleView.setTitle("商品详情");
-		currentGoods = (GoodsBean) getIntent().getSerializableExtra("bean");
+//		currentGoods = (GoodsBean) getIntent().getSerializableExtra("bean");
 	}
 
 	@Override
 	protected void setListener() {
 		titleView.setBackBtn();
+		addCart = (Button) findViewById(R.id.detail_add_cart);
+		findViewById(R.id.detail_add_cart).setOnClickListener(this);
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.detail_add_cart:
+			selectPpw = new DetailSelectPopupWindow();
+			selectPpw.initPopupWindow(context, currentGoods, new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					selectPpw.dismiss();
+				}
+			});
+			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -87,4 +116,5 @@ public class GoodsDetailActivity extends BaseActivity {
 			}
 		});
 	}
+
 }

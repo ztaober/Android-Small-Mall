@@ -38,13 +38,16 @@ import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
+import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AdCarouselView;
 import com.qws.nypp.view.pullview.DividerGridItemDecoration;
+import com.qws.nypp.view.pullview.MarginDecoration;
 import com.qws.nypp.view.pullview.PullToRefreshBase.OnRefreshListener;
 import com.qws.nypp.view.pullview.PullToRefreshListView;
+import com.qws.nypp.view.pullview.SpacesItemDecoration;
 import com.yolanda.nohttp.Headers;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
@@ -86,7 +89,10 @@ public class HomeFragment extends BaseFragment {
 		mRecyclerView = mPullRefreshRecyclerView.getRefreshableView();
 		mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 //		mRecyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-		mRecyclerView.addItemDecoration(new DividerGridItemDecoration(context));
+		//设置item之间的间隔
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(DisplayUtil.dip2px(context, 5)));
+//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(context));
+//		mRecyclerView.addItemDecoration(new MarginDecoration(context));
 	}
 	
 	@Override
@@ -186,8 +192,8 @@ public class HomeFragment extends BaseFragment {
 			((MyViewHolder)holder).tv.setText(list.get(position).getTitle());
 			((MyViewHolder)holder).soldTv.setText("成交"+list.get(position).getSoldQuantity()+"笔");
 			((MyViewHolder)holder).stockTv.setText(list.get(position).getStockType()+position);
-			((MyViewHolder)holder).newPriceTv.setText(list.get(position).getPreferentialPrice()+"");
-			((MyViewHolder)holder).oldPriceTv.setText(list.get(position).getPrice()+"");
+			((MyViewHolder)holder).newPriceTv.setText("¥"+list.get(position).getPreferentialPrice());
+			((MyViewHolder)holder).oldPriceTv.setText("¥"+list.get(position).getPrice());
 			((MyViewHolder)holder).oldPriceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
 		}
 		

@@ -258,18 +258,21 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/detail_collection"
            android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:text="收藏" />
 
         <Button
+            android:id="@+id/detail_add_cart"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:text="加入购物车" />
 
         <Button
+            android:id="@+id/detail_buy"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"

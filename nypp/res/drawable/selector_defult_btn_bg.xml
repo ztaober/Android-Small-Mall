@@ -4,17 +4,17 @@
     <item android:state_pressed="true"><shape>
             <corners android:radius="@dimen/radius" />
 
-            <solid android:color="@color/defult_btn_pressed"></solid>
+            <solid android:color="@color/comm_color"></solid>
         </shape></item>
     <item android:state_enabled="false"><shape>
             <corners android:radius="@dimen/radius" />
 
-            <solid android:color="@color/defult_btn_enabled"></solid>
+            <solid android:color="@color/comm_color"></solid>
         </shape></item>
     <item><shape>
             <corners android:radius="@dimen/radius" />
 
-            <solid android:color="@color/defult_btn"></solid>
+            <solid android:color="@color/comm_color"></solid>
         </shape></item>
 
 </selector>

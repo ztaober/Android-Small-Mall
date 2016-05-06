@@ -36,8 +36,6 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 	private MyRadioView radio_setting;
 	/** 当前选择项 */
 	private MyRadioView radio_now;
-	/** 切换进度条 */
-	private View view_slider;
 	/** 第几个视图 */
 	private int currentPage = 0;
 
@@ -52,14 +50,10 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 		radio_optional = (MyRadioView) findViewById(R.id.main_radio_optional);
 		radio_order = (MyRadioView) findViewById(R.id.main_radio_order);
 		radio_setting = (MyRadioView) findViewById(R.id.main_radio_setting);
-		view_slider = findViewById(R.id.view_slider);
-
 	}
 
 	@Override
 	protected void initData() {
-		LinearLayout.LayoutParams layoutParams = (LayoutParams) view_slider.getLayoutParams();
-		layoutParams.width = getResources().getDisplayMetrics().widthPixels / 4;
 		manager = getSupportFragmentManager();// 获取Fragment管理
 		fragments = new BaseFragment[4];
 		//避免应用重载导致界面重叠的问题
@@ -85,13 +79,6 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 	@Override
 	protected void getData() {
 
-	}
-
-	private void translateSlider(int fromXDelta, int toXDelta) {
-		TranslateAnimation animation = new TranslateAnimation(fromXDelta, toXDelta, 0, 0);
-		animation.setDuration(200);
-		animation.setFillAfter(true);
-		view_slider.startAnimation(animation);
 	}
 
 	public void chooseFragment(int position) {
@@ -123,13 +110,6 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 			}
 		}
 		beginTransaction.commit();
-		// 设置导航条
-		int toXDelta = 0;
-		int fromXDelta = 0;
-		fromXDelta = currentPage * view_slider.getWidth();
-		toXDelta = position * view_slider.getWidth();
-		currentPage = position;
-		translateSlider(fromXDelta, toXDelta);
 	}
 
 	@Override

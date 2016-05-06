@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flowlayout="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/commSelect_view_gap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/ppw_detail_img"
+            android:layout_width="90dip"
+            android:layout_height="90dip"
+            android:background="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/ppw_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/ppw_detail_img"
+            android:text="秋季钢圈那饿哦放假爱饿哦放假啊哦额放假爱" />
+
+        <TextView
+            android:id="@+id/ppw_detail_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/ppw_detail_img"
+            android:text="250.00"
+            android:textColor="@color/light_red" />
+    </RelativeLayout>
+
+    <View style="@style/line_view" />
+
+    <com.qws.nypp.view.AutoSizeGridView
+        android:id="@+id/gv_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:cacheColorHint="#00000000"
+        android:horizontalSpacing="10dp"
+        android:listSelector="#00000000"
+        android:numColumns="3"
+        android:padding="5dp"
+        android:scrollbars="none"
+        android:verticalSpacing="10dp" />
+
+    <View style="@style/line_view" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="尺码"
+            android:textSize="@dimen/font_size_normal" />
+
+        <com.qws.nypp.view.AutoSizeGridView
+            android:id="@+id/gv_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:cacheColorHint="#00000000"
+            android:horizontalSpacing="10dp"
+            android:listSelector="#00000000"
+            android:numColumns="3"
+            android:padding="5dp"
+            android:scrollbars="none"
+            android:verticalSpacing="10dp" />
+    </LinearLayout>
+
+</LinearLayout>

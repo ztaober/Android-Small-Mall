@@ -148,19 +148,6 @@ public class AdCarouselView extends RelativeLayout {
 						Exception exception, int responseCode,
 						long networkMillis) {
 					LogUtil.i("请求失败: " + exception.getMessage());
-					BannerBean object = new BannerBean();
-					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
-					adList.add(object);
-					object = new BannerBean();
-					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311333458232.jpg");
-					adList.add(object);
-					object = new BannerBean();
-					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311129148111.jpg");
-					adList.add(object);
-					object = new BannerBean();
-					object.setBannerPicture("http://staticlive.douyutv.com/upload/signs/201512311333458232.jpg");
-					adList.add(object);
-	    			initAd(getContext());
 				}
 
 				@Override

@@ -3,47 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5E5"
+    android:background="@drawable/bg_login"
     android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/login_img_head"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="98dp"
         android:src="@drawable/ic_launcher"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/login_txt_nike"
-        style="@style/default_textview_txt1"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/all_txt_00"
-        tools:ignore="SelectableText" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="张小小"
+        android:textSize="@dimen/font_size_middle"
+        android:textColor="@color/all_txt_00" />
 
-    <com.qws.nypp.view.DeleteEditText
-        android:id="@+id/login_edit_uesrname"
-        style="@style/default_edit_style"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:hint="用户名:" />
+    <LinearLayout
+        android:id="@+id/login_linear"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_login_input"
+        android:orientation="vertical" >
 
-    <com.qws.nypp.view.DeleteEditText
-        android:id="@+id/login_edit_password"
-        style="@style/default_edit_style"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:hint="密码:" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/login_user_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_login_user" />
+
+            <com.qws.nypp.view.DeleteEditText
+                android:id="@+id/login_edit_uesrname"
+                style="@style/login_edit_style"
+                android:layout_toRightOf="@+id/login_user_img"
+                android:hint="@string/login_user_hint" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/login_pwd_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_login_password" />
+
+            <com.qws.nypp.view.DeleteEditText
+                android:id="@+id/login_edit_password"
+                style="@style/login_edit_style"
+                android:layout_toRightOf="@+id/login_pwd_img"
+                android:hint="@string/login_pwds_hint"
+                android:inputType="textPassword" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/login_txt_login"
         style="@style/default_textview_btn"
+        android:layout_height="44dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
         android:text="登录" />
 
     <TextView
@@ -53,7 +93,7 @@
         android:layout_marginRight="10dp"
         android:padding="5dp"
         android:text="登录遇到问题?"
-        android:textColor="#477DC4"
+        android:textColor="#5D4A91"
         android:textSize="@dimen/font_size_little" />
 
 </LinearLayout>

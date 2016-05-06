@@ -43,6 +43,10 @@
     <color name="bg_gray_30">#30868686</color>
     
     <!-- nypp -->
+    <color name="nypp_help">#333</color>
+    <color name="nypp_help_text">#10a9e5</color>
+    <color name="nypp_help_line">#ddd</color>
+    <color name="nypp_help_bg">#E5E5E5</color>
     <color name="light_white">#ffffff</color>
     <color name="light_red">#ff2727</color>
     <color name="light_gray">#eaeaea</color>

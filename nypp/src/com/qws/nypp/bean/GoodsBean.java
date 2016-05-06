@@ -28,7 +28,7 @@ public class GoodsBean extends BaseBean {
 	/**
 	 * 原价
 	 */
-	private int price;
+	private double price;
 	/**
 	 * 促销类型
 	 */
@@ -48,7 +48,7 @@ public class GoodsBean extends BaseBean {
 	/**
 	 * 现价
 	 */
-	private int preferentialPrice;
+	private double preferentialPrice;
 	/**
 	 * 销售数量
 	 */
@@ -83,10 +83,10 @@ public class GoodsBean extends BaseBean {
 	public void setStockType(String stockType) {
 		this.stockType = stockType;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public String getCouponType() {
@@ -113,10 +113,10 @@ public class GoodsBean extends BaseBean {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getPreferentialPrice() {
+	public double getPreferentialPrice() {
 		return preferentialPrice;
 	}
-	public void setPreferentialPrice(int preferentialPrice) {
+	public void setPreferentialPrice(double preferentialPrice) {
 		this.preferentialPrice = preferentialPrice;
 	}
 	public int getSoldQuantity() {

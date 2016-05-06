@@ -1,11 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+    android:layout_height="match_parent" >
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
+        android:background="@color/nypp_help_bg" >
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="17dp"
+            android:background="@color/nypp_help_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/help_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="24dp" >
+
+        <TextView
+            android:id="@+id/help_num_1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_help_progress"
+            android:gravity="center"
+            android:textSize="@dimen/font22"
+            android:text="@string/help_num1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/help_num_1"
+            android:background="@drawable/nypp_normal_bg"
+            android:padding="8dp"
+            android:text="@string/help_warn1"
+            android:textColor="@color/nypp_help"
+            android:textSize="@dimen/font24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/help_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/help_1"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/help_num_2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_help_progress"
+            android:gravity="center"
+            android:textSize="@dimen/font22"
+            android:text="@string/help_num2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/help_num_2"
+            android:background="@drawable/nypp_normal_bg"
+            android:padding="8dp"
+            android:text="@string/help_warn2"
+            android:textColor="@color/nypp_help"
+            android:textSize="@dimen/font24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/help_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/help_2"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/help_num_3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_help_progress"
+            android:gravity="center"
+            android:textSize="@dimen/font22"
+            android:text="@string/help_num3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/help_num_3"
+            android:background="@drawable/nypp_normal_bg"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/ic_help_call_img"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/ic_help_call" />
+
+                <TextView
+                    android:id="@+id/ic_help_call_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ic_help_call_img"
+                    android:text="@string/help_custom_call"
+                    android:padding="8dp"
+                    android:textSize="@dimen/font26" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ic_help_call_txt"
+                    android:text="@string/help_call"
+                    android:padding="8dp"
+                    android:textColor="@color/nypp_help_text"
+                    android:textSize="@dimen/font26" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/ic_help_chat_img"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/ic_help_chat" />
+
+                <TextView
+                    android:id="@+id/ic_help_chat_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ic_help_chat_img"
+                    android:text="@string/help_custom_chat"
+                    android:padding="8dp"
+                    android:textSize="@dimen/font26" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ic_help_chat_txt"
+                    android:text="@string/help_chat"
+                    android:padding="8dp"
+                    android:textSize="@dimen/font26" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

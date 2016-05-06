@@ -4,11 +4,24 @@
     <string name="app_name">优衣橱</string>
     <string name="company_name">深圳市茜维诗服饰有限公司</string>
     
+    <string name="login_user_hint">请输入用户名</string>
+    <string name="login_pwds_hint">请输入密码</string>
+    
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     
     <string name="back">返回</string>
-
+    
+    <!-- 帮助页面 -->
+    <string  name="help_num1">1</string>
+    <string  name="help_num2">2</string>
+    <string  name="help_num3">3</string>
+    <string name="help_warn1">第一步：您先确认输入的账户名和密码是否正确。(列如：大小写是否正确，是否输入空格等特殊字符...)</string>
+    <string name="help_warn2">第二步：电话咨询客服人员，分配跟您的账户和密码是否正确。我们将迅速为您排查问题。</string>
+    <string name="help_custom_call">客服电话：</string>
+    <string name="help_call">138-8989-8989</string>
+    <string name="help_custom_chat">微信号：</string>
+    <string name="help_chat">Wxggggggg</string>
     
     <!-- *******************************上下拉刷新提示文本**************************** -->
     <string name="pull_to_refresh_pull_label">下拉刷新&#8230;</string>
