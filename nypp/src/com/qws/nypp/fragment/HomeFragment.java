@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyc
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.wraprecyclerview.WrapRecyclerView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.adapter.CommAdapter;
@@ -44,7 +47,6 @@ import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AdCarouselView;
 import com.qws.nypp.view.pullview.DividerGridItemDecoration;
-import com.qws.nypp.view.pullview.MarginDecoration;
 import com.qws.nypp.view.pullview.PullToRefreshBase.OnRefreshListener;
 import com.qws.nypp.view.pullview.PullToRefreshListView;
 import com.qws.nypp.view.pullview.SpacesItemDecoration;
@@ -173,6 +175,14 @@ public class HomeFragment extends BaseFragment {
 	}
 	
 	class RecyclerViewAdapter extends Adapter<ViewHolder> {
+		
+		/** imageLoader默认配置 */
+		DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher) // 设置图片下载期间显示的图片
+				.showImageForEmptyUri(R.drawable.ic_launcher) // 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.ic_launcher) // 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+				.cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
+				.build();
 
 		@Override
 		public int getItemCount() {
@@ -189,17 +199,20 @@ public class HomeFragment extends BaseFragment {
 
 		@Override
 		public void onBindViewHolder(ViewHolder holder, int position) {
-			((MyViewHolder)holder).tv.setText(list.get(position).getTitle());
-			((MyViewHolder)holder).soldTv.setText("成交"+list.get(position).getSoldQuantity()+"笔");
-			((MyViewHolder)holder).stockTv.setText(list.get(position).getStockType()+position);
-			((MyViewHolder)holder).newPriceTv.setText("¥"+list.get(position).getPreferentialPrice());
-			((MyViewHolder)holder).oldPriceTv.setText("¥"+list.get(position).getPrice());
+			GoodsBean goodsBean = list.get(position);
+			ImageLoader.getInstance().displayImage(goodsBean.getImage(), ((MyViewHolder)holder).iv, options);
+			((MyViewHolder)holder).tv.setText(goodsBean.getTitle());
+			((MyViewHolder)holder).soldTv.setText("成交"+goodsBean.getSoldQuantity()+"笔");
+			((MyViewHolder)holder).stockTv.setText("混批");
+			((MyViewHolder)holder).newPriceTv.setText("¥"+goodsBean.getPreferentialPrice());
+			((MyViewHolder)holder).oldPriceTv.setText("¥"+goodsBean.getPrice());
 			((MyViewHolder)holder).oldPriceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
 		}
 		
 		
 
         class MyViewHolder extends ViewHolder {
+        	ImageView iv;
             TextView tv;
             TextView soldTv;
             TextView stockTv;
@@ -215,6 +228,7 @@ public class HomeFragment extends BaseFragment {
                     	IntentUtil.gotoActivity(context, GoodsDetailActivity.class, bundle);
                     }  
                 });  
+                iv = (ImageView) view.findViewById(R.id.item_home_goods_img);
                 tv = (TextView) view.findViewById(R.id.item_home_goods_tv);
                 soldTv = (TextView) view.findViewById(R.id.sold_tv);
                 stockTv = (TextView) view.findViewById(R.id.stock_tv);

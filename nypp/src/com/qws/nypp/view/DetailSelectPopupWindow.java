@@ -21,16 +21,22 @@ import com.qws.nypp.view.flowlayout.FlowLayout;
 import com.qws.nypp.view.flowlayout.TagAdapter;
 import com.qws.nypp.view.flowlayout.TagFlowLayout;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.PopupWindow.OnDismissListener;
 
 /**
  * 购买选项的PopupWindow
@@ -38,6 +44,7 @@ import android.widget.Toast;
 public class DetailSelectPopupWindow extends PopupWindow implements View.OnClickListener {
     private Context context;
 	private LayoutInflater mInflater;
+	private int mCount;
 	private GridView colorGv;
 	private GridView sizeGv;
 	private SkuAdapter skuColorAdapter;// 颜色适配器
@@ -47,73 +54,61 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 	List<SukBean> mList;// sku数据
 	List<SukTypeBean> mColorList;// 颜色列表
 	List<SukTypeBean> mSizeList;// 尺码列表
+	private ImageView sukImg;
+	private TextView titleTv;
 	
 
-    public void initPopupWindow(final Context context, GoodsBean currentGoods, View.OnClickListener listener) {
+    public void initPopupWindow(final Context context, List<SukBean> sukList, View.OnClickListener listener) {
         if (this.context == null) {
             this.context = context;
             mInflater = LayoutInflater.from(context);
             setContentView(View.inflate(context, R.layout.ppw_detail_select, null));
             TextView title = (TextView) getContentView().findViewById(R.id.ppw_detail_title);
-            title.setText("geh");
+            title.setText("芯片啊皮夹克哦啊符号额安慰发飞啊飞阿文发恶发疯吉");
             title.setOnClickListener(this);
             colorGv = (GridView) getContentView().findViewById(R.id.gv_color);
             sizeGv = (GridView) getContentView().findViewById(R.id.gv_size);
            
-            initFlowLayoutData();
-            initFlowlayoutView();
-           
+            sukImg = (ImageView) getContentView().findViewById(R.id.ppw_detail_img);
+            titleTv = (TextView) getContentView().findViewById(R.id.ppw_detail_title);
+            titleTv.setText("");
             
-            getContentView().findViewById(R.id.commSelect_view_gap).setOnClickListener(listener);
-            //设置SelectPicPopupWindow弹出窗体的宽
+//            getContentView().findViewById(R.id.commSelect_view_gap).setOnClickListener(listener);
+            
+            
             setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-            //设置SelectPicPopupWindow弹出窗体的高
             setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            //设置SelectPicPopupWindow弹出窗体可点击
             setFocusable(true);
-            //设置SelectPicPopupWindow弹出窗体动画效果
-            setAnimationStyle(R.style.AnimBottom);
-            //实例化一个ColorDrawable颜色为半透明
-            ColorDrawable dw = new ColorDrawable(context.getResources().getColor(R.color.trans50));
-            //设置SelectPicPopupWindow弹出窗体的背景
-            setBackgroundDrawable(dw);
+            setAnimationStyle(R.style.anim_popup_dir);
+            setBackgroundDrawable(new BitmapDrawable());
+            new CountDownTimer(175, 25) {
+    			@Override
+    			public void onTick(long millisUntilFinished) {
+    				mCount++;
+    				backgroundAlpha(context, (float) (1 - (0.1 * mCount)));
+    			}
+    			
+    			@Override
+    			public void onFinish() {
+    				
+    			}
+    		}.start();
+    		setOnDismissListener(new OnDismissListener() {
+
+    			@Override
+    			public void onDismiss() {
+    				backgroundAlpha(context, 1f);
+    			}
+    		});
+    		
+    		initFlowLayoutData(sukList);
+            initFlowlayoutView();
         }
+        
     }
 
-//    private void initFlowLayoutData(GoodsDetailBean bean) {
-    private void initFlowLayoutData() {
-//    	mList = bean.sukList;
-    	mList = new ArrayList<SukBean>();
-    	SukBean item1 = new SukBean();
-		item1.setQuantity(16);
-		item1.setColour("红色");
-		item1.setSize("M");
-		mList.add(item1);
-		SukBean item2 = new SukBean();
-		item2.setQuantity(16);
-		item2.setColour("白色");
-		item2.setSize("L");
-		mList.add(item2);
-		SukBean item3 = new SukBean();
-		item3.setQuantity(16);
-		item3.setColour("黑色");
-		item3.setSize("XL");
-		mList.add(item3);
-		SukBean item4 = new SukBean();
-		item4.setQuantity(16);
-		item4.setColour("红色");
-		item4.setSize("XL");
-		mList.add(item4);
-		SukBean item5 = new SukBean();
-		item5.setQuantity(16);
-		item5.setColour("白色");
-		item5.setSize("M");
-		mList.add(item5);
-		SukBean item6 = new SukBean();
-		item6.setQuantity(16);
-		item6.setColour("绿色");
-		item6.setSize("L");
-		mList.add(item6);
+    private void initFlowLayoutData(List<SukBean> sukList) {
+    	mList = sukList;
     	mColorList = new ArrayList<SukTypeBean>();
 		mSizeList = new ArrayList<SukTypeBean>();
     	Set<String> colorSet = new HashSet<String>(); // color列表
@@ -326,4 +321,16 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
                 break;
         }
     }
+	
+	/**
+	 * 设置添加屏幕的背景透明度
+	 * 
+	 * @param bgAlpha
+	 */
+	public void backgroundAlpha(Context context, float bgAlpha) {
+		WindowManager.LayoutParams lp = ((Activity)context).getWindow().getAttributes();
+		lp.alpha = bgAlpha; // 0.0-1.0
+		((Activity)context).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+		((Activity)context).getWindow().setAttributes(lp);
+	}
 }

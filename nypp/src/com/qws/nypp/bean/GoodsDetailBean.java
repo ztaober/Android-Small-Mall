@@ -23,7 +23,7 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 最高评价
 	 */
-	public AppraiseBean appraise;
+//	public AppraiseBean appraise;
 	/**
 	 * 标题
 	 */
@@ -31,27 +31,27 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 成交笔数
 	 */
-	public int soldQuantity;
+	public String soldQuantity;
 	/**
 	 * 库存
 	 */
-	public int quantity;
+	public String quantity;
 	/**
 	 * 起批数
 	 */
-	public int minimum;
+	public String minimum;
 	/**
 	 * 价格
 	 */
-	public int preferentialPrice;
+	public String preferentialPrice;
 	/**
 	 * 原价
 	 */
-	public int price;
+	public String price;
 	/**
 	 * 快递费
 	 */
-	public int logistics;
+	public String logistics;
 	/**
 	 * 发货地
 	 */
@@ -59,6 +59,6 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 评价数
 	 */
-	public int appraiseCount;
+	public String appraiseCount;
 
 }

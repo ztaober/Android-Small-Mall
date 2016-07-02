@@ -1,14 +1,17 @@
 package com.qws.nypp.utils;
 
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.UUID;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -47,6 +50,18 @@ public class Util {
 		}
 		return false;
 	}
+	
+	private static long lastClickTime;
+    
+    public static boolean isFastDoubleClick() {
+        long cur = System.currentTimeMillis();
+        if (cur - lastClickTime < 300) {
+            lastClickTime = cur;
+        	return true;
+        }
+        lastClickTime = cur;
+        return false;
+    }
 
 	/**
 	 * 使用md5的算法进行加密
@@ -68,5 +83,58 @@ public class Util {
 			md5code = "0" + md5code;
 		}
 		return md5code;
+	}
+	
+	public static String md5three(String plainText){
+		return md5(md5(md5(plainText)));
+	}
+	
+	/**
+	 * 获取 移动终端设备id号
+	 * 
+	 * @param context
+	 *            :上下文文本对象
+	 * @return id 移动终端设备id号
+	 */
+	public static String getDevId(Context context) {
+		String id = SpUtil.getSpUtil().getSPValue("devicesID", "");
+		if (id.length() == 0) {
+			try {
+				id = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+			} catch (Exception e) {
+			}
+			if (id == null)
+				id = "";
+		}
+		if (id.length() == 0) {
+			try {
+				id = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getSimSerialNumber();
+			} catch (Exception e) {
+			}
+			if (id == null)
+				id = "";
+		}
+		if (id.length() == 0) {
+			try {
+				id = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
+			} catch (Exception e) {
+			}
+			if (id == null)
+				id = "";
+		}
+		if (id.length() == 0) {
+			try {
+				Class<?> c = Class.forName("android.os.SystemProperties");
+				Method get = c.getMethod("get", String.class, String.class);
+				id = (String) (get.invoke(c, "ro.serialno", "unknown"));
+			} catch (Exception e) {
+			}
+		}
+		if (id.length() == 0 || "0".equals(id)) {
+			// 随机生成
+			id = UUID.randomUUID().toString().replaceAll("-", "");
+			SpUtil.getSpUtil().putSPValue("devicesID", id);
+		}
+		return id;
 	}
 }

@@ -1,9 +1,6 @@
 package com.qws.nypp.view;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +22,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.bean.BannerBean;
-import com.qws.nypp.bean.CommonResult4List;
-import com.qws.nypp.config.ServerConfig;
-import com.qws.nypp.http.CallServer;
-import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
-import com.yolanda.nohttp.Headers;
-import com.yolanda.nohttp.OnResponseListener;
-import com.yolanda.nohttp.Request;
-import com.yolanda.nohttp.Response;
 
 /**
- * 
+ * 详情页轮播图
  * 
  * @Description
  * @author Troy
@@ -45,36 +35,19 @@ import com.yolanda.nohttp.Response;
  * @Copyright:
  */
 public class DetailsCarouselView extends RelativeLayout {
-	private List<BannerBean> adList;
+	private List<String> adList;
 	/** ViewPager */
 	private ViewPager viewpager_ad;
 	/** 点 */
 	private LinearLayout ll_ad;
-	/** 切换广告线程 */
-	private Runnable runnable = new Runnable() {
-		@Override
-		public void run() {
-			if (isShown()) {
-				flag++;
-				viewpager_ad.setCurrentItem(flag);
-			}
-			handler.removeCallbacks(runnable);
-			handler.postDelayed(runnable, adPlayerTime);
-		}
-	};
 	/** 广告播放时间 */
 	private final int adPlayerTime = 5000;
 	/** 广告当前所在位置 */
-	private int flag;
+	private int flag = 0;
 	/** touch开始x坐标 */
 	private int startX = 0;
 	/** touch开始y坐标 */
 	private int startY = 0;
-	private Handler handler = new Handler();
-	/** 是否是轮播图被按下 */
-	private boolean isDown = false;
-	/** 是否获取了网络数据 */
-	private boolean isGetNet = false;
 	/** imageLoader默认配置 */
 	public DisplayImageOptions options;
 
@@ -101,30 +74,20 @@ public class DetailsCarouselView extends RelativeLayout {
 				.cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 				.build();
 		View view = View.inflate(context, R.layout.view_ad_carousel, null);
-		DisplayUtil.setViewWH(context, view, 256f / 640f);
 		addView(view);
 		viewpager_ad = (ViewPager) findViewById(R.id.viewpager_ad);
 		ll_ad = (LinearLayout) findViewById(R.id.ll_ad);
-//		queryInformations();
 	}
-
 	
-	
-
-	/** 重新开始 */
-	public void resetRun() {
-		if (isDown) {
-			isDown = false;
-			handler.removeCallbacks(runnable);
-			handler.postDelayed(runnable, adPlayerTime);
-		}
+	public void initPicList(List<String> picList){
+		adList = picList;
+		initAd(getContext());
 	}
 
 	private void initAd(Context context) {
 		if (adList.size() == 0) {
 			return;
 		}
-		handler.removeCallbacks(runnable);
 		ll_ad.removeAllViews();
 		for (int i = 0; i < adList.size(); i++) {
 			View point = new View(context);
@@ -155,8 +118,6 @@ public class DetailsCarouselView extends RelativeLayout {
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
-		flag = 1000 - (1000 % adList.size());
-		viewpager_ad.setCurrentItem(flag);
 		viewpager_ad.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -164,31 +125,25 @@ public class DetailsCarouselView extends RelativeLayout {
 				case MotionEvent.ACTION_DOWN:
 					startX = (int) event.getX();
 					startY = (int) event.getY();
-					handler.removeCallbacks(runnable);
-					isDown = true;
 				case MotionEvent.ACTION_MOVE:
 
 					break;
 				case MotionEvent.ACTION_UP:
 				case MotionEvent.ACTION_CANCEL:
-					handler.postDelayed(runnable, adPlayerTime);
 					if (Math.abs(event.getX() - startX) < 10 && Math.abs(event.getY() - startY) < 10) {
-						Bundle bundle = new Bundle();
-						bundle.putSerializable("bean", adList.get(flag % adList.size()));
-						IntentUtil.gotoActivity(getContext(), GoodsDetailActivity.class, bundle);
+						LogUtil.t("gogogo"+flag);
 					}
 					break;
 				}
 				return false;
 			}
 		});
-		handler.postDelayed(runnable, adPlayerTime);
 	}
 
 	private class MyAdapter extends PagerAdapter {
 		@Override
 		public int getCount() {
-			return Integer.MAX_VALUE;
+			return adList.size();
 		}
 
 		@Override
@@ -200,9 +155,8 @@ public class DetailsCarouselView extends RelativeLayout {
 		public Object instantiateItem(View view, int position) {
 			ViewPager viewPage = (ViewPager) view;
 			View inflate = View.inflate(getContext(), R.layout.item_ad_carousel, null);
-			DisplayUtil.setViewWH(getContext(), inflate, 256f / 640f);
 			ImageView ad_img_item = (ImageView) inflate.findViewById(R.id.ad_img_item);
-			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).getBannerPicture(), ad_img_item, options);
+			ImageLoader.getInstance().displayImage(adList.get(position), ad_img_item, options);
 			viewPage.addView(inflate);
 			return inflate;
 		}

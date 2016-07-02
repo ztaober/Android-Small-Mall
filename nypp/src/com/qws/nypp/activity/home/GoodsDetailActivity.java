@@ -1,15 +1,19 @@
 package com.qws.nypp.activity.home;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.qws.nypp.R;
@@ -17,11 +21,15 @@ import com.qws.nypp.activity.BaseActivity;
 import com.qws.nypp.bean.CommonResult;
 import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.bean.GoodsDetailBean;
+import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.LogUtil;
+import com.qws.nypp.utils.ToastUtil;
+import com.qws.nypp.utils.Util;
 import com.qws.nypp.view.DetailSelectPopupWindow;
+import com.qws.nypp.view.DetailsCarouselView;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
@@ -35,7 +43,18 @@ import com.yolanda.nohttp.Response;
  */
 public class GoodsDetailActivity extends BaseActivity implements OnClickListener {
 
+	public static final String TAG = "GoodsDetailActivity";
 	private GoodsBean currentGoods;
+	private List<SukBean> sukList;
+	private DetailsCarouselView carouselView;
+	private TextView titleTv;		//商品名
+	private TextView soldTv;		//成交数
+	private TextView stockTv;		//库存
+	private TextView miniTv;		//起批数
+	private TextView prePriceTv;	//价格
+	private TextView priceTv;		//折扣前价格
+	private TextView logisticsTv;	//快递费
+	private TextView harbourTv;		//地址
 	private Button addCart;
 	private DetailSelectPopupWindow selectPpw;
 	@Override
@@ -51,22 +70,51 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 	@Override
 	protected void initData() {
 		titleView.setTitle("商品详情");
-//		currentGoods = (GoodsBean) getIntent().getSerializableExtra("bean");
+		currentGoods = (GoodsBean) getIntent().getSerializableExtra("bean");
 	}
 
 	@Override
 	protected void setListener() {
 		titleView.setBackBtn();
 		addCart = (Button) findViewById(R.id.detail_add_cart);
+		carouselView = (DetailsCarouselView) findViewById(R.id.goods_detail_carousel);
+		findViewById(R.id.detail_collection).setOnClickListener(this);
 		findViewById(R.id.detail_add_cart).setOnClickListener(this);
+		findViewById(R.id.detail_buy).setOnClickListener(this);
+		
+		titleTv = (TextView) findViewById(R.id.goods_detail_title);
+		soldTv = (TextView) findViewById(R.id.goods_detail_sold_num);
+		stockTv = (TextView) findViewById(R.id.goods_detail_stock_num);
+		miniTv = (TextView) findViewById(R.id.goods_detail_mini_num);
+		prePriceTv = (TextView) findViewById(R.id.goods_detail_pre_price);
+		priceTv = (TextView) findViewById(R.id.goods_detail_price);
+		logisticsTv = (TextView) findViewById(R.id.goods_detail_logistics);
+		harbourTv = (TextView) findViewById(R.id.goods_detail_harbour);
 	}
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.detail_collection:
+			if (Util.isFastDoubleClick()) {
+				return;
+			}
+			addCollection();
+			break;
 		case R.id.detail_add_cart:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, currentGoods, new OnClickListener() {
+			selectPpw.initPopupWindow(context, sukList, new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					selectPpw.dismiss();
+				}
+			});
+			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
+			break;
+		case R.id.detail_buy:
+			selectPpw = new DetailSelectPopupWindow();
+			selectPpw.initPopupWindow(context, sukList, new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -81,13 +129,62 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		}
 	}
 
+	private void addCollection() {
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_ADD_COLLECTION);
+		JSONObject postJson = null;
+		try {
+			postJson = new JSONObject();
+			postJson.put("sign", "1");
+			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			JSONArray array = new JSONArray();
+			JSONObject object = new JSONObject();
+			object.put("productId", currentGoods.getProductId());
+			array.put(object);
+			postJson.put("productIds", array);
+		} catch (Exception e) {
+			return;
+		}
+		request.setRequestBody(postJson.toString());
+		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>(){
+
+			@Override
+			public void onStart(int what) {
+				
+			}
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+				if (what == 0) {
+	                // 请求成功
+	                JSONObject result = response.get();// 响应结果
+	                LogUtil.t("coloction="+result);
+	                String resultStr = result.optString("declare", "收藏失败");
+	                ToastUtil.show(resultStr);
+				}
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				
+			}
+
+			@Override
+			public void onFinish(int what) {
+				
+			}
+			
+		});
+	}
+
 	@Override
 	protected void getData() {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_DETAIL_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", "1");
-//		Log.i("taotao", "bb7a2a215ed64623a3d3b8191b23d09c===="+currentGoods.getProductId());
-		postData.put("productId", "36feba901efd4d5885175ef169864e6d");
+		  LogUtil.t(currentGoods.getProductId());
+		postData.put("productId", currentGoods.getProductId());
+		LogUtil.t(new Gson().toJson(postData));
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>() {
 
@@ -100,9 +197,21 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 				 if (what == 0) {
 	                // 请求成功
 	                JSONObject result = response.get();// 响应结果
-	                Log.i("taotao", "=="+ result.toString());
-	                CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
 	                LogUtil.t("PRODUCT_DETAIL_PATH="+result);
+	                CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
+	                GoodsDetailBean data = goodsDetial.getData();
+	                sukList = data.sukList;
+	                carouselView.initPicList(data.figure);
+	                
+	                titleTv.setText(data.title);
+	                soldTv.setText("成交"+data.soldQuantity+"笔");
+	                stockTv.setText("库存"+data.quantity+"件");
+	                miniTv.setText(data.minimum+"件起批");
+	                prePriceTv.setText("¥"+data.preferentialPrice);
+	                priceTv.setText("¥"+data.price);
+	                priceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
+	                logisticsTv.setText("快递"+data.logistics+"元");
+	                harbourTv.setText(data.harbour);
 	             }
 			}
 

@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 public class WelcomeActivity extends Activity {
 	
-	private CountDownTimer mCountDownTimer = new CountDownTimer(2000, 2000) {
+	private CountDownTimer mCountDownTimer = new CountDownTimer(500, 500) {
 		@Override
 		public void onTick(long millisUntilFinished) {
 		}

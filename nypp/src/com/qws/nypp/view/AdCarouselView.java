@@ -242,7 +242,7 @@ public class AdCarouselView extends RelativeLayout {
 			return Integer.MAX_VALUE;
 		}
 
-		@Override
+		@Override 
 		public boolean isViewFromObject(View arg0, Object arg1) {
 			return arg0 == arg1;
 		}
@@ -253,7 +253,7 @@ public class AdCarouselView extends RelativeLayout {
 			View inflate = View.inflate(getContext(), R.layout.item_ad_carousel, null);
 			DisplayUtil.setViewWH(getContext(), inflate, 256f / 640f);
 			ImageView ad_img_item = (ImageView) inflate.findViewById(R.id.ad_img_item);
-			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).getBannerPicture(), ad_img_item, options);
+//			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).getBannerPicture(), ad_img_item, options);
 			viewPage.addView(inflate);
 			return inflate;
 		}

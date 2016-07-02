@@ -1,78 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/light_gray">
+    android:layout_height="match_parent"
+    android:background="@color/white" >
 
     <ImageView
         android:id="@+id/item_home_goods_img"
-        android:layout_width="150dp"
-        android:layout_height="102dp"
-        android:background="@drawable/ic_launcher" />
-    
+        android:layout_width="match_parent"
+        android:layout_height="122dp"
+        android:scaleType="fitXY" />
+
     <TextView
         android:id="@+id/item_home_goods_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/item_home_goods_img"
         android:layout_margin="5dp"
-        android:textSize="@dimen/font24"
-        android:textColor="#000"
         android:ellipsize="end"
-        android:maxLines="2" />
+        android:maxLines="2"
+        android:textColor="#000"
+        android:textSize="@dimen/font24" />
 
     <RelativeLayout
         android:id="@+id/sold_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_below="@+id/item_home_goods_tv" >
-        
-        <TextView 
+        android:layout_below="@+id/item_home_goods_tv"
+        android:layout_marginRight="5dp" 
+        android:layout_marginLeft="5dp"
+        >
+
+        <TextView
             android:id="@+id/sold_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_width="match_parent"
-        	android:layout_height="match_parent"
-        	android:textColor="@color/gray"/>
-        
-        <TextView 
+            android:textColor="@color/gray" />
+
+        <TextView
             android:id="@+id/stock_tv"
-            android:gravity="right"
             android:layout_width="match_parent"
-        	android:layout_height="match_parent"
-        	android:textColor="@color/red"/>
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:textColor="@color/red" />
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/price_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_below="@+id/sold_rl" >
-        
-        <TextView 
+        android:layout_below="@+id/sold_rl"
+        android:layout_marginTop="2dp" 
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="5dp" 
+        android:layout_marginLeft="5dp" >
+
+        <TextView
             android:id="@+id/new_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="@color/red"/>
-        
-        <TextView 
+            android:textColor="@color/red" />
+
+        <TextView
             android:id="@+id/old_price_tv"
-            android:layout_toRightOf="@+id/new_price_tv"
             android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="@color/gray"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@+id/new_price_tv"
+            android:textColor="@color/gray" />
     </RelativeLayout>
-    
-    <TextView 
-        android:visibility="visible"
-       	android:id="@+id/sale"
-       	android:layout_below="@+id/price_rl"
-       	android:layout_width="wrap_content"
-   	   	android:layout_height="wrap_content"
-   	   	android:layout_margin="5dp"
-   	   	android:text="优惠"
-   	   	android:textColor="@color/red"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/price_rl"
+        android:layout_marginTop="2dp" 
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="5dp" 
+        android:layout_marginLeft="5dp">
+
+        <TextView
+            android:id="@+id/sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优惠"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:layout_toRightOf="@+id/sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="拿货满3000元免邮哦"
+			android:singleLine="true"            
+            android:textColor="@color/gray" />
+    </RelativeLayout>
 
 </RelativeLayout>

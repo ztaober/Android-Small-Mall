@@ -21,10 +21,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.qws.nypp.view.AdCarouselView
+            <com.qws.nypp.view.DetailsCarouselView
+                android:id="@+id/goods_detail_carousel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </com.qws.nypp.view.AdCarouselView>
+                android:layout_height="213dp" >
+            </com.qws.nypp.view.DetailsCarouselView>
 
             <TextView
                 android:id="@+id/goods_detail_title"
@@ -32,15 +33,16 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:padding="11dip"
-                android:text="我if骄傲耳机发哦风景奥尔夫i骄傲二纺机哦啊附件"
+                android:layout_margin="11dip"
+                android:text="title"
                 android:textColor="@color/nypp_black"
                 android:textSize="@dimen/font_size_big" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="11dip" >
+                android:layout_marginRight="11dip"
+                android:layout_marginLeft="11dip" >
 
                 <TextView
                     android:id="@+id/goods_detail_sold_num"
@@ -73,7 +75,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="11dip" >
+                android:layout_margin="11dip" >
 
                 <TextView
                     android:id="@+id/goods_detail_pre_price"
@@ -90,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/goods_detail_pre_price"
                     android:text="￥166.00"
+                    android:layout_centerVertical="true"
                     android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/nypp_gray" />
 
@@ -99,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="快递66元"
+                    android:layout_centerVertical="true"
                     android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/nypp_gray" />
 
@@ -107,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
+                    android:layout_centerVertical="true"
                     android:text="北京"
                     android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/light_red" />
@@ -115,14 +120,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="11dip" >
+                android:layout_margin="11dip" >
 
                 <TextView
+                    android:id="@+id/goods_detail_sale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="优惠"
                     android:textSize="@dimen/font_size_normal"
                     android:textColor="@color/light_red" />
+                <TextView
+                    android:layout_toRightOf="@+id/goods_detail_sale"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="亲,拿货满3000元免邮费哦"
+                    android:textSize="@dimen/font_size_normal"
+                    android:textColor="@color/gray" />
             </RelativeLayout>
 
             <View
@@ -134,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="11dip" >
+                android:layout_margin="11dip" >
 
                 <TextView
                     android:id="@+id/goods_detail_appraise"
@@ -254,29 +268,37 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dip"
         android:orientation="horizontal" >
 
         <Button
             android:id="@+id/detail_collection"
-           android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_weight="1"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:drawableLeft="@drawable/ic_bottom_love_select"
             android:text="收藏" />
 
         <Button
             android:id="@+id/detail_add_cart"
             android:layout_weight="1"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:text="加入购物车" />
+            android:layout_height="match_parent"
+            android:background="@color/comm_color"
+            android:text="加入进货单"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/detail_buy"
             android:layout_weight="1"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:text="购买" />
+            android:layout_height="match_parent"
+            android:background="#CF184C"
+            android:text="购买"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

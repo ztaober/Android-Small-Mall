@@ -71,7 +71,7 @@ public class SkuAdapter extends BaseAdapter {
 		// 选中
 		case "0":
 			holder.layout.setBackgroundResource(R.xml.shape2);
-			holder.title.setTextColor(Color.WHITE);
+			holder.title.setTextColor(Color.parseColor("#844aeb"));
 			break;
 		// 未选中
 		case "1":
@@ -80,8 +80,8 @@ public class SkuAdapter extends BaseAdapter {
 			break;
 		// 不可选
 		case "2":
-			holder.layout.setBackgroundResource(R.xml.shape1);
-			holder.title.setTextColor(Color.parseColor("#999999"));
+			holder.layout.setBackgroundResource(R.xml.shape3);
+			holder.title.setTextColor(Color.parseColor("#C0C0C0"));
 			break;
 		default:
 			break;
