@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:padding="15dp" >
 
-        <com.qwwuyu.baseproject.view.LoadingView
+        <com.qws.nypp.view.pullview.LoadingView
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:background="@drawable/img_load_reflush" />

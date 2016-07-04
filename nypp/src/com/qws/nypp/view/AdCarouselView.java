@@ -1,7 +1,9 @@
 package com.qws.nypp.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -19,13 +21,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.bean.BannerBean;
 import com.qws.nypp.bean.CommonResult4List;
+import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
@@ -43,7 +48,7 @@ import com.yolanda.nohttp.Response;
  * @date 2016-1-4
  */
 public class AdCarouselView extends RelativeLayout {
-	private List<BannerBean> adList;
+	private List<GoodsBean> adList;
 	/** ViewPager */
 	private ViewPager viewpager_ad;
 	/** 点 */
@@ -92,12 +97,7 @@ public class AdCarouselView extends RelativeLayout {
 	}
 
 	private void init(Context context) {
-		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher) // 设置图片下载期间显示的图片
-				.showImageForEmptyUri(R.drawable.ic_launcher) // 设置图片Uri为空或是错误的时候显示的图片
-				.showImageOnFail(R.drawable.ic_launcher) // 设置图片加载或解码过程中发生错误显示的图片
-				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-				.cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
-				.build();
+		options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_banner);
 		View view = View.inflate(context, R.layout.view_ad_carousel, null);
 		DisplayUtil.setViewWH(context, view, 256f / 640f);
 		addView(view);
@@ -109,8 +109,11 @@ public class AdCarouselView extends RelativeLayout {
 	private void queryInformations() {
 		if (!isGetNet) {
 			isGetNet = true;
-			adList = new ArrayList<BannerBean>();
+			adList = new ArrayList<GoodsBean>();
 			Request<JSONObject> request = new NyppJsonRequest(ServerConfig.BANNER_PATH);
+			Map<String, String> postData = new HashMap<String, String>();
+			postData.put("sign", "test");
+			request.setRequestBody(new Gson().toJson(postData));
 			CallServer.getRequestInstance().add(0, request,  new OnResponseListener<JSONObject>() {
 
 				@Override
@@ -120,34 +123,20 @@ public class AdCarouselView extends RelativeLayout {
 
 				@Override
 				public void onSucceed(int what, Response<JSONObject> response) {
-					 if (what == 0) {
 		                // 请求成功
-		                JSONObject result = response.get();// 响应结果
-
-//			            Object tag = response.getTag();// 拿到请求时设置的tag
-//			            byte[] responseBody = response.getByteArray();// 如果需要byteArray
-		                CommonResult4List<BannerBean> bannerList = CommonResult4List.fromJson(result.toString(), BannerBean.class);
-		                LogUtil.t(bannerList.toJson(BannerBean.class));
-		                // 响应头
-		                Headers headers = response.getHeaders();
-
-		                StringBuilder headBuild = new StringBuilder("响应码: ");
-		                headBuild.append(headers.getResponseCode());// 响应码
-		                headBuild.append("\n请求花费时间: ");
-		                headBuild.append(response.getNetworkMillis()).append("毫秒"); // 请求花费的时间
-		                LogUtil.t(headBuild.toString());
-		                
-		                
-		    			adList.addAll(bannerList.getData());
-		    			initAd(getContext());
-			            }
+	                JSONObject result = response.get();// 响应结果
+	                CommonResult4List<GoodsBean> bannerList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
+	                List<GoodsBean> data = bannerList.getData();
+	    			for(GoodsBean bean : data){
+	    				adList.add(bean);
+	    			}
+	    			initAd(getContext());
 				}
 
 				@Override
 				public void onFailed(int what, String url, Object tag,
 						Exception exception, int responseCode,
 						long networkMillis) {
-					LogUtil.i("请求失败: " + exception.getMessage());
 				}
 
 				@Override
@@ -253,7 +242,7 @@ public class AdCarouselView extends RelativeLayout {
 			View inflate = View.inflate(getContext(), R.layout.item_ad_carousel, null);
 			DisplayUtil.setViewWH(getContext(), inflate, 256f / 640f);
 			ImageView ad_img_item = (ImageView) inflate.findViewById(R.id.ad_img_item);
-//			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).getBannerPicture(), ad_img_item, options);
+			ImageLoader.getInstance().displayImage(adList.get(position % adList.size()).getImage(), ad_img_item, options);
 			viewPage.addView(inflate);
 			return inflate;
 		}

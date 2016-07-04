@@ -24,6 +24,7 @@ import com.qws.nypp.bean.GoodsDetailBean;
 import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
@@ -45,7 +46,8 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 
 	public static final String TAG = "GoodsDetailActivity";
 	private GoodsBean currentGoods;
-	private List<SukBean> sukList;
+	private GoodsDetailBean goodsDetailBean;
+	
 	private DetailsCarouselView carouselView;
 	private TextView titleTv;		//商品名
 	private TextView soldTv;		//成交数
@@ -64,7 +66,14 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	protected void findViews() {
-
+		titleTv = (TextView) findViewById(R.id.goods_detail_title);
+		soldTv = (TextView) findViewById(R.id.goods_detail_sold_num);
+		stockTv = (TextView) findViewById(R.id.goods_detail_stock_num);
+		miniTv = (TextView) findViewById(R.id.goods_detail_mini_num);
+		prePriceTv = (TextView) findViewById(R.id.goods_detail_pre_price);
+		priceTv = (TextView) findViewById(R.id.goods_detail_price);
+		logisticsTv = (TextView) findViewById(R.id.goods_detail_logistics);
+		harbourTv = (TextView) findViewById(R.id.goods_detail_harbour);
 	}
 
 	@Override
@@ -82,14 +91,6 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		findViewById(R.id.detail_add_cart).setOnClickListener(this);
 		findViewById(R.id.detail_buy).setOnClickListener(this);
 		
-		titleTv = (TextView) findViewById(R.id.goods_detail_title);
-		soldTv = (TextView) findViewById(R.id.goods_detail_sold_num);
-		stockTv = (TextView) findViewById(R.id.goods_detail_stock_num);
-		miniTv = (TextView) findViewById(R.id.goods_detail_mini_num);
-		prePriceTv = (TextView) findViewById(R.id.goods_detail_pre_price);
-		priceTv = (TextView) findViewById(R.id.goods_detail_price);
-		logisticsTv = (TextView) findViewById(R.id.goods_detail_logistics);
-		harbourTv = (TextView) findViewById(R.id.goods_detail_harbour);
 	}
 	
 	@Override
@@ -103,24 +104,12 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.detail_add_cart:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, sukList, new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					selectPpw.dismiss();
-				}
-			});
+			selectPpw.initPopupWindow(context, goodsDetailBean, 1);
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
 			break;
 		case R.id.detail_buy:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, sukList, new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					selectPpw.dismiss();
-				}
-			});
+			selectPpw.initPopupWindow(context, goodsDetailBean, 0);
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
 			break;
 
@@ -145,22 +134,13 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			return;
 		}
 		request.setRequestBody(postJson.toString());
-		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>(){
-
-			@Override
-			public void onStart(int what) {
-				
-			}
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
-				if (what == 0) {
-	                // 请求成功
-	                JSONObject result = response.get();// 响应结果
-	                LogUtil.t("coloction="+result);
-	                String resultStr = result.optString("declare", "收藏失败");
-	                ToastUtil.show(resultStr);
-				}
+				JSONObject result = response.get();// 响应结果
+                String resultStr = result.optString("declare", "收藏失败");
+                ToastUtil.show(resultStr);
 			}
 
 			@Override
@@ -168,13 +148,7 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 					Exception exception, int responseCode, long networkMillis) {
 				
 			}
-
-			@Override
-			public void onFinish(int what) {
-				
-			}
-			
-		});
+		}, false, true);
 	}
 
 	@Override
@@ -182,48 +156,36 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_DETAIL_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", "1");
-		  LogUtil.t(currentGoods.getProductId());
 		postData.put("productId", currentGoods.getProductId());
 		LogUtil.t(new Gson().toJson(postData));
 		request.setRequestBody(new Gson().toJson(postData));
-		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>() {
-
-			@Override
-			public void onStart(int what) {
-			}
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
-				 if (what == 0) {
-	                // 请求成功
-	                JSONObject result = response.get();// 响应结果
-	                LogUtil.t("PRODUCT_DETAIL_PATH="+result);
-	                CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
-	                GoodsDetailBean data = goodsDetial.getData();
-	                sukList = data.sukList;
-	                carouselView.initPicList(data.figure);
-	                
-	                titleTv.setText(data.title);
-	                soldTv.setText("成交"+data.soldQuantity+"笔");
-	                stockTv.setText("库存"+data.quantity+"件");
-	                miniTv.setText(data.minimum+"件起批");
-	                prePriceTv.setText("¥"+data.preferentialPrice);
-	                priceTv.setText("¥"+data.price);
-	                priceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
-	                logisticsTv.setText("快递"+data.logistics+"元");
-	                harbourTv.setText(data.harbour);
-	             }
+				JSONObject result = response.get();// 响应结果
+                CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
+                GoodsDetailBean data = goodsDetial.getData();
+                goodsDetailBean = data;
+                carouselView.initPicList(data.figure);
+                
+                titleTv.setText(data.title);
+                soldTv.setText("成交"+data.soldQuantity+"笔");
+                stockTv.setText("库存"+data.quantity+"件");
+                miniTv.setText(data.minimum+"件起批");
+                prePriceTv.setText("¥"+data.preferentialPrice);
+                priceTv.setText("¥"+data.price);
+                priceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
+                logisticsTv.setText("快递"+data.logistics+"元");
+                harbourTv.setText(data.harbour);
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
+				
 			}
-
-			@Override
-			public void onFinish(int what) {
-			}
-		});
+		}, false, true);
 	}
 
 }

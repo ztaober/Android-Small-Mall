@@ -7,6 +7,7 @@ import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.bean.SukTypeBean;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * 数据处理类
@@ -93,7 +94,6 @@ public class SkuDataUtil {
 			String color = itme.getColour();
 			if (color.equals(str)) {
 				stock += itme.getQuantity();
-				break;
 			}
 		}
 		return stock;

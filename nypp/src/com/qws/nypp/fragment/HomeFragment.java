@@ -1,57 +1,44 @@
 package com.qws.nypp.fragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.json.JSONObject;
 
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyclerView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyclerView;
 import com.handmark.pulltorefresh.library.wraprecyclerview.WrapRecyclerView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
-import com.qws.nypp.adapter.CommAdapter;
-import com.qws.nypp.bean.BannerBean;
 import com.qws.nypp.bean.CommonResult4List;
 import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
-import com.qws.nypp.utils.LogUtil;
-import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AdCarouselView;
-import com.qws.nypp.view.pullview.DividerGridItemDecoration;
-import com.qws.nypp.view.pullview.PullToRefreshBase.OnRefreshListener;
-import com.qws.nypp.view.pullview.PullToRefreshListView;
 import com.qws.nypp.view.pullview.SpacesItemDecoration;
-import com.yolanda.nohttp.Headers;
-import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
 
@@ -87,14 +74,11 @@ public class HomeFragment extends BaseFragment {
 		
 		mPullRefreshRecyclerView = (PullToRefreshRecyclerView) this.findViewById(R.id.pull_refresh_recycler);
 		mPullRefreshRecyclerView.setHasPullUpFriction(true); // 设置没有上拉阻力
-		
+		// 上下拉的mRecyclerView
 		mRecyclerView = mPullRefreshRecyclerView.getRefreshableView();
 		mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-//		mRecyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 		//设置item之间的间隔
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(DisplayUtil.dip2px(context, 5)));
-//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(context));
-//		mRecyclerView.addItemDecoration(new MarginDecoration(context));
 	}
 	
 	@Override
@@ -140,49 +124,29 @@ public class HomeFragment extends BaseFragment {
 		postData.put("rows", "4");
 		postData.put("sign", "test");
 		request.setRequestBody(new Gson().toJson(postData));
-		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>() {
-
-			@Override
-			public void onStart(int what) {
-			}
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
-				 if (what == 0) {
-	                // 请求成功
-	                JSONObject result = response.get();// 响应结果
-	                CommonResult4List<GoodsBean> bannerList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
-	                list.addAll(bannerList.getData());
-	                mAdapter.notifyDataSetChanged();
-	                mPullRefreshRecyclerView.onRefreshComplete();
-	                LogUtil.t("bannerList="+result);
-	                LogUtil.t("list="+list.size());
-	             }
+				JSONObject result = response.get();// 响应结果
+                CommonResult4List<GoodsBean> goodsList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
+                list.addAll(goodsList.getData());
+                mAdapter.notifyDataSetChanged();
+                mPullRefreshRecyclerView.onRefreshComplete();
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
-				ToastUtil.show("请求失败");
 				mPullRefreshRecyclerView.onRefreshComplete();
 			}
-
-			@Override
-			public void onFinish(int what) {
-				LogUtil.t("onFinish");
-			}
-		});
+		}, false, true);
 	}
 	
 	class RecyclerViewAdapter extends Adapter<ViewHolder> {
 		
 		/** imageLoader默认配置 */
-		DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher) // 设置图片下载期间显示的图片
-				.showImageForEmptyUri(R.drawable.ic_launcher) // 设置图片Uri为空或是错误的时候显示的图片
-				.showImageOnFail(R.drawable.ic_launcher) // 设置图片加载或解码过程中发生错误显示的图片
-				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-				.cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
-				.build();
+		DisplayImageOptions options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_list);
 
 		@Override
 		public int getItemCount() {

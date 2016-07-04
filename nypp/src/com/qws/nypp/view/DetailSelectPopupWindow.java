@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.adapter.SkuAdapter;
 import com.qws.nypp.adapter.SkuAdapter.onItemClickListener;
@@ -15,6 +17,7 @@ import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.bean.GoodsDetailBean;
 import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.bean.SukTypeBean;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.SkuDataUtil;
 import com.qws.nypp.view.flowlayout.FlowLayout;
@@ -43,72 +46,79 @@ import android.widget.PopupWindow.OnDismissListener;
  */
 public class DetailSelectPopupWindow extends PopupWindow implements View.OnClickListener {
     private Context context;
-	private LayoutInflater mInflater;
+    private GoodsDetailBean detailBean;
+    private int type;
 	private int mCount;
 	private GridView colorGv;
 	private GridView sizeGv;
 	private SkuAdapter skuColorAdapter;// 颜色适配器
 	private SkuAdapter skuSizeAdapter;// 尺码适配器
-	String color;//
-	String size;//
+	private String color;//
+	private String size;//
+	private int stock;//
 	List<SukBean> mList;// sku数据
 	List<SukTypeBean> mColorList;// 颜色列表
 	List<SukTypeBean> mSizeList;// 尺码列表
 	private ImageView sukImg;
-	private TextView titleTv;
+	private TextView moneyTv;
+	private TextView stockTv;
+	private DisplayImageOptions options;
 	
+	//type 0购买 1收藏
+    public void initPopupWindow(final Context context, GoodsDetailBean goodsDetailBean, int type) {
+        this.context = context;
+        this.detailBean = goodsDetailBean;
+        options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_180);
+//        setContentView(View.inflate(context, R.layout.ppw_detail_select, null));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.ppw_detail_select, null);
+        setContentView(inflate);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        setFocusable(true);
+        setAnimationStyle(R.style.anim_popup_dir);
+        setBackgroundDrawable(new BitmapDrawable());
+        new CountDownTimer(175, 25) {
+			@Override
+			public void onTick(long millisUntilFinished) {
+				mCount++;
+				backgroundAlpha(context, (float) (1 - (0.1 * mCount)));
+			}
+			
+			@Override
+			public void onFinish() {
+				
+			}
+		}.start();
+		setOnDismissListener(new OnDismissListener() {
 
-    public void initPopupWindow(final Context context, List<SukBean> sukList, View.OnClickListener listener) {
-        if (this.context == null) {
-            this.context = context;
-            mInflater = LayoutInflater.from(context);
-            setContentView(View.inflate(context, R.layout.ppw_detail_select, null));
-            TextView title = (TextView) getContentView().findViewById(R.id.ppw_detail_title);
-            title.setText("芯片啊皮夹克哦啊符号额安慰发飞啊飞阿文发恶发疯吉");
-            title.setOnClickListener(this);
-            colorGv = (GridView) getContentView().findViewById(R.id.gv_color);
-            sizeGv = (GridView) getContentView().findViewById(R.id.gv_size);
-           
-            sukImg = (ImageView) getContentView().findViewById(R.id.ppw_detail_img);
-            titleTv = (TextView) getContentView().findViewById(R.id.ppw_detail_title);
-            titleTv.setText("");
-            
-//            getContentView().findViewById(R.id.commSelect_view_gap).setOnClickListener(listener);
-            
-            
-            setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-            setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            setFocusable(true);
-            setAnimationStyle(R.style.anim_popup_dir);
-            setBackgroundDrawable(new BitmapDrawable());
-            new CountDownTimer(175, 25) {
-    			@Override
-    			public void onTick(long millisUntilFinished) {
-    				mCount++;
-    				backgroundAlpha(context, (float) (1 - (0.1 * mCount)));
-    			}
-    			
-    			@Override
-    			public void onFinish() {
-    				
-    			}
-    		}.start();
-    		setOnDismissListener(new OnDismissListener() {
-
-    			@Override
-    			public void onDismiss() {
-    				backgroundAlpha(context, 1f);
-    			}
-    		});
-    		
-    		initFlowLayoutData(sukList);
-            initFlowlayoutView();
-        }
+			@Override
+			public void onDismiss() {
+				backgroundAlpha(context, 1f);
+			}
+		});
+		
+		mList = detailBean.sukList;
+        initView();
+		initFlowLayoutData();
+        initFlowlayoutView();
         
     }
 
-    private void initFlowLayoutData(List<SukBean> sukList) {
-    	mList = sukList;
+    private void initView() {
+    	colorGv = (GridView) getContentView().findViewById(R.id.gv_color);
+        sizeGv = (GridView) getContentView().findViewById(R.id.gv_size);
+       
+        sukImg = (ImageView) getContentView().findViewById(R.id.ppw_detail_img);
+        ImageLoader.getInstance().displayImage(detailBean.figure.get(0), sukImg, options);
+        TextView titleTv = (TextView) getContentView().findViewById(R.id.ppw_detail_title);
+        titleTv.setText(detailBean.title);
+        moneyTv = (TextView) getContentView().findViewById(R.id.ppw_detail_money);
+        moneyTv.setText("¥ "+detailBean.preferentialPrice);
+        stockTv = (TextView) getContentView().findViewById(R.id.ppw_detail_quantity);
+        stockTv.setText(SkuDataUtil.getAllStock(mList)+"件可售");
+	}
+
+	private void initFlowLayoutData() {
     	mColorList = new ArrayList<SukTypeBean>();
 		mSizeList = new ArrayList<SukTypeBean>();
     	Set<String> colorSet = new HashSet<String>(); // color列表
@@ -123,17 +133,13 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
     	Iterator<String> colorIt = colorSet.iterator();
     	while(colorIt.hasNext()){
     		String color = colorIt.next();
-    		SukTypeBean colorBean = new SukTypeBean();
-			colorBean.setName(color);
-			colorBean.setStates("1");
+    		SukTypeBean colorBean = new SukTypeBean(color,"1");
 			mColorList.add(colorBean);
     	}
     	Iterator<String> sizeIt = sizeSet.iterator();
     	while(sizeIt.hasNext()){
     		String size = sizeIt.next();
-    		SukTypeBean sizeBean = new SukTypeBean();
-    		sizeBean.setName(size);
-    		sizeBean.setStates("1");
+    		SukTypeBean sizeBean = new SukTypeBean(size,"1");
     		mSizeList.add(sizeBean);
     	}
 	}
@@ -159,10 +165,10 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					// 判断使用选中了尺码
 					if (!TextUtils.isEmpty(size)) {
 						// 选中尺码，计算库存
-//						stock =SkuDataUtil.getSizeAllStock(mList,size);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						stock =SkuDataUtil.getSizeAllStock(mList,size);
+						if (stock > 0) {
+							stockTv.setText(stock +"件可售");
+						}
 //						tvSkuName.setText("请选择尺码");
 						// 获取该尺码对应的颜色列表
 						List<String> list = SkuDataUtil.getColorListBySize(mList,size);
@@ -175,10 +181,10 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						skuSizeAdapter.notifyDataSetChanged();
 					} else {
 						// 所有库存
-//						stock = SkuDataUtil.getAllStock(mList);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						stock = SkuDataUtil.getAllStock(mList);
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 //						tvSkuName.setText("请选择尺码,颜色分类");
 					}
 					break;
@@ -190,12 +196,12 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					List<String> list = SkuDataUtil.getSizeListByColor(mList,color);
 					if (!TextUtils.isEmpty(size)) {
 						// 计算改颜色与尺码对应的库存
-//						stock = SkuDataUtil.getStockByColorAndSize(mList,color, size);
+						stock = SkuDataUtil.getStockByColorAndSize(mList,color, size);
 //						tvSkuName.setText("规格:" + color + " " + size);
 						LogUtil.t("c规格:" + color + " " + size);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 						if (list != null && list.size() > 0) {
 							// 更新尺码列表
 							mSizeList = SkuDataUtil.setSizeOrColorListStates(mSizeList,list, size);
@@ -203,10 +209,10 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						}
 					} else {
 						// 根据颜色计算库存
-//						stock = SkuDataUtil.getColorAllStock(mList,color);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						stock = SkuDataUtil.getColorAllStock(mList,color);
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 //						tvSkuName.setText("请选择尺码");
 						if (list != null && list.size() > 0) {
 							// 更新尺码列表
@@ -227,10 +233,9 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 
 			@Override
 			public void onItemClick(SukTypeBean bean, int position) {
-				// TODO Auto-generated method stub
 				size = bean.getName();
 				switch (bean.getStates()) {
-				case "0":
+				case "0": //选中
 					// 清空尺码
 					mSizeList=SkuDataUtil.clearAdapterStates(mSizeList);
 					skuSizeAdapter.notifyDataSetChanged();
@@ -240,10 +245,10 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					size = "";
 					if (!TextUtils.isEmpty(color)) {
 						// 计算改颜色对应的所有库存
-//						stock = SkuDataUtil.getColorAllStock(mList,color);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						stock = SkuDataUtil.getColorAllStock(mList,color);
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 //						tvSkuName.setText("请选择尺码");
 						// 计算改颜色对应的尺码列表
 						List<String> list = SkuDataUtil.getSizeListByColor(mList,color);
@@ -256,10 +261,10 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						skuColorAdapter.notifyDataSetChanged();
 					} else {
 						// 获取所有库存
-//						stock = SkuDataUtil.getAllStock(mList);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						stock = SkuDataUtil.getAllStock(mList);
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 //						tvSkuName.setText("请选择尺码,颜色分类");
 					}
 					break;
@@ -271,12 +276,12 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					List<String> list = SkuDataUtil.getColorListBySize(mList,size);
 					if (!TextUtils.isEmpty(color)) {
 						// 计算改颜色与尺码对应的库存
-//						stock = SkuDataUtil.getStockByColorAndSize(mList,color, size);
+						stock = SkuDataUtil.getStockByColorAndSize(mList,color, size);
 //						tvSkuName.setText("规格:" + color + " " + size);
 						LogUtil.t("s规格:" + color + " " + size);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 						if (list != null && list.size() > 0) {
 							// 更新颜色列表
 							mColorList = SkuDataUtil.setSizeOrColorListStates(mColorList,list, color);
@@ -284,10 +289,10 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						}
 					} else {
 						// 计算改尺码的所有库存
-//						stock = SkuDataUtil.getSizeAllStock(mList,size);
-//						if (stock > 0) {
-//							tvSkuStock.setText("库存：" + stock + "");
-//						}
+						stock = SkuDataUtil.getSizeAllStock(mList,size);
+						if (stock > 0) {
+							stockTv.setText(stock + "件可售");
+						}
 //						tvSkuName.setText("请选择颜色分类");
 						if (list != null && list.size() > 0) {
 							mColorList =  SkuDataUtil.setSizeOrColorListStates(mColorList,list, "");

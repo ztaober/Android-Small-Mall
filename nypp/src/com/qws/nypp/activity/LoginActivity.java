@@ -16,13 +16,13 @@ import com.qws.nypp.R;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.config.SpConfig;
 import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.SpUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.utils.Util;
-import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
 
@@ -97,45 +97,34 @@ public class LoginActivity extends BaseActivity {
 		postData.put("account", mUserName);
 		postData.put("password", Util.md5three(mPassword));
 		request.setRequestBody(new Gson().toJson(postData));
-		CallServer.getRequestInstance().add(0, request, new OnResponseListener<JSONObject>() {
-
-			@Override
-			public void onStart(int what) {
-			}
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
-				 if (what == 0) {
-	                // 请求成功
-	                JSONObject result = response.get();// 响应结果
-	                LogUtil.t(result);
-	                if("200".equals(result.optString("status"))) {
-	                	JSONObject data = result.optJSONObject("data");
-	                	if( null != data){
-	                		SpUtil.getSpUtil().putSPValue(SpConfig.USER_NAME, mUserName);
-	                		SpUtil.getSpUtil().putSPValue(SpConfig.USER_PWD, mPassword);
-	                		SpUtil.getSpUtil().putSPValue(SpConfig.NICK_NAME, data.optString("nickname", ""));
-	                		SpUtil.getSpUtil().putSPValue(SpConfig.PORTRAIT_URL, data.optString("portrait", ""));
-	                		SpUtil.getSpUtil().putSPValue(SpConfig.USER_SIGN, data.optString("sign", ""));
-	        				IntentUtil.gotoActivityAndFinish(context, MainActivity.class);
-	                	}
-	                } else {
-	                	ToastUtil.show(result.optString("declare", "未知错误"));
-	                }
-	             }
+                // 请求成功
+                JSONObject result = response.get();// 响应结果
+                LogUtil.t(result);
+                if("200".equals(result.optString("status"))) {
+                	JSONObject data = result.optJSONObject("data");
+                	if( null != data){
+                		SpUtil.getSpUtil().putSPValue(SpConfig.USER_NAME, mUserName);
+                		SpUtil.getSpUtil().putSPValue(SpConfig.USER_PWD, mPassword);
+                		SpUtil.getSpUtil().putSPValue(SpConfig.NICK_NAME, data.optString("nickname", ""));
+                		SpUtil.getSpUtil().putSPValue(SpConfig.PORTRAIT_URL, data.optString("portrait", ""));
+                		SpUtil.getSpUtil().putSPValue(SpConfig.USER_SIGN, data.optString("sign", ""));
+        				IntentUtil.gotoActivityAndFinish(context, MainActivity.class);
+                	}
+                } else {
+                	ToastUtil.show(result.optString("declare", "未知错误"));
+                }
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
-				ToastUtil.show("请求失败");
+				
 			}
-
-			@Override
-			public void onFinish(int what) {
-				LogUtil.t("onFinish");
-			}
-		});
+		}, false, true);
 	}
 
 	@Override

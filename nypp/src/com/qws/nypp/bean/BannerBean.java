@@ -5,6 +5,11 @@ public class BannerBean extends BaseBean {
 	private String bannerPicture;
 	private String bannerUrl;
 	
+	public BannerBean(String bannerPicture, String bannerUrl) {
+		super();
+		this.bannerPicture = bannerPicture;
+		this.bannerUrl = bannerUrl;
+	}
 	public String getBannerPicture() {
 		return bannerPicture;
 	}

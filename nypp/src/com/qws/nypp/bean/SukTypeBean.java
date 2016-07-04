@@ -13,6 +13,14 @@ public class SukTypeBean extends BaseBean {
 	private String states;//状态 3种  1 选中  2 未选中 3不可选
 	
 
+	public SukTypeBean() {
+	}
+	
+	public SukTypeBean(String name, String states) {
+		this.name = name;
+		this.states = states;
+	}
+
 	public String getName() {
 		return name;
 	}

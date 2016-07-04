@@ -8,6 +8,13 @@
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+    <include 
+        android:id="@+id/network_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/a_network_error"
+        android:visibility="gone"/>
 
     <com.handmark.pulltorefresh.library.extras.recyclerview.PullToRefreshRecyclerView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
