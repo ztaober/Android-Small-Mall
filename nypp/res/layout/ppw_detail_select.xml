@@ -107,15 +107,15 @@
             android:layout_alignParentRight="true"/>
         
         <com.qws.nypp.view.StockChangeView 
+            android:id="@+id/ppw_detail_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ppw_detail_quantity"
             android:layout_alignParentRight="true"
             android:layout_margin="15dp"
             android:orientation="horizontal"
-            >
+            />
             
-        </com.qws.nypp.view.StockChangeView>
             
     </RelativeLayout>
     

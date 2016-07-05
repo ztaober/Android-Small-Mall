@@ -156,6 +156,24 @@ public class SkuDataUtil {
 		}
 		return list;
 	}
+	
+	/**
+	 * 点击颜色后，获取该颜色款式对应的图片url
+	 * 
+	 * @param colorStr
+	 */
+	public static String getImgByColor(List<SukBean> mList,String colorStr) {
+		String url = null;
+		if (!TextUtils.isEmpty(colorStr)) {
+			for (SukBean itme : mList) {
+				String color = itme.getColour();
+				if (color.equals(colorStr)) {
+					url = itme.getImage();
+				}
+			}
+		}
+		return url;
+	}
 
 	/**
 	 * 点击尺码后，获取该尺码对应的所有颜色列表
@@ -200,6 +218,25 @@ public class SkuDataUtil {
 			list2.add(bean);
 		}
 		return list2;
+	}
+	
+	/**
+	 * 获取实体类中对应的对象(如果Suk集合有颜色尺码相同的数据=BUG)
+	 * 
+	 * @param colorStr
+	 * @param sizeStr
+	 * @return
+	 */
+	public static SukBean getMateEntity(List<SukBean> mList,String colorStr, String sizeStr){
+		SukBean sukEntity = null;
+		for (SukBean item : mList) {
+			String color = item.getColour();
+			String size = item.getSize();
+			if (color.equals(colorStr) && size.equals(sizeStr)) {
+				sukEntity = item;
+			}
+		}
+		return sukEntity;
 	}
 
 	

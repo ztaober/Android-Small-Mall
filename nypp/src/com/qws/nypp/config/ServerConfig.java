@@ -29,10 +29,14 @@ public class ServerConfig {
 	/**	 热区产品列表获取*/
 	public static final String HOT_PRODUCT_PATH = base + "/getHotspotProductList";
 	/**	 产品列表获取*/
-	public static final String OPT_PRODUCT_PATH = base + "/getProductByPageList";
+//	public static final String OPT_PRODUCT_PATH = base + "/getProductByPageList";
+	/**	 产品列表-》自选商品*/
+	public static final String OPT_PRODUCT_LIST = base + "/optionalProduct";
 	/**	 产品详情获取*/
 	public static final String PRODUCT_DETAIL_PATH = base + "/getProductDetail";
 	/** 产品收藏 */
 	public static final String PRODUCT_ADD_COLLECTION = base + "/addCollection";
+	/** 产品加入经货单 */
+	public static final String PRODUCT_INSERT_CART = base + "/insertCartSelective";
 
 }

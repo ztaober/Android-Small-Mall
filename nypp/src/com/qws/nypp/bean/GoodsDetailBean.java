@@ -39,7 +39,7 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 起批数
 	 */
-	public String minimum;
+	public int minimum;
 	/**
 	 * 价格
 	 */

@@ -273,7 +273,7 @@ public class OptionalFragment extends BaseFragment {
 	}
 	
 	private void getData(int i){
-		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.OPT_PRODUCT_PATH);
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.OPT_PRODUCT_LIST);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("page", i+"");
 		postData.put("rows", "4");
@@ -296,7 +296,6 @@ public class OptionalFragment extends BaseFragment {
 	                goodsAdapter.refreshList(goodsList);
 	                mPullRefreshListView.onRefreshComplete();
 	                LogUtil.t("goodsList="+result);
-	                LogUtil.t("goodsList size="+list.size());
 	             }
 			}
 

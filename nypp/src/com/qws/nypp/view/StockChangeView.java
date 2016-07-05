@@ -1,12 +1,15 @@
 package com.qws.nypp.view;
 
 import com.qws.nypp.R;
+import com.qws.nypp.utils.ToastUtil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 购买数量加减控件
@@ -22,7 +25,7 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 	private TextView stockTv;
 	private int num = 1;
 	private int maxNum = 1;
-	
+	private String warn ="";
 	public StockChangeView(Context context) {
 		super(context);
 		init(context);
@@ -49,37 +52,47 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 		stockTv.setText(num+"");
 	}
 	
-	private void notifyNum(int maxNum){
+	public void notifyNum(String warn, int maxNum){
 		this.num = 1;
 		this.maxNum = maxNum;
+		this.warn = warn;
 		stockTv.setText(num+"");
 	}
 	
-	private OnStockChangeListener listner;
-	
-	public interface OnStockChangeListener{
-		void onStockChange(int num);
+	public int getCurrentNum(){
+		return num;
 	}
 	
-	public void setListner(OnStockChangeListener listener){
-		this.listner = listener;
-	}
-
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
 		case R.id.view_stock_reduce:
+			if(!"".equals(warn)){
+				ToastUtil.show(warn);
+				break;
+			}
 			num--;
+			if(num<1){
+				num++;
+				break;
+			}
 			stockTv.setText(num+"");
 			break;
 		case R.id.view_stock_add:
+			if(!"".equals(warn)){
+				ToastUtil.show(warn);
+				break;
+			}
 			num++;
+			if(num>maxNum){
+				num--;
+				break;
+			}
 			stockTv.setText(num+"");
 			break;
 			
 		default:
-			listner.onStockChange(num);	
 			break;
 		}
 	}

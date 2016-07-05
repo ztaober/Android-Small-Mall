@@ -1,36 +1,39 @@
 package com.qws.nypp.view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.adapter.SkuAdapter;
 import com.qws.nypp.adapter.SkuAdapter.onItemClickListener;
-import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.bean.GoodsDetailBean;
 import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.bean.SukTypeBean;
+import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.config.TApplication;
+import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.HttpListener;
+import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.SkuDataUtil;
-import com.qws.nypp.view.flowlayout.FlowLayout;
-import com.qws.nypp.view.flowlayout.TagAdapter;
-import com.qws.nypp.view.flowlayout.TagFlowLayout;
+import com.qws.nypp.utils.ToastUtil;
+import com.qws.nypp.utils.Util;
+import com.yolanda.nohttp.Request;
+import com.yolanda.nohttp.Response;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -38,8 +41,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.PopupWindow.OnDismissListener;
 
 /**
  * 购买选项的PopupWindow
@@ -47,6 +48,7 @@ import android.widget.PopupWindow.OnDismissListener;
 public class DetailSelectPopupWindow extends PopupWindow implements View.OnClickListener {
     private Context context;
     private GoodsDetailBean detailBean;
+    private String productId;
     private int type;
 	private int mCount;
 	private GridView colorGv;
@@ -55,6 +57,8 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 	private SkuAdapter skuSizeAdapter;// 尺码适配器
 	private String color;//
 	private String size;//
+	private String warn = "请选择尺码,颜色分类";
+	private SukBean	currentSuk;
 	private int stock;//
 	List<SukBean> mList;// sku数据
 	List<SukTypeBean> mColorList;// 颜色列表
@@ -63,15 +67,16 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 	private TextView moneyTv;
 	private TextView stockTv;
 	private DisplayImageOptions options;
+	private StockChangeView changeView;
 	
 	//type 0购买 1收藏
-    public void initPopupWindow(final Context context, GoodsDetailBean goodsDetailBean, int type) {
+    public void initPopupWindow(final Context context, GoodsDetailBean goodsDetailBean, int type, String productId) {
         this.context = context;
         this.detailBean = goodsDetailBean;
+        this.productId = productId;
+        this.type = type;
         options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_180);
-//        setContentView(View.inflate(context, R.layout.ppw_detail_select, null));
-        View inflate = LayoutInflater.from(context).inflate(R.layout.ppw_detail_select, null);
-        setContentView(inflate);
+        setContentView(View.inflate(context, R.layout.ppw_detail_select, null));
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setFocusable(true);
@@ -116,6 +121,11 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
         moneyTv.setText("¥ "+detailBean.preferentialPrice);
         stockTv = (TextView) getContentView().findViewById(R.id.ppw_detail_quantity);
         stockTv.setText(SkuDataUtil.getAllStock(mList)+"件可售");
+        
+        changeView = (StockChangeView) getContentView().findViewById(R.id.ppw_detail_change);
+        changeView.notifyNum(warn,1);
+        
+        getContentView().findViewById(R.id.ppw_detail_ok).setOnClickListener(this);
 	}
 
 	private void initFlowLayoutData() {
@@ -169,7 +179,8 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						if (stock > 0) {
 							stockTv.setText(stock +"件可售");
 						}
-//						tvSkuName.setText("请选择尺码");
+						warn = "请选择颜色分类";
+						changeView.notifyNum(warn,stock);
 						// 获取该尺码对应的颜色列表
 						List<String> list = SkuDataUtil.getColorListBySize(mList,size);
 						if (list != null && list.size() > 0) {
@@ -185,7 +196,8 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
 						}
-//						tvSkuName.setText("请选择尺码,颜色分类");
+						warn = "请选择尺码,颜色分类";
+						changeView.notifyNum(warn,stock);
 					}
 					break;
 				case "1":
@@ -197,7 +209,12 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					if (!TextUtils.isEmpty(size)) {
 						// 计算改颜色与尺码对应的库存
 						stock = SkuDataUtil.getStockByColorAndSize(mList,color, size);
+						currentSuk = SkuDataUtil.getMateEntity(mList, color, size);
+						ImageLoader.getInstance().displayImage(currentSuk.getImage(), sukImg, options);
+						moneyTv.setText("¥ "+currentSuk.getMoney());
 //						tvSkuName.setText("规格:" + color + " " + size);
+						warn = "";
+						changeView.notifyNum(warn,stock);
 						LogUtil.t("c规格:" + color + " " + size);
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
@@ -210,10 +227,13 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					} else {
 						// 根据颜色计算库存
 						stock = SkuDataUtil.getColorAllStock(mList,color);
+						String url = SkuDataUtil.getImgByColor(mList, color);
+						ImageLoader.getInstance().displayImage(url, sukImg, options);
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
 						}
-//						tvSkuName.setText("请选择尺码");
+						warn = "请选择尺码";
+						changeView.notifyNum(warn,stock);
 						if (list != null && list.size() > 0) {
 							// 更新尺码列表
 							mSizeList = SkuDataUtil.setSizeOrColorListStates(mSizeList,list, "");
@@ -246,10 +266,13 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					if (!TextUtils.isEmpty(color)) {
 						// 计算改颜色对应的所有库存
 						stock = SkuDataUtil.getColorAllStock(mList,color);
+						String url = SkuDataUtil.getImgByColor(mList, color);
+						ImageLoader.getInstance().displayImage(url, sukImg, options);
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
 						}
-//						tvSkuName.setText("请选择尺码");
+						warn = "请选择尺码";
+						changeView.notifyNum(warn,stock);
 						// 计算改颜色对应的尺码列表
 						List<String> list = SkuDataUtil.getSizeListByColor(mList,color);
 						if (list != null && list.size() > 0) {
@@ -265,7 +288,8 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
 						}
-//						tvSkuName.setText("请选择尺码,颜色分类");
+						warn = "请选择尺码,颜色分类";
+						changeView.notifyNum(warn,stock);
 					}
 					break;
 				case "1":
@@ -277,7 +301,12 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					if (!TextUtils.isEmpty(color)) {
 						// 计算改颜色与尺码对应的库存
 						stock = SkuDataUtil.getStockByColorAndSize(mList,color, size);
+						currentSuk = SkuDataUtil.getMateEntity(mList, color, size);
+						ImageLoader.getInstance().displayImage(currentSuk.getImage(), sukImg, options);
+						moneyTv.setText("¥ "+currentSuk.getMoney());
 //						tvSkuName.setText("规格:" + color + " " + size);
+						warn = "";
+						changeView.notifyNum(warn,stock);
 						LogUtil.t("s规格:" + color + " " + size);
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
@@ -293,7 +322,8 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 						if (stock > 0) {
 							stockTv.setText(stock + "件可售");
 						}
-//						tvSkuName.setText("请选择颜色分类");
+						warn = "请选择颜色分类";
+						changeView.notifyNum(warn,stock);
 						if (list != null && list.size() > 0) {
 							mColorList =  SkuDataUtil.setSizeOrColorListStates(mColorList,list, "");
 							skuColorAdapter.notifyDataSetChanged();
@@ -310,22 +340,76 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 	@Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.commSelect_txt_select1:
-//                break;
-//            case R.id.commSelect_txt_select2:
-//                break;
-//            case R.id.commSelect_txt_select3:
-//                dismiss();
-//                break;
-//            case R.id.moreSelect_txt_cancel://取消
-//                dismiss();
-//                break;
-        case R.id.ppw_detail_title:
-        	break;
+            case R.id.ppw_detail_ok:
+            	if(Util.isFastDoubleClick())
+            		break;
+            	if(!"".equals(warn)){
+            		ToastUtil.show(warn);
+            		break;
+            	}
+            	int addNum = changeView.getCurrentNum();
+            	//type 未0购买 1为加入购物车
+            	if(type == 0){
+            		if(addNum < detailBean.minimum){
+            			ToastUtil.show("您的起批数量不足，无法购买");
+            		}else {
+            			ToastUtil.show("跳转下单页面");
+            		}
+            	}else{
+            		//添加到进货单
+            		insertCart(addNum);
+            	}
+                break;
             default:
                 break;
         }
     }
+	
+	/**
+	 * 加入进货单
+	 */
+	private void insertCart(int addNum) {
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_INSERT_CART);
+		JSONObject postJson = null;
+		try {
+			postJson = new JSONObject();
+			postJson.put("sign", "1");
+			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			postJson.put("productId", productId);
+			JSONArray array = new JSONArray();
+			JSONObject object = new JSONObject();
+			object.put("sukId", currentSuk.getSukId());
+			object.put("quantity", addNum);
+			array.put(object);
+			postJson.put("sukList", array);
+		} catch (Exception e) {
+			return;
+		}
+		 LogUtil.t(postJson.toString());
+		request.setRequestBody(postJson.toString());
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+				JSONObject result = response.get();// 响应结果
+
+				if("200".equals(result.optString("status"))) {
+		            ToastUtil.show("成功加入进货单，快去看看吧~");
+		            //TODO 发送广播什么的通知进货单刷新数据selectShopCartListByMemberId
+				}else{
+	                String resultStr = result.optString("declare", "添加进货单失败");
+					ToastUtil.show(resultStr);
+				}
+               
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				
+			}
+		}, false, true);
+	}
 	
 	/**
 	 * 设置添加屏幕的背景透明度

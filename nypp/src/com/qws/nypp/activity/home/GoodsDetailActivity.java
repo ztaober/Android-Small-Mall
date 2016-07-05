@@ -104,12 +104,12 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.detail_add_cart:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, goodsDetailBean, 1);
+			selectPpw.initPopupWindow(context, goodsDetailBean, 1, currentGoods.getProductId());
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
 			break;
 		case R.id.detail_buy:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, goodsDetailBean, 0);
+			selectPpw.initPopupWindow(context, goodsDetailBean, 0, currentGoods.getProductId());
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
 			break;
 
