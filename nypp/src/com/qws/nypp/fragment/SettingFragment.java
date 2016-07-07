@@ -37,7 +37,7 @@ public class SettingFragment extends BaseFragment implements AdapterListener {
 
 	@Override
 	protected void findViews() {
-		listView = findViewById(R.id.setting_listview);
+//		listView = findViewById(R.id.setting_listview);
 	}
 
 	@Override
@@ -50,14 +50,6 @@ public class SettingFragment extends BaseFragment implements AdapterListener {
 			}
 		}, 0);
 		titleView.setRightEnabled(false);
-		adapter = new CommAdapter<String>(context, Arrays.asList(items), R.layout.item_setting, this) {
-
-			@Override
-			public void onGetView(int position, View convertView, String data) {
-				setText(convertView, R.id.setting_txt_name, data);
-			}
-		};
-		listView.setAdapter(adapter);
 	}
 
 	@Override

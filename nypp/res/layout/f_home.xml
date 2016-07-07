@@ -27,7 +27,7 @@
         android:footerDividersEnabled="false"  
         android:headerDividersEnabled="false"  
         android:smoothScrollbar="true"  
-        android:background="#eaeaea"
+        android:background="@color/light_gray"
         ptr:ptrMode="both"
         ptr:ptrAnimationStyle="flip"  
         ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium" 

@@ -1,80 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingBottom="3dp"
+    android:paddingTop="3dp" >
 
     <ImageView
         android:id="@+id/item_optional_goods_img"
         android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/ic_launcher" />
+        android:layout_height="120dp" />
 
     <TextView
         android:id="@+id/item_optional_goods_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_toRightOf="@+id/item_optional_goods_img"
         android:ellipsize="end"
-        android:text="啊违法违法威锋啊额发额发疯阿发 "
-        android:maxLines="2" />
-    
+        android:maxLines="2"
+        android:textColor="#000"
+        android:textSize="@dimen/font24" />
 
     <RelativeLayout
         android:id="@+id/sold_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/item_optional_goods_img"
-        android:layout_below="@+id/item_optional_goods_tv" >
-        
-        <TextView 
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/item_optional_goods_tv"
+        android:layout_toRightOf="@+id/item_optional_goods_img" >
+
+        <TextView
             android:id="@+id/sold_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:text="额额额"
-        	android:textColor="@color/gray"/>
-        
-        <TextView 
+            android:textColor="@color/gray" />
+
+        <TextView
             android:id="@+id/stock_tv"
-            android:gravity="right"
             android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:text="额额额"
-        	android:textColor="@color/red"/>
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@color/red" />
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/price_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/item_optional_goods_img"
-        android:layout_below="@+id/sold_rl" >
-        
-        <TextView 
+        android:layout_below="@+id/sold_rl"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/item_optional_goods_img" >
+
+        <TextView
             android:id="@+id/new_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="额额额"
-        	android:textColor="@color/red"/>
-        
-        <TextView 
+            android:textColor="@color/red" />
+
+        <TextView
             android:id="@+id/old_price_tv"
-            android:layout_toRightOf="@+id/new_price_tv"
             android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="额额额"
-        	android:textColor="@color/gray"/>
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/new_price_tv"
+            android:layout_marginLeft="25dp"
+            android:textColor="@color/gray" />
     </RelativeLayout>
-    
-    <TextView 
-        android:visibility="visible"
-       	android:id="@+id/sale"
-       	android:layout_toRightOf="@+id/item_optional_goods_img"
-       	android:layout_below="@+id/price_rl"
-       	android:layout_width="wrap_content"
-   	   	android:layout_height="wrap_content"
-   	   	android:text="优惠"
-   	   	android:textColor="@color/red"/>
-    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/price_rl"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/item_optional_goods_img" >
+
+        <TextView
+            android:id="@+id/sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优惠"
+            android:textColor="@color/red"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/sale"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拿货满3000元免邮费"
+            android:textColor="@color/gray" />
+    </RelativeLayout>
+
 </RelativeLayout>

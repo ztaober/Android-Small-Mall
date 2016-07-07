@@ -82,6 +82,7 @@ public class TabIndicator extends RelativeLayout {
 			RadioButton textBtn = new RadioButton(c);
 			textBtn.setButtonDrawable(android.R.color.transparent);
 			textBtn.setText(tabArgs[i]);
+			textBtn.setTextSize(14);
 			textBtn.setId(i);
 			int padding = DisplayUtil.dip2px(c, 10);
 			textBtn.setPadding(padding, padding, padding, padding);
