@@ -38,6 +38,7 @@ import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.view.AdCarouselView;
+import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.qws.nypp.view.pullview.SpacesItemDecoration;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
@@ -89,6 +90,16 @@ public class HomeFragment extends BaseFragment {
 		mRecyclerView.setAdapter(mAdapter);
 		adCarouselView = new AdCarouselView(context);
 		mPullRefreshRecyclerView.getRefreshableView().addHeaderView(adCarouselView);
+		
+		// 重新加载按钮事件
+		mLoadingView.setReloadBtListenner(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				page = 1;
+				list.clear();
+				getData(page);
+			}
+		});
 	}
 
 	@Override
@@ -118,6 +129,9 @@ public class HomeFragment extends BaseFragment {
 	}
 	
 	private void getData(int i){
+		// 加载模式
+		mLoadingView.setLoadingMode(LoadingMode.LOADING);
+				
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.HOT_PRODUCT_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("page", i+"");
@@ -133,14 +147,18 @@ public class HomeFragment extends BaseFragment {
                 list.addAll(goodsList.getData());
                 mAdapter.notifyDataSetChanged();
                 mPullRefreshRecyclerView.onRefreshComplete();
+                
+                mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
 				mPullRefreshRecyclerView.onRefreshComplete();
+				
+				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
 			}
-		}, false, true);
+		}, false, false);
 	}
 	
 	class RecyclerViewAdapter extends Adapter<ViewHolder> {

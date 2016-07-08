@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.qws.nypp.R;
+import com.qws.nypp.view.LoadingView;
 import com.qws.nypp.view.TitleView;
 
 import de.greenrobot.event.EventBus;
@@ -31,6 +32,8 @@ public abstract class BaseFragment extends Fragment {
 	protected View view_Parent;
 	/** 标题 */
 	protected TitleView titleView;
+	/** 加载框View */
+	protected LoadingView mLoadingView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public abstract class BaseFragment extends Fragment {
 		context = getActivity();
 		view_Parent = getViews();
 		titleView = findViewById(R.id.view_title);
+		mLoadingView = findViewById(R.id.network_error);
 		findViews();
 		initData();
 		setListener();

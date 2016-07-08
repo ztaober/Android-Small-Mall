@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/view_loading_bg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/view_loading_tip_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网络不给力，请稍后再试~"
+            android:textColor="@color/opt_gray"
+            android:textSize="@dimen/font31" />
+
+        <Button
+            android:id="@+id/view_loading_reload_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dip"
+            android:background="@xml/btn_shape"
+            android:gravity="center"
+            android:text="重新加载"
+            android:textColor="@color/comm_color"
+            android:textSize="@dimen/font30" />
+
+        <ProgressBar
+            android:id="@+id/view_loading_bar"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/dialog_loading_progress"
+            android:indeterminateOnly="true" />
+    </LinearLayout>
+
+</RelativeLayout>

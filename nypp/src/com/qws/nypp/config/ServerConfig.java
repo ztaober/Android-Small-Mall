@@ -36,7 +36,9 @@ public class ServerConfig {
 	public static final String PRODUCT_DETAIL_PATH = base + "/getProductDetail";
 	/** 产品收藏 */
 	public static final String PRODUCT_ADD_COLLECTION = base + "/addCollection";
-	/** 产品加入经货单 */
+	/** 产品加入进货单 */
 	public static final String PRODUCT_INSERT_CART = base + "/insertCartSelective";
+	/** 获取 进货单 购物车列表 */
+	public static final String PRODUCT_GET_CART = base + "/selectShopCartListByMemberId";
 
 }

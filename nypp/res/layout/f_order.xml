@@ -1,12 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/light_gray" >
 
     <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+    <TextView 
+        android:layout_below="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="@dimen/font_size_little"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="温馨提示:亲，10件起批，拿货满3000元免邮，支持混批哦~"/>
+    
+    <ListView 
+        android:id="@+id/order_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+    </ListView>
+    
+    <TextView 
+        android:id="@+id/no_order"
+        android:layout_below="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/font_size_middle"
+        android:textColor="#000"
+        android:gravity="center"
+        android:background="@color/white"
+        android:text="购物车暂无商品，快去商场逛逛吧~"/>
 
-</LinearLayout>
+</RelativeLayout>
