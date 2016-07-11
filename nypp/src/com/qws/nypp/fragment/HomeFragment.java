@@ -98,6 +98,8 @@ public class HomeFragment extends BaseFragment {
 				page = 1;
 				list.clear();
 				getData(page);
+				// 加载模式
+				mLoadingView.setLoadingMode(LoadingMode.LOADING);
 			}
 		});
 	}
@@ -126,12 +128,11 @@ public class HomeFragment extends BaseFragment {
 	protected void getData() {
 		list.clear();
 		getData(1);
+		// 加载模式
+		mLoadingView.setLoadingMode(LoadingMode.LOADING);
 	}
 	
 	private void getData(int i){
-		// 加载模式
-		mLoadingView.setLoadingMode(LoadingMode.LOADING);
-				
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.HOT_PRODUCT_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("page", i+"");

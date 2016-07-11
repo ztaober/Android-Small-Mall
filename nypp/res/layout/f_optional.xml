@@ -27,60 +27,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
-                android:textSize="14sp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textSize="14sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
-                android:textSize="14sp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textSize="14sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
-                android:textSize="14sp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textSize="14sp" />
         </RadioGroup>
     </HorizontalScrollView>
 
     <com.qws.nypp.view.TabIndicator
         android:id="@+id/view_tab"
-        android:layout_below="@+id/category_hs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_hs" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/pull_refresh_listview"
-        android:layout_below="@+id/view_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="#00000000"  
-        android:listSelector="#00000000"
-        android:divider="@null" 
-        android:fadingEdge="none"  
-        android:fastScrollEnabled="false"  
-        android:footerDividersEnabled="false"  
-        android:headerDividersEnabled="false"  
-        android:smoothScrollbar="true"  
-        ptr:ptrMode="both"
-        ptr:ptrAnimationStyle="flip"  
-        ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium" />
-    
-    <TextView 
-        android:id="@+id/hint_tv"
-        android:visibility="invisible"
         android:layout_below="@+id/view_tab"
-        android:layout_marginTop="35dp"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="#00000000"
+        android:smoothScrollbar="true"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium"
+        ptr:ptrMode="both" />
+
+    <TextView
+        android:id="@+id/hint_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/view_tab"
+        android:layout_marginTop="35dp"
         android:gravity="center"
         android:text="亲，没有您筛选的产品~"
+        android:textColor="@color/opt_gray"
         android:textSize="@dimen/font30"
-        android:textColor="@color/opt_gray"/>
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/category_ll"
@@ -99,5 +99,11 @@
             android:numColumns="2" >
         </GridView>
     </LinearLayout>
-    
+
+    <com.qws.nypp.view.LoadingView
+        android:id="@+id/network_error"
+        android:layout_below="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </RelativeLayout>

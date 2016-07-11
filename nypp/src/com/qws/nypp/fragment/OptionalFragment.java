@@ -28,6 +28,7 @@ import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.view.TabIndicator;
+import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.qws.nypp.view.TabIndicator.OnTabChangeListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
@@ -84,7 +85,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 	/** 切换进度条 */
 	private TabIndicator view_tab;
 	//排序 0综合，1价格，2销量
-	private String order;
+	private String order = "0";;
 	//款型
 	private String type = "";
 	//颜色
@@ -124,6 +125,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 	@Override
 	protected void initData() {
 		titleView.setTitle("自选");
+		options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_180);
 		getList();
 		
 		for(int i=0; i<categoryRg.getChildCount(); i++){
@@ -216,8 +218,6 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 			
 			@Override
 			public void onGetView(int position, View convertView, GoodsBean data) {
-				DisplayImageOptions options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_180);
-				
 				ImageLoader.getInstance().displayImage(data.getImage(), (ImageView)convertView.findViewById(R.id.item_optional_goods_img), options);
 				setText(convertView, R.id.item_optional_goods_tv, data.getTitle());
 				setText(convertView, R.id.sold_tv, "成交"+data.getSoldQuantity()+"笔");
@@ -241,6 +241,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 	}
 
 	private int choseIndex;
+	private DisplayImageOptions options;
 	protected void openChoser(int position) {
 		choseIndex = position;
 		typeList = (List<String>) list.get(position).getCategroys();
@@ -262,6 +263,18 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 
 	@Override
 	protected void setListener() {
+		// 重新加载按钮事件
+		mLoadingView.setReloadBtListenner(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				page = 1;
+				goodsList.clear();
+				refreshData();
+				// 加载模式
+				mLoadingView.setLoadingMode(LoadingMode.LOADING);
+			}
+		});
+				
 		categoryGv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -322,8 +335,9 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 
 	@Override
 	protected void getData() {
-		order = "0";
 		refreshData();
+		// 加载模式
+		mLoadingView.setLoadingMode(LoadingMode.LOADING);
 	}
 	
 	private void refreshData(){
@@ -360,7 +374,6 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 			public void onSucceed(int what, Response<JSONObject> response) {
 				 JSONObject result = response.get();// 响应结果
                 if("200".equals(result.optString("status"))) {
-                	LogUtil.t("OPT_PRODUCT_LIST="+result);
                     CommonResult4List<GoodsBean> dataList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
                     List<GoodsBean> data = dataList.getData();
                     goodsList.addAll(data);
@@ -371,15 +384,18 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
                     } else {
                     	categoryHintTv.setVisibility(View.INVISIBLE);
                     }
+                    
+                    mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
                 }
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag, Exception exception, int responseCode,
 					long networkMillis) {
-				mPullRefreshListView.onRefreshComplete();				
+				mPullRefreshListView.onRefreshComplete();	
+				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
 			}
-		}, false, true);
+		}, false, false);
 	}
 
 }

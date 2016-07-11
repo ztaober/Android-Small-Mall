@@ -13,7 +13,7 @@ public class GoodsCartSukBean extends BaseBean {
 	/**
 	 * 数量
 	 */
-	public String quantity;
+	public int quantity;
 	/**
 	 * 大小
 	 */
@@ -21,7 +21,7 @@ public class GoodsCartSukBean extends BaseBean {
 	/**
 	 * 价格
 	 */
-	public String price;
+	public double price;
 	/**
 	 * 详细编号
 	 */
@@ -30,6 +30,8 @@ public class GoodsCartSukBean extends BaseBean {
 	 * suk编号
 	 */
 	public String sukId;
+	//选中状态
+	public boolean select;
 
 	
 }

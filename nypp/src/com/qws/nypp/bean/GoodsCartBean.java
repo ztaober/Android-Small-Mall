@@ -36,4 +36,11 @@ public class GoodsCartBean extends BaseBean {
 	 * 详细商品 list
 	 */
 	public List<GoodsCartSukBean> sukList;
+	
+	//所有的价格
+	public String allPri;
+	//所有的件数
+	public int allQua;
+	//选中状态
+	public boolean select;
 }

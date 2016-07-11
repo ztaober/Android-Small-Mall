@@ -49,23 +49,24 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 		screenWidth = getResources().getDisplayMetrics().widthPixels;
 		screenHight = getResources().getDisplayMetrics().heightPixels;
 		DataBaseManage.createPulibicDataBase();
-		// defaultUncaught = Thread.getDefaultUncaughtExceptionHandler();
-		// Thread.setDefaultUncaughtExceptionHandler(this);
+		 defaultUncaught = Thread.getDefaultUncaughtExceptionHandler();
+		 Thread.setDefaultUncaughtExceptionHandler(this);
 		initImageLoader();
 		NoHttp.init(this);
 	}
 
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
-
+		Log.e("Exception", "", ex);
+		defaultUncaught.uncaughtException(thread, ex);
 	}
 	
 	private void initImageLoader() {
-//		ImageLoaderConfiguration.createDefault(this)
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-				.memoryCache(new LruMemoryCache(2 * 1024 * 1024)).memoryCacheSize(2 * 1024 * 1024)
+				.memoryCache(new LruMemoryCache(20 * 1024 * 1024)).memoryCacheSize(20 * 1024 * 1024)
 				.diskCacheSize(30 * 1024 * 1024).diskCacheFileCount(100).build();
-		ImageLoader.getInstance().init(config);
+//		ImageLoader.getInstance().init(config);
+		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 	}
 	
 	// 默认的
@@ -86,7 +87,7 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 				.bitmapConfig(Bitmap.Config.RGB_565) // default
 				// .displayer(new FadeInBitmapDisplayer(300)) // 设置这个，刷新图片时不会闪
 				.displayer(new SimpleBitmapDisplayer())
-				.displayer(new FadeInBitmapDisplayer(1000))
+				.displayer(new FadeInBitmapDisplayer(500))
 				.build();
 	}
 	
@@ -98,7 +99,7 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 				.bitmapConfig(Bitmap.Config.RGB_565) // default
 				// .displayer(new FadeInBitmapDisplayer(300)) // 设置这个，刷新图片时不会闪
 				.displayer(new SimpleBitmapDisplayer())
-				.displayer(new FadeInBitmapDisplayer(1000))
+				.displayer(new FadeInBitmapDisplayer(500))
 				.build();
 	}
 

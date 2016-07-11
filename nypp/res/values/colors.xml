@@ -48,10 +48,16 @@
     <color name="nypp_help_line">#ddd</color>
     <color name="nypp_help_bg">#E5E5E5</color>
     <color name="light_white">#ffffff</color>
+    <color name="nypp_white">#fff</color>
     <color name="light_red">#ff2727</color>
     <color name="light_gray">#eaeaea</color>
     <color name="opt_gray">#999</color>
     <color name="nypp_gray">#777</color>
+    <color name="order_gray">#f5f5f7</color>
+    <color name="order_done_gray">#9a9a9a</color>
+    <color name="order_done_red">#CE1B4E</color>
+    <color name="text_gray">#333</color>
     <color name="nypp_black">#000</color>
+    
 
 </resources>

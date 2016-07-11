@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 public class StockChangeView extends LinearLayout implements View.OnClickListener {
 
 	private Context c;
+	private ImageView reduceIv;
+	private ImageView addIv;
 	private TextView stockTv;
 	private int num = 1;
 	private int maxNum = 1;
@@ -46,6 +49,8 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 		View view = View.inflate(context, R.layout.view_stock_change, null);
 		view.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		addView(view);
+		reduceIv = (ImageView) findViewById(R.id.view_stock_reduce);
+		addIv = (ImageView) findViewById(R.id.view_stock_add);
 		findViewById(R.id.view_stock_reduce).setOnClickListener(this);
 		findViewById(R.id.view_stock_add).setOnClickListener(this);
 		stockTv = (TextView) findViewById(R.id.view_stock_text);
@@ -57,6 +62,17 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 		this.maxNum = maxNum;
 		this.warn = warn;
 		stockTv.setText(num+"");
+	}
+	
+	public void notifyNum(int num, int maxNum){
+		this.num = num;
+		this.maxNum = maxNum;
+		stockTv.setText(num+"");
+	}
+	
+	public void isChange(boolean canChange){
+		reduceIv.setVisibility(canChange ? View.VISIBLE:View.INVISIBLE );
+		addIv.setVisibility(canChange ? View.VISIBLE:View.INVISIBLE);
 	}
 	
 	public int getCurrentNum(){

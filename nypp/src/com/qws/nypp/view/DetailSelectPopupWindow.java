@@ -41,6 +41,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 /**
  * 购买选项的PopupWindow
@@ -395,7 +396,7 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 
 				if("200".equals(result.optString("status"))) {
 		            ToastUtil.show("成功加入进货单，快去看看吧~");
-		            //TODO 发送广播什么的通知进货单刷新数据selectShopCartListByMemberId
+		            EventBus.getDefault().post("getOrderData");
 				}else{
 	                String resultStr = result.optString("declare", "添加进货单失败");
 					ToastUtil.show(resultStr);
@@ -408,7 +409,7 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					Exception exception, int responseCode, long networkMillis) {
 				
 			}
-		}, false, true);
+		}, false, false);
 	}
 	
 	/**
