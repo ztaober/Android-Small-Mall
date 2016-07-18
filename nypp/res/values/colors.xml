@@ -59,5 +59,9 @@
     <color name="text_gray">#333</color>
     <color name="nypp_black">#000</color>
     
+    <!-- 确认订单 -->
+    <color name="order_sure_red">#db315e</color>
+    <color name="order_sure_black">#3e3c47</color>
+    
 
 </resources>

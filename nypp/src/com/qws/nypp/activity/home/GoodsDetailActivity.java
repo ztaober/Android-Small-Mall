@@ -164,6 +164,7 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();// 响应结果
+				LogUtil.t(result.toString());
                 CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
                 GoodsDetailBean data = goodsDetial.getData();
                 goodsDetailBean = data;

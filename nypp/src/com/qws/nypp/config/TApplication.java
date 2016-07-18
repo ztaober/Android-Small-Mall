@@ -5,6 +5,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -100,6 +101,17 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 				// .displayer(new FadeInBitmapDisplayer(300)) // 设置这个，刷新图片时不会闪
 				.displayer(new SimpleBitmapDisplayer())
 				.displayer(new FadeInBitmapDisplayer(500))
+				.build();
+	}
+	// 自定义默认的 不带渐入的
+	public DisplayImageOptions getAllOptionsNoAmi(int resouceId) {
+		return new DisplayImageOptions.Builder().showImageOnLoading(resouceId)
+				.showImageForEmptyUri(resouceId).showImageOnFail(resouceId)
+				.cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2) // default
+				.bitmapConfig(Bitmap.Config.RGB_565) // default
+				// .displayer(new FadeInBitmapDisplayer(300)) // 设置这个，刷新图片时不会闪
+				.displayer(new SimpleBitmapDisplayer())
+//				.displayer(new FadeInBitmapDisplayer(500))
 				.build();
 	}
 

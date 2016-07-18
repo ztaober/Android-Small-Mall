@@ -40,5 +40,9 @@ public class ServerConfig {
 	public static final String PRODUCT_INSERT_CART = base + "/insertCartSelective";
 	/** 获取 进货单 购物车列表 */
 	public static final String PRODUCT_GET_CART = base + "/selectShopCartListByMemberId";
+	/** 购物车产品数量修改 */
+	public static final String PRODUCT_UPDATE_CART = base + "/updateCartDetail";
+	/** 购物车明细项删除 */
+	public static final String PRODUCT_REMOVE_CART = base + "/removeCartDetail";
 
 }

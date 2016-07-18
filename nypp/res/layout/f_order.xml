@@ -54,6 +54,7 @@
             android:textSize="@dimen/font_size_middle" />
 
         <LinearLayout
+            android:id="@+id/ll_order_price"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
@@ -81,6 +82,18 @@
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/font_size_little" />
         </LinearLayout>
+        
+         <TextView
+            android:id="@+id/order_collect"
+            android:visibility="gone"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/order_done"
+            android:background="@color/comm_color"
+            android:gravity="center"
+            android:text="添加收藏"
+            android:textColor="@color/order_gray"
+            android:textSize="@dimen/font_size_middle" />
 
         <TextView
             android:id="@+id/order_done"

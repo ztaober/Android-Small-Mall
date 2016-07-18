@@ -94,8 +94,10 @@ public class LoginActivity extends BaseActivity {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.LOGIN_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("deviceId", Util.getDevId(context));
+		postData.put("sign", Util.getDevId(context));
 		postData.put("account", mUserName);
 		postData.put("password", Util.md5three(mPassword));
+		LogUtil.t(new Gson().toJson(postData));
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 

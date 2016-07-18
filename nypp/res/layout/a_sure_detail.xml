@@ -1,11 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_title"
+        android:layout_above="@+id/sure_detail_rl" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="88dp" 
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_list_map02" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="无默认地址，请选择收获地址~" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_list_into" />
+            </RelativeLayout>
+            
+            <TextView 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/order_gray"
+                android:text="货品清单"/>
+
+            <com.qws.nypp.view.AutoSizeListView
+                android:id="@+id/sure_order_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:listSelector="#00000000" >
+            </com.qws.nypp.view.AutoSizeListView>
+            
+            <EditText 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="给卖家留言"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/sure_detail_rl"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_above="@+id/sure_detail_done"
+        android:background="@color/order_sure_black" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/sure_detail_logistics"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="运费：1111"
+                android:textColor="@color/opt_gray"
+                android:textSize="@dimen/font22" />
+
+            <TextView
+                android:id="@+id/sure_detail_price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="货款总计:1231"
+                android:textColor="@color/opt_gray"
+                android:textSize="@dimen/font22" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sure_detail_allmoney"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="合计：23333"
+            android:textColor="@color/light_red"
+            android:textSize="@dimen/font26" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/sure_detail_done"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/order_sure_red"
+        android:gravity="center"
+        android:text="确认订单"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

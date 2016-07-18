@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp" >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_margin="10dp"
+        android:background="@color/order_gray" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/cart_suk_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/font_size_little"
+                android:textColor="@color/text_gray"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/cart_suk_size"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/cart_suk_color"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/font_size_little"
+                android:textColor="@color/text_gray"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/cart_suk_price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/cart_suk_size"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/font_size_little"
+                android:textColor="@color/text_gray"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/cart_suk_money"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="$888.00"
+            android:textSize="@dimen/font_size_little"
+            android:textColor="@color/light_red" />
+
+        <com.qws.nypp.view.StockChangeView
+            android:id="@+id/cart_suk_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:paddingRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+</RelativeLayout>
