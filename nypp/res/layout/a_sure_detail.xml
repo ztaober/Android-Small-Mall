@@ -12,8 +12,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/view_title"
-        android:layout_above="@+id/sure_detail_rl" >
+        android:layout_above="@+id/sure_detail_rl"
+        android:layout_below="@+id/view_title" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,33 +21,81 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/sure_order_address_rl"
                 android:layout_width="match_parent"
-                android:layout_height="88dp" 
-                android:layout_gravity="center_vertical">
+                android:layout_height="88dp" >
 
                 <ImageView
+                    android:id="@+id/sure_order_location"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
                     android:src="@drawable/ic_list_map02" />
 
                 <TextView
+                    android:id="@+id/sure_order_default_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/sure_order_into"
+                    android:layout_toRightOf="@+id/sure_order_location"
                     android:gravity="center"
-                    android:text="无默认地址，请选择收获地址~" />
+                    android:text="无默认地址，请选择收获地址~"
+                    android:textColor="@color/opt_gray"
+                    android:textSize="@dimen/font30" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/sure_order_into"
+                    android:layout_toRightOf="@+id/sure_order_location"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" >
+
+                        <TextView
+                            android:id="@+id/sure_order_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/font26" />
+
+                        <TextView
+                            android:id="@+id/sure_order_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:textSize="@dimen/font26" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/sure_order_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/sure_order_name"
+                        android:layout_margin="5dp"
+                        android:textSize="@dimen/font26" />
+                </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/sure_order_into"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
                     android:src="@drawable/ic_list_into" />
             </RelativeLayout>
-            
-            <TextView 
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/order_gray"
-                android:text="货品清单"/>
+                android:text="货品清单" />
 
             <com.qws.nypp.view.AutoSizeListView
                 android:id="@+id/sure_order_listview"
@@ -56,11 +104,11 @@
                 android:divider="@null"
                 android:listSelector="#00000000" >
             </com.qws.nypp.view.AutoSizeListView>
-            
-            <EditText 
+
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="给卖家留言"/>
+                android:hint="给卖家留言" />
         </LinearLayout>
     </ScrollView>
 

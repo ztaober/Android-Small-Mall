@@ -44,5 +44,9 @@ public class ServerConfig {
 	public static final String PRODUCT_UPDATE_CART = base + "/updateCartDetail";
 	/** 购物车明细项删除 */
 	public static final String PRODUCT_REMOVE_CART = base + "/removeCartDetail";
+	/** 获取默认收货地址 */
+	public static final String QUERY_DEFAULT_ADDRESS = base + "/queryDefaultAddress";
+	/** 获取收货地址列表 */
+	public static final String QUERY_ALL_ADDRESS = base + "/findContactAddressAllByPage";
 
 }

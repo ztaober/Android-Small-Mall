@@ -3,9 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/addr_edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="收货人" />
+
+    <EditText
+        android:id="@+id/addr_edit_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="手机号码" />
+
+    <EditText
+        android:id="@+id/addr_edit_zip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="邮政编码" />
+
+    <EditText
+        android:id="@+id/addr_edit_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="省，市，区" />
+
+    <EditText
+        android:id="@+id/addr_edit_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="详细地址" />
+
+    <TextView
+        android:id="@+id/addr_edit_submit"
+        style="@style/default_textview_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:text="保存" />
 
 </LinearLayout>

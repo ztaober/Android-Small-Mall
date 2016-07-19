@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+    android:background="@color/light_gray" >
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <ListView
+        android:id="@+id/addr_hand_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
+        android:layout_above="@+id/addr_hand_bottom_rl"
+        android:divider="@null"
+        android:listSelector="#00000000" >
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/addr_hand_bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" >
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentTop="true"
+            android:background="@color/trans50" />
+        <TextView 
+            android:id="@+id/addr_hand_bottom_tv"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            style="@style/default_textview_btn"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:text="管理收获地址"/>
+    </RelativeLayout>
+
+</RelativeLayout>
