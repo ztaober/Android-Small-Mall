@@ -160,7 +160,6 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();
 				CommonResult<AddressBean> addressBean = CommonResult.fromJson(result.toString(), AddressBean.class);
-//				CommonResult4List<AddressBean> addressBean = CommonResult4List.fromJson(result.toString(), AddressBean.class);
 				addrData = addressBean.getData();
 				defaultTv.setVisibility(View.GONE);
 				setAddr();
@@ -177,7 +176,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	protected void setAddr() {
 		nameTv.setText("收货人："+addrData.name);
 		phoneTv.setText(addrData.mobile);
-		addressTv.setText("收货地址:"+addrData.province+addrData.city+addrData.district+addrData.address+"骚诶附件奥尔夫骄傲诶减肥奥菲姐");
+		addressTv.setText("收货地址:"+addrData.province+addrData.city+addrData.district+addrData.address);
 	}
 
 }

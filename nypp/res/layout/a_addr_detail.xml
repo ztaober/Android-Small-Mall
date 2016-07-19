@@ -1,11 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+    android:background="@color/light_gray" >
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/addr_detail_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="11dp"
+                android:gravity="center_vertical"
+                android:text="收货人"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:id="@+id/addr_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="11dp"
+                android:background="@color/trans50" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="11dp"
+                android:gravity="center_vertical"
+                android:text="手机号码"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:id="@+id/addr_detail_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="11dp"
+                android:background="@color/trans50" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="11dp"
+                android:gravity="center_vertical"
+                android:text="邮政编码"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:id="@+id/addr_detail_zip"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="11dp"
+                android:background="@color/trans50" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="11dp"
+                android:gravity="center_vertical"
+                android:text="所在地区"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:id="@+id/addr_detail_city"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="11dp"
+                android:background="@color/trans50" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="11dp"
+                android:gravity="center_vertical"
+                android:text="详细地址"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:id="@+id/addr_detail_addr"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/addr_detail_delete"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/addr_detail_ll"
+        android:layout_marginTop="10dp"
+        android:background="@color/white" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="11dp"
+            android:gravity="center_vertical"
+            android:text="删除收货地址"
+            android:textColor="@color/nypp_red" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/addr_detail_bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentTop="true"
+            android:background="@color/trans50" />
+
+        <TextView
+            android:id="@+id/addr_detail_bottom_tv"
+            style="@style/default_textview_btn"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:text="设为默认收货地址" />
+    </RelativeLayout>
+
+</RelativeLayout>

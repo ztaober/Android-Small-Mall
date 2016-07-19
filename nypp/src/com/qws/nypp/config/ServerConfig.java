@@ -48,5 +48,13 @@ public class ServerConfig {
 	public static final String QUERY_DEFAULT_ADDRESS = base + "/queryDefaultAddress";
 	/** 获取收货地址列表 */
 	public static final String QUERY_ALL_ADDRESS = base + "/findContactAddressAllByPage";
+	/** 添加收货地址 */
+	public static final String ADD_CONTACT_ADDRESS = base + "/addContactAddress";
+	/** 删除收货地址 */
+	public static final String DELETE_CONTACT_ADDRESS = base + "/deleteContactAddress";
+	/** 修改收货地址 */
+	public static final String UPDATE_CONTACT_ADDRESS = base + "/updateContactAddress";
+	/** 修改为默认收货地址 */
+	public static final String UPDATE_DEFAULT_ADDRESS = base + "/updateDefaultContactAddress";
 
 }

@@ -13,30 +13,37 @@
         android:id="@+id/addr_edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/font24"
         android:hint="收货人" />
 
     <EditText
         android:id="@+id/addr_edit_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/font24"
         android:hint="手机号码" />
 
     <EditText
         android:id="@+id/addr_edit_zip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/font24"
         android:hint="邮政编码" />
 
-    <EditText
+    <TextView
         android:id="@+id/addr_edit_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="省，市，区" />
+        android:textSize="@dimen/font24"
+        style="@android:style/Widget.Holo.EditText"
+        android:textColor="@color/opt_gray"
+        android:text="省，市，区" />
 
     <EditText
         android:id="@+id/addr_edit_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/font24"
         android:hint="详细地址" />
 
     <TextView

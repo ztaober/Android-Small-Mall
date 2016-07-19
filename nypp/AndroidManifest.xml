@@ -114,6 +114,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >
         </activity>
+        <!-- 修改收货地址-->
+        <activity
+            android:name=".activity.settting.CityChooserActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
         <!-- 管理收货地址-->
         <activity
             android:name=".activity.settting.AddrHandActivity"

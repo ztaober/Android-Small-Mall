@@ -53,6 +53,7 @@
     <color name="light_gray">#eaeaea</color>
     <color name="opt_gray">#999</color>
     <color name="nypp_gray">#777</color>
+    <color name="nypp_red">#d83232</color>
     <color name="order_gray">#f5f5f7</color>
     <color name="order_done_gray">#9a9a9a</color>
     <color name="order_done_red">#CE1B4E</color>

@@ -32,6 +32,8 @@ import com.qws.nypp.utils.LogUtil;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * 选择&管理 收货地址
  * 
@@ -60,6 +62,7 @@ public class AddrHandActivity extends BaseActivity implements AdapterListener {
 
 	@Override
 	protected void initData() {
+		EventBus.getDefault().register(this);
 		// isSelect  true为选择 false为管理
 		Bundle bundle = getIntent().getExtras();
 		if(bundle == null){
@@ -91,7 +94,9 @@ public class AddrHandActivity extends BaseActivity implements AdapterListener {
 			setResult(SureOrderActivity.SELECT_ADDR, intent);
 			finish();
 		}else{
-			
+			Intent intent = new Intent(context,AddrDetailActivity.class);
+			intent.putExtra("addrData", data.get(position));
+			startActivity(intent);
 		}
 	}
 	
@@ -120,6 +125,23 @@ public class AddrHandActivity extends BaseActivity implements AdapterListener {
 
 	@Override
 	protected void getData() {
+		getAllAddress();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		 EventBus.getDefault().unregister(this); 
+	}
+	
+	/** 添加进货单之后收到这个事件 */
+    public void onEventMainThread(String msg) {  
+        if (msg != null && "getAllAddress".equals(msg)) {
+        	getAllAddress();
+        }
+    }  
+    
+	private void getAllAddress(){
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.QUERY_ALL_ADDRESS);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", "test");
@@ -131,8 +153,10 @@ public class AddrHandActivity extends BaseActivity implements AdapterListener {
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();
 				CommonResult4List<AddressBean> addressBean = CommonResult4List.fromJson(result.toString(), AddressBean.class);
+				LogUtil.t(result.toString());
 				data = addressBean.getData();
 				adapter.refreshList(data);
+				adapter.notifyDataSetChanged();
 			}
 
 			@Override
