@@ -207,7 +207,7 @@ public class HomeFragment extends BaseFragment {
                     @Override  
                     public void onClick(View v) {  
                     	Bundle bundle = new Bundle();
-						bundle.putSerializable("bean", list.get(getPosition()-1));
+						bundle.putString("productId", list.get(getPosition()-1).getProductId());
                     	IntentUtil.gotoActivity(context, GoodsDetailActivity.class, bundle);
                     }  
                 });  

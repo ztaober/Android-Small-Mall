@@ -236,7 +236,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 	@Override
 	public void onItemClick(int position, View v) {
 		Bundle bundle = new Bundle();
-		bundle.putSerializable("bean", goodsList.get(position));
+		bundle.putSerializable("productId", goodsList.get(position).getProductId());
     	IntentUtil.gotoActivity(context, GoodsDetailActivity.class, bundle);
 	}
 

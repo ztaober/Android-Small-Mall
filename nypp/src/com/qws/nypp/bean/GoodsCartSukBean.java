@@ -19,9 +19,13 @@ public class GoodsCartSukBean extends BaseBean {
 	 */
 	public String size;
 	/**
-	 * 价格
+	 * 折扣前价格
 	 */
 	public double price;
+	/**
+	 * 实际价格
+	 */
+	public double preferentialPrice;
 	/**
 	 * 详细编号
 	 */

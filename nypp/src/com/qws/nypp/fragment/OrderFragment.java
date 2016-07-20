@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
+import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.activity.home.SureOrderActivity;
 import com.qws.nypp.activity.settting.MyOrderActivity;
 import com.qws.nypp.adapter.CommAdapter;
@@ -52,7 +53,8 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 	private List<GoodsCartBean> cartList = new ArrayList<GoodsCartBean>();
 	private View noOrder;
 	private ListView orderLv;
-	private CheckBox orderCb;
+	private ImageView selectIv;
+	private boolean selectAll;
 	private TextView orderMoneyTv;
 	private TextView orderManyTv;
 	private TextView collectTv;
@@ -74,7 +76,7 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 	protected void findViews() {
 		noOrder = findViewById(R.id.no_order);
 		orderLv = (ListView)findViewById(R.id.order_listview);
-		orderCb = (CheckBox)findViewById(R.id.order_checkbox);
+		selectIv = (ImageView)findViewById(R.id.order_select_img);
 		orderMoneyTv = (TextView)findViewById(R.id.order_money);
 		orderManyTv = (TextView)findViewById(R.id.order_many);
 		collectTv = (TextView)findViewById(R.id.order_collect);
@@ -154,8 +156,8 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 						});
 						setText(convertView, R.id.cart_suk_color, "颜色:"+data.colour);
 						setText(convertView, R.id.cart_suk_size, "尺码:"+data.size);
-						setText(convertView, R.id.cart_suk_price, "单价:"+String.format("%.2f" ,data.price)+"/件");
-						setText(convertView, R.id.cart_suk_money, "¥"+String.format("%.2f" ,data.price*data.quantity));
+						setText(convertView, R.id.cart_suk_price, "单价:"+String.format("%.2f" ,data.preferentialPrice)+"/件");
+						setText(convertView, R.id.cart_suk_money, "¥"+String.format("%.2f" ,data.preferentialPrice*data.quantity));
 						StockChangeView stockCv = (StockChangeView) convertView.findViewById(R.id.cart_suk_change);
 						stockCv.isChange(collectOrder);
 						stockCv.notifyNum(data.quantity,data.detailId);
@@ -170,11 +172,14 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 	
 	@Override
 	public void onItemClick(int position, View v) {
-		
+		Bundle bundle = new Bundle();
+		bundle.putString("productId", cartList.get(position).pid);
+    	IntentUtil.gotoActivity(context, GoodsDetailActivity.class, bundle);
 	}
 	
 	private void notifyOrderData(){
 		int type = 0;
+		int alltype = 0;
 		int piece = 0;
 		double total = 0;
 		if( selectCart!=null ){
@@ -185,19 +190,23 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 		}
 		for(GoodsCartBean cartBean : cartList){
 			for(GoodsCartSukBean sukBean : cartBean.sukList){
+				alltype++;
 				if(sukBean.select){
 					selectCart.add(sukBean.detailId);
 					selectCartPid.add(cartBean.pid);
 					type++;
 					piece += sukBean.quantity;
-					total += sukBean.price * sukBean.quantity;
+					total += sukBean.preferentialPrice * sukBean.quantity;
 				}
 			}
 		}
+		
+		selectIv.setImageResource(type == alltype ? R.drawable.ic_select : R.drawable.ic_unselect);
+		
 		if(!collectOrder){
 			orderMoneyTv.setText("总计：¥"+String.format("%.2f" ,total));
 			orderManyTv.setText(type+"种"+piece+"件,不含运费");
-			if(piece >= 10){
+			if(piece >= 5){
 				doneTv.setBackgroundResource(R.color.order_done_red);
 				placeOrder = true;
 			} else {
@@ -205,6 +214,25 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 				placeOrder = false;
 			}
 		}
+	}
+	
+	private List<GoodsCartBean> filterCart(List<GoodsCartBean> allList){
+		List<GoodsCartBean> list = new ArrayList<GoodsCartBean>();
+		for(GoodsCartBean cartBean : allList){
+			List<GoodsCartSukBean> selectCartList = new ArrayList<GoodsCartSukBean>();
+			for(GoodsCartSukBean sukBean : cartBean.sukList){
+				if(sukBean.select){
+					selectCartList.add(sukBean);
+				}
+			}
+			if(selectCartList.size() != 0){
+				GoodsCartBean selectCartBean = new GoodsCartBean();
+				selectCartBean = cartBean;
+				selectCartBean.sukList = selectCartList;
+				list.add(selectCartBean);
+			}
+		}
+		return list;
 	}
 
 	@Override
@@ -216,16 +244,18 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 				getOrderData();
 			}
 		});
-		orderCb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		selectIv.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onClick(View v) {
 				for(GoodsCartBean cartBean : cartList){
-					cartBean.select = isChecked;
+					cartBean.select = !selectAll;
 					for(GoodsCartSukBean sukBean : cartBean.sukList){
-						sukBean.select = isChecked;
+						sukBean.select = !selectAll;
 					}
 				}
+				selectAll = !selectAll;
+				selectIv.setImageResource(selectAll ? R.drawable.ic_select :R.drawable.ic_unselect);
 				notifyOrderData();
 				ordersAdapter.notifyDataSetChanged();
 			}
@@ -236,9 +266,14 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 			@Override
 			public void onClick(View view) {
 				if(placeOrder && !collectOrder){
-					ToastUtil.show("GO下单");
+//					List<GoodsCartBean> orderList = new ArrayList<GoodsCartBean>();
+//					for(GoodsCartBean bean: cartList){
+//						for(GoodsCartSukBean sukBean: bean){
+//							
+//						}
+//					}
 					Bundle bundle = new Bundle();
-					bundle.putSerializable("orderList", (Serializable)cartList);
+					bundle.putSerializable("orderList", (Serializable)filterCart(cartList));
 					IntentUtil.gotoActivity(context, SureOrderActivity.class, bundle);
 				} else if(collectOrder){
 					if(selectCart.size() <= 0){
@@ -277,8 +312,9 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 					doneTv.setText("结算");
 					collectOrder = false;
 				}
-				if(orderCb.isChecked()){
-					orderCb.setChecked(false);
+				if(selectAll){
+					selectAll = !selectAll;
+					selectIv.setImageResource(R.drawable.ic_unselect);
 				}else{
 					for(GoodsCartBean cartBean : cartList){
 						cartBean.select = false;
@@ -341,7 +377,7 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 						for(GoodsCartSukBean sukBean : sukList){
 							sukBean.select = false;
 							allQua = sukBean.quantity +allQua;
-							double pow = sukBean.quantity * sukBean.price;
+							double pow = sukBean.quantity * sukBean.preferentialPrice;
 							allPri = pow + allPri;
 						}
 						cartBean.allQua = allQua;

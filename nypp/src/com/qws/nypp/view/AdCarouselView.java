@@ -214,7 +214,7 @@ public class AdCarouselView extends RelativeLayout {
 					handler.postDelayed(runnable, adPlayerTime);
 					if (Math.abs(event.getX() - startX) < 10 && Math.abs(event.getY() - startY) < 10) {
 						Bundle bundle = new Bundle();
-						bundle.putSerializable("bean", adList.get(flag % adList.size()));
+						bundle.putSerializable("productId", adList.get(flag % adList.size()).getProductId());
 						IntentUtil.gotoActivity(getContext(), GoodsDetailActivity.class, bundle);
 					}
 					break;

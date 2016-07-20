@@ -45,7 +45,7 @@ import com.yolanda.nohttp.Response;
 public class GoodsDetailActivity extends BaseActivity implements OnClickListener {
 
 	public static final String TAG = "GoodsDetailActivity";
-	private GoodsBean currentGoods;
+	private String productId;
 	private GoodsDetailBean goodsDetailBean;
 	
 	private DetailsCarouselView carouselView;
@@ -79,7 +79,7 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 	@Override
 	protected void initData() {
 		titleView.setTitle("商品详情");
-		currentGoods = (GoodsBean) getIntent().getSerializableExtra("bean");
+		productId = getIntent().getStringExtra("productId");
 	}
 
 	@Override
@@ -104,12 +104,12 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.detail_add_cart:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, goodsDetailBean, 1, currentGoods.getProductId());
+			selectPpw.initPopupWindow(context, goodsDetailBean, 1, productId);
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
 			break;
 		case R.id.detail_buy:
 			selectPpw = new DetailSelectPopupWindow();
-			selectPpw.initPopupWindow(context, goodsDetailBean, 0, currentGoods.getProductId());
+			selectPpw.initPopupWindow(context, goodsDetailBean, 0, productId);
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
 			break;
 
@@ -127,7 +127,7 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
 			JSONArray array = new JSONArray();
 			JSONObject object = new JSONObject();
-			object.put("productId", currentGoods.getProductId());
+			object.put("productId", productId);
 			array.put(object);
 			postJson.put("productIds", array);
 		} catch (Exception e) {
@@ -156,7 +156,7 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_DETAIL_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", "1");
-		postData.put("productId", currentGoods.getProductId());
+		postData.put("productId", productId);
 		LogUtil.t(new Gson().toJson(postData));
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {

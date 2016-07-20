@@ -108,7 +108,6 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		
 		Bundle bundle = getIntent().getExtras();
 		cartList = (List<GoodsCartBean>) bundle.getSerializable("orderList");
-		
 		options = TApplication.getInstance().getAllOptionsNoAmi(R.drawable.bg_defualt_118);
 		ordersAdapter = new CommAdapter<GoodsCartBean>(context, cartList, R.layout.item_sure_order_cart) {
 			
@@ -128,8 +127,8 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 					public void onGetView(int position, View convertView, final GoodsCartSukBean data) {
 						setText(convertView, R.id.cart_suk_color, "颜色:"+data.colour);
 						setText(convertView, R.id.cart_suk_size, "尺码:"+data.size);
-						setText(convertView, R.id.cart_suk_price, "单价:"+String.format("%.2f" ,data.price)+"/件");
-						setText(convertView, R.id.cart_suk_money, "¥"+String.format("%.2f" ,data.price*data.quantity));
+						setText(convertView, R.id.cart_suk_price, "单价:"+String.format("%.2f" ,data.preferentialPrice)+"/件");
+						setText(convertView, R.id.cart_suk_money, "¥"+String.format("%.2f" ,data.preferentialPrice*data.quantity));
 						StockChangeView stockCv = (StockChangeView) convertView.findViewById(R.id.cart_suk_change);
 						stockCv.isChange(false);
 						stockCv.notifyNum(data.quantity,data.detailId);

@@ -16,7 +16,7 @@
         android:layout_below="@+id/view_title"
         android:background="@color/white"
         android:gravity="center"
-        android:text="温馨提示:亲，10件起批，拿货满3000元免邮，支持混批哦~"
+        android:text="温馨提示:亲，5件起批，拿货满3000元免邮，支持混批哦~"
         android:textColor="@color/nypp_gray"
         android:textSize="@dimen/font_size_little" />
 
@@ -43,15 +43,31 @@
             android:layout_alignParentTop="true"
             android:background="@color/trans50" />
 
-        <CheckBox
-            android:id="@+id/order_checkbox"
-            style="@style/OrderCheckBox"
+        <LinearLayout
+            android:id="@+id/order_select_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text=" 全选"
-            android:textColor="@color/nypp_gray"
-            android:textSize="@dimen/font_size_middle" />
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/order_select_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_unselect" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全选"
+                android:layout_marginLeft="-5dp"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font_size_middle" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_order_price"
@@ -82,10 +98,9 @@
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/font_size_little" />
         </LinearLayout>
-        
-         <TextView
+
+        <TextView
             android:id="@+id/order_collect"
-            android:visibility="gone"
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/order_done"
@@ -93,7 +108,8 @@
             android:gravity="center"
             android:text="添加收藏"
             android:textColor="@color/order_gray"
-            android:textSize="@dimen/font_size_middle" />
+            android:textSize="@dimen/font_size_middle"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/order_done"
