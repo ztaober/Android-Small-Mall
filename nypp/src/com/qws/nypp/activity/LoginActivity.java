@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.qws.nypp.R;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.config.SpConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -93,11 +94,9 @@ public class LoginActivity extends BaseActivity {
 		
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.LOGIN_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("deviceId", Util.getDevId(context));
 		postData.put("sign", Util.getDevId(context));
 		postData.put("account", mUserName);
 		postData.put("password", Util.md5three(mPassword));
-		LogUtil.t(new Gson().toJson(postData));
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
@@ -105,7 +104,6 @@ public class LoginActivity extends BaseActivity {
 			public void onSucceed(int what, Response<JSONObject> response) {
                 // 请求成功
                 JSONObject result = response.get();// 响应结果
-                LogUtil.t(result);
                 if("200".equals(result.optString("status"))) {
                 	JSONObject data = result.optJSONObject("data");
                 	if( null != data){
@@ -114,6 +112,9 @@ public class LoginActivity extends BaseActivity {
                 		SpUtil.getSpUtil().putSPValue(SpConfig.NICK_NAME, data.optString("nickname", ""));
                 		SpUtil.getSpUtil().putSPValue(SpConfig.PORTRAIT_URL, data.optString("portrait", ""));
                 		SpUtil.getSpUtil().putSPValue(SpConfig.USER_SIGN, data.optString("sign", ""));
+                		
+                		TApplication.getInstance().setUserSign(data.optString("sign", ""));
+                		TApplication.getInstance().setMemberId(data.optString("memberId", ""));
         				IntentUtil.gotoActivityAndFinish(context, MainActivity.class);
                 	}
                 } else {

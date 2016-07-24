@@ -8,6 +8,7 @@
     <color name="trans">#00000000</color>
     <!-- 透明色(50) -->
     <color name="trans50">#50000000</color>
+    <color name="trans30">#30000000</color>
     <!-- 橙色 -->
     <color name="orange">#E6601B</color>
     <!-- 绿色 -->

@@ -3,9 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <com.qws.nypp.view.TabIndicator
+        android:id="@+id/view_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/order_refresh_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="#00000000"
+        android:smoothScrollbar="true"
+        android:background="@color/light_gray"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium"
+        ptr:ptrMode="both" />
 
 </LinearLayout>

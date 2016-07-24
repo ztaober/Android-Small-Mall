@@ -36,6 +36,10 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 	public static int screenHight = 0;
 	/** 全局异常异步处理对象 */
 	private static UncaughtExceptionHandler defaultUncaught;
+	/** 用户sign 登录签名 */
+	private String sign = "";
+	/** 用户memberId 会员编号 */
+	private String memberId = "";
 	
 	public static TApplication getInstance() {
 		return mInstance;
@@ -55,7 +59,25 @@ public class TApplication extends Application implements UncaughtExceptionHandle
 		initImageLoader();
 		NoHttp.init(this);
 	}
-
+	
+	/** 获取 用户sign 登录签名 */
+	public String getUserSign() {
+		return sign;
+	}
+	
+	public void setUserSign(String sign) {
+		this.sign = sign;
+	}
+	
+	/** 获取 用户memberId 会员编号 */
+	public String getMemberId() {
+		return memberId;
+	}
+	
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+	
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		Log.e("Exception", "", ex);

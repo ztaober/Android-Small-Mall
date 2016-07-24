@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp" >
+
+    <ImageView
+        android:id="@+id/item_order_suk_pic"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/item_order_suk_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_toLeftOf="@+id/item_order_suk_price"
+        android:layout_toRightOf="@+id/item_order_suk_pic"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="@dimen/font24" />
+
+    <TextView
+        android:id="@+id/item_order_suk_color_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/item_order_suk_pic"
+        android:paddingBottom="13dp"
+        android:paddingLeft="10dp"
+        android:text="肤色：肤色裤子，尺寸 XXL"
+        android:textColor="@color/nypp_gray"
+        android:textSize="@dimen/font_size_little" />
+
+    <TextView
+        android:id="@+id/item_order_suk_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingTop="3dp"
+        android:layout_margin="10dp"
+        android:text="12.00元"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_little" />
+
+    <TextView
+        android:id="@+id/item_order_suk_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/item_order_suk_price"
+        android:layout_marginRight="10dp"
+        android:text="x6"
+        android:textColor="@color/nypp_gray"
+        android:textSize="@dimen/font_size_little" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:background="@color/trans30" />
+
+</RelativeLayout>

@@ -112,7 +112,7 @@ public class AdCarouselView extends RelativeLayout {
 			adList = new ArrayList<GoodsBean>();
 			Request<JSONObject> request = new NyppJsonRequest(ServerConfig.BANNER_PATH);
 			Map<String, String> postData = new HashMap<String, String>();
-			postData.put("sign", "test");
+			postData.put("sign", TApplication.getInstance().getUserSign());
 			request.setRequestBody(new Gson().toJson(postData));
 			CallServer.getRequestInstance().add(0, request,  new OnResponseListener<JSONObject>() {
 
@@ -125,12 +125,14 @@ public class AdCarouselView extends RelativeLayout {
 				public void onSucceed(int what, Response<JSONObject> response) {
 		                // 请求成功
 	                JSONObject result = response.get();// 响应结果
-	                CommonResult4List<GoodsBean> bannerList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
-	                List<GoodsBean> data = bannerList.getData();
-	    			for(GoodsBean bean : data){
-	    				adList.add(bean);
-	    			}
-	    			initAd(getContext());
+	                if("200".equals(result.optString("status"))) {
+		                CommonResult4List<GoodsBean> bannerList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
+		                List<GoodsBean> data = bannerList.getData();
+		    			for(GoodsBean bean : data){
+		    				adList.add(bean);
+		    			}
+		    			initAd(getContext());
+	                }
 				}
 
 				@Override

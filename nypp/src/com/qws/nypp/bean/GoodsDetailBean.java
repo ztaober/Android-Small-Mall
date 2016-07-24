@@ -43,15 +43,15 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 价格
 	 */
-	public String preferentialPrice;
+	public double preferentialPrice;
 	/**
 	 * 原价
 	 */
-	public String price;
+	public double price;
 	/**
 	 * 快递费
 	 */
-	public String logistics;
+	public double logistics;
 	/**
 	 * 发货地
 	 */

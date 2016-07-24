@@ -1,5 +1,6 @@
 package com.qws.nypp.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,8 +13,11 @@ import org.json.JSONObject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
+import com.qws.nypp.activity.home.SureOrderActivity;
 import com.qws.nypp.adapter.SkuAdapter;
 import com.qws.nypp.adapter.SkuAdapter.onItemClickListener;
+import com.qws.nypp.bean.GoodsCartBean;
+import com.qws.nypp.bean.GoodsCartSukBean;
 import com.qws.nypp.bean.GoodsDetailBean;
 import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.bean.SukTypeBean;
@@ -22,6 +26,7 @@ import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
+import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.SkuDataUtil;
 import com.qws.nypp.utils.ToastUtil;
@@ -32,6 +37,7 @@ import com.yolanda.nohttp.Response;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
@@ -69,6 +75,7 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 	private TextView stockTv;
 	private DisplayImageOptions options;
 	private StockChangeView changeView;
+	private int addNum;
 	
 	//type 0购买 1收藏
     public void initPopupWindow(final Context context, GoodsDetailBean goodsDetailBean, int type, String productId) {
@@ -348,17 +355,31 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
             		ToastUtil.show(warn);
             		break;
             	}
-            	int addNum = changeView.getCurrentNum();
+			addNum = changeView.getCurrentNum();
             	//type 未0购买 1为加入购物车
             	if(type == 0){
             		if(addNum < detailBean.minimum){
             			ToastUtil.show("您的起批数量不足，无法购买");
             		}else {
-            			ToastUtil.show("跳转下单页面");
+            			List<GoodsCartSukBean> selectCartList = new ArrayList<GoodsCartSukBean>();
+            			GoodsCartSukBean goodsCartSukBean = new GoodsCartSukBean(currentSuk.getColour(), addNum, 
+            					currentSuk.getSize(), detailBean.price, currentSuk.getMoney(), "", currentSuk.getSukId(), true);
+            			selectCartList.add(goodsCartSukBean);
+            			
+            			List<GoodsCartBean> list = new ArrayList<GoodsCartBean>();
+            			double allPri = currentSuk.getMoney()*addNum;
+            			GoodsCartBean goodsCartBean = new GoodsCartBean(currentSuk.getImage(), detailBean.logistics, 
+            					productId, detailBean.title, "", "", selectCartList, Double.toString(allPri) , addNum, true);
+            			list.add(goodsCartBean);
+            			
+            			Bundle bundle = new Bundle();
+            			bundle.putInt("quantity", currentSuk.getQuantity());
+    					bundle.putSerializable("orderList", (Serializable)list);
+    					IntentUtil.gotoActivity(context, SureOrderActivity.class, bundle);
             		}
             	}else{
             		//添加到进货单
-            		insertCart(addNum);
+            		insertCart();
             	}
                 break;
             default:
@@ -369,13 +390,13 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 	/**
 	 * 加入进货单
 	 */
-	private void insertCart(int addNum) {
+	private void insertCart() {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_INSERT_CART);
 		JSONObject postJson = null;
 		try {
 			postJson = new JSONObject();
-			postJson.put("sign", "1");
-			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			postJson.put("sign", TApplication.getInstance().getUserSign());
+			postJson.put("memberId", TApplication.getInstance().getMemberId());
 			postJson.put("productId", productId);
 			JSONArray array = new JSONArray();
 			JSONObject object = new JSONObject();
@@ -409,7 +430,7 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 					Exception exception, int responseCode, long networkMillis) {
 				
 			}
-		}, false, false);
+		}, false, true);
 	}
 	
 	/**

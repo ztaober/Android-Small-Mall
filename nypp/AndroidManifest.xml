@@ -177,7 +177,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/TransStyle" >
         </activity>
-
+        <!-- 支付界面-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
 
         <!-- =========================================广播部分=========================================== -->
         <!-- 监听网络状态的广播 -->

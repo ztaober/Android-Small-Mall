@@ -23,6 +23,7 @@ import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.bean.GoodsDetailBean;
 import com.qws.nypp.bean.SukBean;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -123,8 +124,8 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		JSONObject postJson = null;
 		try {
 			postJson = new JSONObject();
-			postJson.put("sign", "1");
-			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			postJson.put("sign", TApplication.getInstance().getUserSign());
+			postJson.put("memberId", TApplication.getInstance().getMemberId());
 			JSONArray array = new JSONArray();
 			JSONObject object = new JSONObject();
 			object.put("productId", productId);
@@ -155,7 +156,7 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 	protected void getData() {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_DETAIL_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", "1");
+		postData.put("sign", TApplication.getInstance().getUserSign());
 		postData.put("productId", productId);
 		LogUtil.t(new Gson().toJson(postData));
 		request.setRequestBody(new Gson().toJson(postData));
@@ -164,7 +165,6 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();// 响应结果
-				LogUtil.t(result.toString());
                 CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
                 GoodsDetailBean data = goodsDetial.getData();
                 goodsDetailBean = data;

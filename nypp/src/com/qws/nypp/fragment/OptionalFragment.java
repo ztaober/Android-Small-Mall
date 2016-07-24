@@ -33,6 +33,7 @@ import com.qws.nypp.view.TabIndicator.OnTabChangeListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
 
+import android.app.Application;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -348,7 +349,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 			postJson.put("page", page+"");
 			postJson.put("rows", "5");
 			postJson.put("order", order);
-			postJson.put("sign", "test");
+			postJson.put("sign", TApplication.getInstance().getUserSign());
 			postJson.put("rows", "5");
 			if(!"".equals(type)){
 				postJson.put("type", type);
@@ -366,7 +367,6 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 		} catch (Exception e) {
 			return;
 		}
-		LogUtil.t(postJson.toString());
 		request.setRequestBody(postJson.toString());
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 

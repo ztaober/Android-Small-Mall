@@ -37,6 +37,7 @@ import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
+import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.view.AdCarouselView;
 import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.qws.nypp.view.pullview.SpacesItemDecoration;
@@ -137,19 +138,23 @@ public class HomeFragment extends BaseFragment {
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("page", i+"");
 		postData.put("rows", "4");
-		postData.put("sign", "test");
+		postData.put("sign", TApplication.getInstance().getUserSign());
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();// 响应结果
-                CommonResult4List<GoodsBean> goodsList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
-                list.addAll(goodsList.getData());
-                mAdapter.notifyDataSetChanged();
-                mPullRefreshRecyclerView.onRefreshComplete();
-                
-                mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
+				LogUtil.t(result.toString());
+				if("200".equals(result.optString("status"))) {
+	                CommonResult4List<GoodsBean> goodsList = CommonResult4List.fromJson(result.toString(), GoodsBean.class);
+	                list.addAll(goodsList.getData());
+	                mAdapter.notifyDataSetChanged();
+	                mPullRefreshRecyclerView.onRefreshComplete();
+	                mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
+				}else{
+					mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
+				}
 			}
 
 			@Override

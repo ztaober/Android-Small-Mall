@@ -51,6 +51,7 @@
                 android:id="@+id/login_edit_uesrname"
                 style="@style/login_edit_style"
                 android:layout_toRightOf="@+id/login_user_img"
+                android:singleLine="true"
                 android:hint="@string/login_user_hint" />
         </RelativeLayout>
 

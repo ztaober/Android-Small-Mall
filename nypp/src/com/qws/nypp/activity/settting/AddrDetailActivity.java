@@ -17,6 +17,7 @@ import com.qws.nypp.activity.BaseActivity;
 import com.qws.nypp.bean.AddressBean;
 import com.qws.nypp.bean.CommonResult4List;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -121,8 +122,8 @@ public class AddrDetailActivity extends BaseActivity {
 	private void updateDefaultAddress(){
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.UPDATE_DEFAULT_ADDRESS);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", "test");
-		postData.put("memberNo", "59BA82FE3CD711E691F700163E022948");
+		postData.put("sign", TApplication.getInstance().getUserSign());
+		postData.put("memberNo", TApplication.getInstance().getMemberId());
 		postData.put("id", addrData.id);
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
@@ -154,8 +155,8 @@ public class AddrDetailActivity extends BaseActivity {
 	private void deleteAddress(){
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.DELETE_CONTACT_ADDRESS);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", "test");
-		postData.put("memberNo", "59BA82FE3CD711E691F700163E022948");
+		postData.put("sign", TApplication.getInstance().getUserSign());
+		postData.put("memberNo", TApplication.getInstance().getMemberId());
 		postData.put("id", addrData.id);
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {

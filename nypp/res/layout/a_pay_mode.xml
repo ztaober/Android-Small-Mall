@@ -2,10 +2,84 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+    android:orientation="vertical" 
+    android:background="@color/light_gray">
+    
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+    <RelativeLayout
+        android:id="@+id/pay_mode_wx_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white" >
 
+        <ImageView
+            android:id="@+id/pay_mode_wx_iv"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="5dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_pay_chat" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentBottom="true"
+            android:background="@color/trans50" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/pay_mode_wx_iv"
+            android:text="微信支付"
+            android:textColor="#000"
+            android:textSize="@dimen/font28" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_list_into" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/pay_mode_alipay_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/pay_mode_alipay_iv"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="5dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_pay_zhifubao" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentBottom="true"
+            android:background="@color/trans50" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/pay_mode_alipay_iv"
+            android:text="支付宝支付"
+            android:textColor="#000"
+            android:textSize="@dimen/font28" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_list_into" />
+    </RelativeLayout>
 </LinearLayout>

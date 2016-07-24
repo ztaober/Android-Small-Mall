@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import com.qws.nypp.R;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -80,10 +81,16 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 		this.detailId = detailId;
 		stockTv.setText(num+"");
 	}
+
+	public interface OnNumChangeListenner{
+		void changeNum(int num);
+	}
+	private OnNumChangeListenner listner;
 	//确认订单使用
-	public void notifyNum(int num, int maxNum){
+	public void notifyNum(int num, int maxNum , OnNumChangeListenner listner){
 		this.num = num;
 		this.maxNum = maxNum;
+		this.listner = listner;
 		stockTv.setText(num+"");
 	}
 	
@@ -117,6 +124,9 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 				break;
 			}
 			stockTv.setText(num+"");
+			if(listner!=null){
+				listner.changeNum(num);
+			}
 			break;
 		case R.id.view_stock_add:
 			if(!"".equals(detailId)){
@@ -134,6 +144,9 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 				break;
 			}
 			stockTv.setText(num+"");
+			if(listner!=null){
+				listner.changeNum(num);
+			}
 			break;
 			
 		default:
@@ -146,8 +159,8 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 		JSONObject postJson = null;
 		try {
 			postJson = new JSONObject();
-			postJson.put("sign", "1");
-			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			postJson.put("sign", TApplication.getInstance().getUserSign());
+			postJson.put("memberId", TApplication.getInstance().getMemberId());
 			postJson.put("detailId", detailId);//购物车详细编号
 			postJson.put("quantity", changeNum);//数量
 		} catch (Exception e) {

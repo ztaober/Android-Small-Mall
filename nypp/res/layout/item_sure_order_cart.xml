@@ -7,12 +7,20 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/sline_view"
-        android:background="@color/trans50" />
+        android:background="@color/trans30" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp" >
+        
+        <TextView 
+            android:id="@+id/item_order_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:textSize="@dimen/font26"/>
 
         <TextView
             android:id="@+id/item_order_quantity"
@@ -41,7 +49,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/sline_view"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="15dp"
         android:background="@color/trans50" />
 
     <RelativeLayout
@@ -101,11 +109,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/sline_view"
-        android:background="@color/trans50" />
+        android:background="@color/trans30" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="10dp"
         android:background="@color/order_gray" />
 
 </LinearLayout>

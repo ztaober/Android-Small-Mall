@@ -222,12 +222,11 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 			List<GoodsCartSukBean> selectCartList = new ArrayList<GoodsCartSukBean>();
 			for(GoodsCartSukBean sukBean : cartBean.sukList){
 				if(sukBean.select){
-					selectCartList.add(sukBean);
+					selectCartList.add(sukBean.getCartSukBean(sukBean.clone()));
 				}
 			}
 			if(selectCartList.size() != 0){
-				GoodsCartBean selectCartBean = new GoodsCartBean();
-				selectCartBean = cartBean;
+				GoodsCartBean selectCartBean = cartBean.getCartBean(cartBean.clone());
 				selectCartBean.sukList = selectCartList;
 				list.add(selectCartBean);
 			}
@@ -354,8 +353,8 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 		mLoadingView.setLoadingMode(LoadingMode.LOADING);
 		NyppJsonRequest request = new NyppJsonRequest(ServerConfig.PRODUCT_GET_CART);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", "1");
-		postData.put("memberId", "59BA82FE3CD711E691F700163E022948");
+		postData.put("sign", TApplication.getInstance().getUserSign());
+		postData.put("memberId", TApplication.getInstance().getMemberId());
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
 
@@ -368,7 +367,6 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 				if(cartList != null){
 					cartList.clear();
 				}
-				
 				for(GoodsCartBean cartBean : allCartList){
 					List<GoodsCartSukBean> sukList = cartBean.sukList;
 					if (sukList.size() > 0) {
@@ -388,10 +386,11 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 				}
 				notifyOrderData();
 				ordersAdapter.notifyDataSetChanged();
+				LogUtil.t("==="+cartList.size());
 				if(cartList.size() == 0){
-					noOrder.setVisibility(View.GONE);
+					noOrder.setVisibility(View.VISIBLE);
 				}else{
-					noOrder.setVisibility(View.INVISIBLE);
+					noOrder.setVisibility(View.GONE);
 				}
 				mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
 			}
@@ -409,8 +408,8 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 		JSONObject postJson = null;
 		try {
 			postJson = new JSONObject();
-			postJson.put("sign", "1");
-			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			postJson.put("sign", TApplication.getInstance().getUserSign());
+			postJson.put("memberId", TApplication.getInstance().getMemberId());
 			JSONArray array = new JSONArray();
 			JSONObject object = new JSONObject();
 			for(String pId : selectCartPid){
@@ -444,8 +443,8 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 		JSONObject postJson = null;
 		try {
 			postJson = new JSONObject();
-			postJson.put("sign", "1");
-			postJson.put("memberId", "59BA82FE3CD711E691F700163E022948");
+			postJson.put("sign", TApplication.getInstance().getUserSign());
+			postJson.put("memberId", TApplication.getInstance().getMemberId());
 			JSONArray array = new JSONArray();
 			for(String cart :selectCart){
 				array.put(cart);//购物车产品子项编号

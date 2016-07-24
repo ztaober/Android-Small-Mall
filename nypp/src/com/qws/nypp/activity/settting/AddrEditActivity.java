@@ -19,6 +19,7 @@ import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
 import com.qws.nypp.bean.AddressBean;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
@@ -162,8 +163,8 @@ public class AddrEditActivity extends BaseActivity {
 	private void changeAddress() {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.UPDATE_CONTACT_ADDRESS);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", "test");
-		postData.put("memberNo", "59BA82FE3CD711E691F700163E022948");
+		postData.put("sign", TApplication.getInstance().getUserSign());
+		postData.put("memberNo", TApplication.getInstance().getMemberId());
 		postData.put("id", addrData.id);
 		postData.put("name", name);
 		postData.put("mobile", phone);
@@ -197,8 +198,8 @@ public class AddrEditActivity extends BaseActivity {
 	protected void addAddress() {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.ADD_CONTACT_ADDRESS);
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", "test");
-		postData.put("memberNo", "59BA82FE3CD711E691F700163E022948");
+		postData.put("sign", TApplication.getInstance().getUserSign());
+		postData.put("memberNo", TApplication.getInstance().getMemberId());
 		postData.put("name", name);
 		postData.put("mobile", phone);
 		postData.put("zipCode", zipCode);

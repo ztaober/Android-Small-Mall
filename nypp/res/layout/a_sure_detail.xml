@@ -94,7 +94,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:background="@color/order_gray"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/font26"
                 android:text="货品清单" />
 
             <com.qws.nypp.view.AutoSizeListView
@@ -106,6 +109,7 @@
             </com.qws.nypp.view.AutoSizeListView>
 
             <EditText
+                android:id="@+id/sure_order_edit_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="给卖家留言" />

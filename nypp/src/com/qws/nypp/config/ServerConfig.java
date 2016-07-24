@@ -4,15 +4,17 @@ package com.qws.nypp.config;
  * 服务器配置
  * 
  * @Description
- * @author qw
+ * @author 
  * @date 2015-6-22
  */
 public class ServerConfig {
+	
+	public static final String APP_ID = "wxb2cb73243d32f8ce";
 
 	// *****************************网请求消息状态码 ******************************//
 	/** 请求接口数据成功状态码 */
 	public static final String RESPONSE_STATUS_SUCCESS = "10000";
-	public static final String base = "http://121.42.204.196:80/malls/app/";
+	public static final String base = "http://121.42.204.196:80/malls/app";
 
 	/** 服务器基本路径 */
 	public static final String BASE_PATH = base + "/interface";
@@ -44,6 +46,7 @@ public class ServerConfig {
 	public static final String PRODUCT_UPDATE_CART = base + "/updateCartDetail";
 	/** 购物车明细项删除 */
 	public static final String PRODUCT_REMOVE_CART = base + "/removeCartDetail";
+	
 	/** 获取默认收货地址 */
 	public static final String QUERY_DEFAULT_ADDRESS = base + "/queryDefaultAddress";
 	/** 获取收货地址列表 */
@@ -56,5 +59,16 @@ public class ServerConfig {
 	public static final String UPDATE_CONTACT_ADDRESS = base + "/updateContactAddress";
 	/** 修改为默认收货地址 */
 	public static final String UPDATE_DEFAULT_ADDRESS = base + "/updateDefaultContactAddress";
+	
+	/** 提交订单*/
+	public static final String SUBMIT_ORDERS = base + "/submitOrders";
+	/** 生成微信单号*/
+	public static final String CREATE_WX_ORDER = base + "/createWxOrder";
+	
+	
+	/** 获取不同状态订单数量*/
+	public static final String GET_ORDERS_AMOUNT = base + "/getOrdersAmount";
+	/** 根据会员编号及状态获取订单列表*/
+	public static final String ACQUIRE_ALL_ORDER = base + "/acquireAllOrder";
 
 }
