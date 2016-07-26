@@ -3,6 +3,8 @@ package com.qws.nypp.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.view.View;
@@ -74,6 +76,7 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Login();
+				getContact();
 			}
 		});
 		findViewById(R.id.login_txt_prob).setOnClickListener(new OnClickListener() {
@@ -115,7 +118,7 @@ public class LoginActivity extends BaseActivity {
                 		
                 		TApplication.getInstance().setUserSign(data.optString("sign", ""));
                 		TApplication.getInstance().setMemberId(data.optString("memberId", ""));
-        				IntentUtil.gotoActivityAndFinish(context, MainActivity.class);
+        				IntentUtil.gotoActivity(context, MainActivity.class);
                 	}
                 } else {
                 	ToastUtil.show(result.optString("declare", "未知错误"));
@@ -133,5 +136,35 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void getData() {
 
+	}
+	
+	private void getContact(){
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.CONTACT_US);
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+                // 请求成功
+                JSONObject result = response.get();// 响应结果
+                if("200".equals(result.optString("status"))) {
+                	JSONArray data = result.optJSONArray("data");
+                	String chat = "";
+                	String call = "";
+					try {
+						chat = (String) data.get(0);
+						call = (String) data.get(1);
+					} catch (JSONException e) {
+					}
+					SpUtil.getSpUtil().putSPValue(SpConfig.CONTACT_CALL, call);
+            		SpUtil.getSpUtil().putSPValue(SpConfig.CONTACT_CHAT, chat);
+                } 
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				
+			}
+		}, false, false);
 	}
 }

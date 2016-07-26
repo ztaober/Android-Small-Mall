@@ -2,7 +2,10 @@ package com.qws.nypp.http;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.text.TextUtils;
 
+import com.qws.nypp.utils.ProcessDialogUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.dialog.WaitDialog;
 import com.yolanda.nohttp.Logger;
@@ -22,8 +25,9 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
     /**
      * Dialog.
      */
-    private WaitDialog mWaitDialog;
-
+//    private WaitDialog mWaitDialog;
+	private Context context;
+	private boolean canCancel;
     private Request<?> mRequest;
 
     /**
@@ -45,16 +49,18 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
      */
     public HttpResponseListener(Context context, Request<?> request, HttpListener<T> httpCallback, boolean canCancel, boolean isLoading) {
         this.mRequest = request;
-        if (context != null && isLoading) {
-            mWaitDialog = new WaitDialog(context);
-            mWaitDialog.setCancelable(canCancel);
-            mWaitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    mRequest.cancel(true);
-                }
-            });
-        }
+        this.context = context;
+        this.canCancel = canCancel;
+//        if (context != null && isLoading) {
+//            mWaitDialog = new WaitDialog(context);
+//            mWaitDialog.setCancelable(canCancel);
+//            mWaitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                @Override
+//                public void onCancel(DialogInterface dialog) {
+//                    mRequest.cancel(true);
+//                }
+//            });
+//        }
         this.callback = httpCallback;
         this.isLoading = isLoading;
     }
@@ -64,8 +70,18 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
      */
     @Override
     public void onStart(int what) {
-        if (isLoading && mWaitDialog != null && !mWaitDialog.isShowing())
-            mWaitDialog.show();
+//        if (isLoading && mWaitDialog != null && !mWaitDialog.isShowing())
+//            mWaitDialog.show();
+        if (context != null && isLoading) {
+  			ProcessDialogUtil.showDialog(context, "加载中", canCancel);
+  			ProcessDialogUtil.setOnDismissListener(new OnDismissListener() {
+
+  				@Override
+  				public void onDismiss(DialogInterface dialog) {
+  					 mRequest.cancel(true);
+  				}
+  			});
+      }
     }
 
     /**
@@ -73,8 +89,9 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
      */
     @Override
     public void onFinish(int what) {
-        if (isLoading && mWaitDialog != null && mWaitDialog.isShowing())
-            mWaitDialog.dismiss();
+//        if (isLoading && mWaitDialog != null && mWaitDialog.isShowing())
+//            mWaitDialog.dismiss();
+    	ProcessDialogUtil.dismissDialog();
     }
 
     /**

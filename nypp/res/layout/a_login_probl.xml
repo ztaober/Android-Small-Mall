@@ -134,10 +134,10 @@
                     android:textSize="@dimen/font26" />
 
                 <TextView
+                    android:id="@+id/login_help_call_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/ic_help_call_txt"
-                    android:text="@string/help_call"
                     android:padding="8dp"
                     android:textColor="@color/nypp_help_text"
                     android:textSize="@dimen/font26" />
@@ -167,10 +167,10 @@
                     android:textSize="@dimen/font26" />
 
                 <TextView
+                    android:id="@+id/login_help_chat_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/ic_help_chat_txt"
-                    android:text="@string/help_chat"
                     android:padding="8dp"
                     android:textSize="@dimen/font26" />
             </RelativeLayout>

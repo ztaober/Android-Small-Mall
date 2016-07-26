@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.qws.nypp.R;
+import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.SystemBarTintManager;
 import com.qws.nypp.utils.Util;
 import com.qws.nypp.view.TitleView;
@@ -55,6 +56,8 @@ public abstract class BaseActivity extends Activity {
 		}
 		mTintManager = new SystemBarTintManager(this);
 		setStatusBarState();
+		
+		AppManager.getAppManager().addActivity(this);
 	}
 
 	/** 是否需要注册EventBus */
@@ -117,6 +120,7 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		AppManager.getAppManager().finishActivity(this);
 		if (useEventBus()) {
 			EventBus.getDefault().unregister(this);
 		}

@@ -260,6 +260,18 @@ public class IntentUtil {
 		intent.putExtra("sms_body", content);
 		context.startActivity(intent);
 	}
+	
+	/**
+	 * 单号码拨打
+	 * 
+	 * @param context
+	 * @param phone
+	 */
+	public static void goCallPhone(Context context, String phone) {
+		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
 
 	/**
 	 * 关闭某个activity

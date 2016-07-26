@@ -9,6 +9,10 @@ package com.qws.nypp.config;
  * @Copyright:
  */
 public class SpConfig {
+	/** 商家电话 */
+	public static final String CONTACT_CALL = "contact_call";
+	/** 商家微信 */
+	public static final String CONTACT_CHAT = "contact_chat";
 	/** 用户名 */
 	public static final String USER_NAME = "user_name";
 	/** 用户密码 */

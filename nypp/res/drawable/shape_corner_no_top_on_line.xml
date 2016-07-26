@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<!-- 单独一个完整输入框时带圆角 -->   
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">   
+    <item>   
+        <shape>   
+            <solid android:color="#dddddd" />   
+            <corners android:topLeftRadius="0dp" android:topRightRadius="0dip"   
+                android:bottomRightRadius="6.6666dp" android:bottomLeftRadius="6.6666dp" />   
+            <stroke android:width="1dp" android:color="#dddddd"/>   
+        </shape>   
+    </item>   
+    <item android:top="1dp" android:bottom="1dp" android:left="1dp" android:right="1dp">   
+        <shape>   
+            <solid android:color="#dddddd"/>   
+            <corners android:topLeftRadius="0dp" android:topRightRadius="0dp"   
+                android:bottomRightRadius="6.6666dp" android:bottomLeftRadius="6.6666dp" />
+            <!-- 外层阴影 -->   
+            <!-- <stroke android:width="1px" android:color="#ffffffff" /> -->   
+        </shape>   
+    </item>   
+</layer-list> 

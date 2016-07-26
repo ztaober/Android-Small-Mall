@@ -24,6 +24,8 @@ public class ServerConfig {
 	public static final String BASE_DOWNLOAD = base + "/download?filename=";
 	
 	
+	/**	 服务质询*/
+	public static final String CONTACT_US = base + "/contactUs";
 	/**	 登录接口*/
 	public static final String LOGIN_PATH = base + "/login";
 	/**	 热区Banner获取*/

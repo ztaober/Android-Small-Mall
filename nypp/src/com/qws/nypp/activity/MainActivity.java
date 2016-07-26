@@ -1,5 +1,6 @@
 package com.qws.nypp.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,8 +17,11 @@ import com.qws.nypp.fragment.HomeFragment;
 import com.qws.nypp.fragment.OptionalFragment;
 import com.qws.nypp.fragment.OrderFragment;
 import com.qws.nypp.fragment.SettingFragment;
+import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.MyRadioView;
+import com.qws.nypp.view.dialog.FunctionDialog;
+import com.qws.nypp.view.dialog.MenuCallback;
 
 public class MainActivity extends BaseFragmentActivity implements OnClickListener {
 	/** Fragment管理 */
@@ -140,12 +144,33 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if ((System.currentTimeMillis() - lastExitTime) > 2000) {
-				ToastUtil.showToast(this, "再按一次退出");
-				lastExitTime = System.currentTimeMillis();
-				return true;
-			}
+//			if ((System.currentTimeMillis() - lastExitTime) > 2000) {
+//				ToastUtil.showToast(this, "再按一次退出");
+//				lastExitTime = System.currentTimeMillis();
+//				return true;
+//			}
+			FunctionDialog.show(MainActivity.this, true,
+					"是否退出登录", "", getString(android.R.string.cancel),
+					"", getString(android.R.string.ok), new MenuCallback() {
+
+						@Override
+						public void onMenuResult(int menuType) {
+							if (menuType == R.id.right_bt) {
+								MainActivity.this.finish();
+							}
+						}
+			});		
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 }

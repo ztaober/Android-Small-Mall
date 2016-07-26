@@ -1,5 +1,6 @@
 package com.qws.nypp.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.qws.nypp.R;
+import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.SystemBarTintManager;
 import com.qws.nypp.utils.Util;
 
@@ -33,6 +35,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 	/** 4.4版本以上的沉浸式 */
 	protected SystemBarTintManager mTintManager;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +54,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 		}
 		mTintManager = new SystemBarTintManager(this);
 		setStatusBarState();
+		
+		AppManager.getAppManager().addActivity(this);
 	}
 
 	/** 是否需要注册EventBus */
@@ -113,6 +118,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		AppManager.getAppManager().finishActivity(this);
 		if (useEventBus()) {
 			EventBus.getDefault().unregister(this);
 		}
