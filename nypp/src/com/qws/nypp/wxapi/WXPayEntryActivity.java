@@ -1,5 +1,6 @@
 package com.qws.nypp.wxapi;
 
+import com.qws.nypp.activity.settting.OrderDetaiActivity;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.utils.ToastUtil;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -8,6 +9,8 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import de.greenrobot.event.EventBus;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -50,6 +53,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 			}else{
 				ToastUtil.show("支付失败，请重试");
 			}
+			EventBus.getDefault().post("showOrderDetail");
 			finish();
 		}
 	}

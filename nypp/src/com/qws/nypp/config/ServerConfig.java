@@ -70,5 +70,11 @@ public class ServerConfig {
 	public static final String GET_ORDERS_AMOUNT = base + "/getOrdersAmount";
 	/** 根据会员编号及状态获取订单列表*/
 	public static final String ACQUIRE_ALL_ORDER = base + "/acquireAllOrder";
+	/** 单个订单获取*/
+	public static final String UNIQUE_ORDER = base + "/uniqueOrders";
+	/** 取消订单 */
+	public static final String CANCLE_RODERS = base + "/cancelOrders";
+	/** 删除订单 */
+	public static final String REMOVE_ORDERS = base + "/removeOrders";
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
+import com.qws.nypp.activity.home.PayModeActivity;
 import com.qws.nypp.adapter.CommAdapter;
 import com.qws.nypp.adapter.CommAdapter.AdapterListener;
 import com.qws.nypp.bean.CommonResult4List;
@@ -33,6 +35,8 @@ import com.qws.nypp.view.TabIndicator;
 import com.qws.nypp.view.TabIndicator.OnTabChangeListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 我的订单
@@ -54,6 +58,7 @@ public class MyOrderActivity extends BaseActivity {
 	private PullToRefreshListView prListView;
 	private CommAdapter<OrderInforBean> orderInfoAdapter;
 	private List<OrderInforBean> orderInforList = new ArrayList<OrderInforBean>();
+	
 	@Override
 	protected int getContentViewId() {
 		return R.layout.a_my_order;
@@ -68,29 +73,22 @@ public class MyOrderActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 		titleView.setTitle("我的订单");
+		EventBus.getDefault().register(this); 
 		viewTab.initData(items);
 	}
 
 	@Override
 	protected void setListener() {
 		titleView.setBackBtn();
-		viewTab.setTabListener(new OnTabChangeListener() {
-			
-			@Override
-			public void OnTabChange(int position) {
-				orderState = position;
-				page = 1;
-				rows = 8;
-				orderInforList.clear();
-				getOrderList();
-			}
-		});
+		
 		options = TApplication.getInstance().getAllOptionsNoAmi(R.drawable.bg_defualt_118);
 		orderInfoAdapter = new CommAdapter<OrderInforBean>(context, orderInforList,R.layout.item_order_info, new AdapterListener() {
 
 			@Override
 			public void onItemClick(int position, View v) {
-				
+				Intent intent = new Intent(context, OrderDetaiActivity.class);
+				intent.putExtra("orderId", orderInforList.get(position).orderId);//订单编号
+				startActivity(intent);
 			}
 		}) {
 			
@@ -100,19 +98,23 @@ public class MyOrderActivity extends BaseActivity {
 				setText(convertView, R.id.item_order_info_pices, " ¥ "+(data.orderAmount + data.logisticsFees) );
 				if(data.orderStatus == 1){
 					setText(convertView, R.id.item_order_info_status, "待付款");
+				} else if(data.orderStatus == 0){
+					setText(convertView, R.id.item_order_info_status, "已取消订单");
 				} else {
 					setText(convertView, R.id.item_order_info_status, "订单状态:"+data.orderStatus);
 				}
-				
+				final String orderId = data.orderId;
 				
 				AutoSizeListView listView = (AutoSizeListView) convertView.findViewById(R.id.order_suk_listview);
 				CommAdapter<OrderSukBean> adapter = new CommAdapter<OrderSukBean>(context,data.newSukList,R.layout.item_order_suk, new AdapterListener() {
 
 					@Override
 					public void onItemClick(int position, View v) {
-						
+						Intent intent = new Intent(context, OrderDetaiActivity.class);
+						intent.putExtra("orderId", orderId);//订单编号
+						startActivity(intent);
 					}
-				}) {
+				})  {
 
 					@Override
 					public void onGetView(int position, View convertView, OrderSukBean sukData) {
@@ -144,6 +146,18 @@ public class MyOrderActivity extends BaseActivity {
 				getOrderList();
 			}
 		});
+		
+		viewTab.setTabListener(new OnTabChangeListener() {
+			
+			@Override
+			public void OnTabChange(int position) {
+				orderState = position;
+				page = 1;
+				rows = 8;
+				orderInforList.clear();
+				getOrderList();
+			}
+		});
 	}
 
 	@Override
@@ -153,6 +167,23 @@ public class MyOrderActivity extends BaseActivity {
 		rows = 8;
 		getOrderList();
 	}
+	
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		 EventBus.getDefault().unregister(this); 
+	}
+	
+	/** 添加进货单之后收到这个事件 */
+    public void onEventMainThread(String msg) {  
+        if (msg != null && "getMyOrderList".equals(msg)) {
+        	page = 1;
+    		rows = 8;
+        	orderInforList.clear();
+        	getOrderList();
+        }
+    }  
 	/**
 	 * 根据会员编号及状态获取订单列表
 	 * 

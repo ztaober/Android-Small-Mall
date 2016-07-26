@@ -6,12 +6,14 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.google.gson.Gson;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
+import com.qws.nypp.activity.settting.OrderDetaiActivity;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
@@ -24,6 +26,8 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 选择支付方式
@@ -49,7 +53,7 @@ public class PayModeActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 		titleView.setTitle("选择支付方式");
-		
+		EventBus.getDefault().register(this); 
 		orderId = getIntent().getStringExtra("orderId");
 	}
 
@@ -101,6 +105,21 @@ public class PayModeActivity extends BaseActivity {
 		},false,true);
 
 	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		 EventBus.getDefault().unregister(this); 
+	}
+	
+	/** 添加进货单之后收到这个事件 */
+    public void onEventMainThread(String msg) {  
+        if (msg != null && "showOrderDetail".equals(msg)) {
+        	Intent intent = new Intent(context, OrderDetaiActivity.class);
+			intent.putExtra("orderId", orderId);//订单编号
+			startActivity(intent);
+        }
+    }  
 
 	@Override
 	protected void getData() {
