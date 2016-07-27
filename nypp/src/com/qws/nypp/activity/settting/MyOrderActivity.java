@@ -96,12 +96,36 @@ public class MyOrderActivity extends BaseActivity {
 			public void onGetView(int position, View convertView, final OrderInforBean data) {
 				setText(convertView, R.id.item_order_info_logis,"总金额(含运费"+data.logisticsFees+"元)" );
 				setText(convertView, R.id.item_order_info_pices, " ¥ "+(data.orderAmount + data.logisticsFees) );
-				if(data.orderStatus == 1){
-					setText(convertView, R.id.item_order_info_status, "待付款");
-				} else if(data.orderStatus == 0){
+				switch (data.orderStatus) {
+				case 0:
 					setText(convertView, R.id.item_order_info_status, "已取消订单");
-				} else {
-					setText(convertView, R.id.item_order_info_status, "订单状态:"+data.orderStatus);
+					break;
+				case 1:
+					setText(convertView, R.id.item_order_info_status, "待付款");
+					break;
+				case 2:
+					setText(convertView, R.id.item_order_info_status, "待发货");
+					break;
+				case 3:
+					setText(convertView, R.id.item_order_info_status, "待收货");
+					break;
+				case 4:
+					setText(convertView, R.id.item_order_info_status, "交易成功(未评价)");
+					break;
+				case 5:
+					setText(convertView, R.id.item_order_info_status, "交易成功");
+					break;
+				case 6:
+					setText(convertView, R.id.item_order_info_status, "退款处理中");
+					break;
+				case 7:
+					setText(convertView, R.id.item_order_info_status, "退款成功");
+				case 8:
+					setText(convertView, R.id.item_order_info_status, "退款被驳回");
+					break;
+
+				default:
+					break;
 				}
 				final String orderId = data.orderId;
 				
@@ -166,6 +190,7 @@ public class MyOrderActivity extends BaseActivity {
 		page = 1;
 		rows = 8;
 		getOrderList();
+		
 	}
 	
 	

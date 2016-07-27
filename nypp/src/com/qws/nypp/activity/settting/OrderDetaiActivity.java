@@ -74,7 +74,7 @@ public class OrderDetaiActivity extends BaseActivity {
 	
 	private TextView cancleTv;
 	private TextView payTv;
-	private TextView deleteTv;
+	private TextView handlingTv;
 	
 	@Override
 	protected int getContentViewId() {
@@ -96,7 +96,7 @@ public class OrderDetaiActivity extends BaseActivity {
 		
 		cancleTv  = (TextView) findViewById(R.id.order_detail_cancle);
 		payTv  = (TextView) findViewById(R.id.order_detail_pay);
-		deleteTv  = (TextView) findViewById(R.id.order_detail_delete_order);
+		handlingTv  = (TextView) findViewById(R.id.order_detail_handling);
 	}
 
 	@Override
@@ -130,30 +130,6 @@ public class OrderDetaiActivity extends BaseActivity {
 		
 		orderList.setAdapter(adapter);
 		
-		
-		cancleTv.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				cancleOrder();
-			}
-		});
-		payTv.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(context,PayModeActivity.class);
-				intent.putExtra("orderId", orderId);//订单编号
-				startActivity(intent);
-			}
-		});
-		deleteTv.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				removeOrder();
-			}
-		});
 	}
 
 	@Override
@@ -203,19 +179,135 @@ public class OrderDetaiActivity extends BaseActivity {
 		moneyTv.setText("¥ "+ (orderDetailBean.orderAmount + orderDetailBean.logisticsFees));
 		userMsgTv.setText("买家留言:"+orderDetailBean.message);
 		
-		if(orderDetailBean.orderStatus == 1){ //待付款
-			deleteTv.setVisibility(View.INVISIBLE);
-			cancleTv.setVisibility(View.VISIBLE);
-			payTv.setVisibility(View.VISIBLE);
-		} else if(orderDetailBean.orderStatus == 0){//已取消订单
-			deleteTv.setVisibility(View.VISIBLE);
+		switch (orderDetailBean.orderStatus) {
+		case 0:  //已取消订单
+			cancleTv.setVisibility(View.INVISIBLE);
+			payTv.setBackgroundResource(R.color.opt_gray);
+			payTv.setText("删除订单");
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.REMOVE_ORDERS);
+				}
+			});
+			break;
+		case 1:	//待付款订单
+			cancleTv.setText("取消订单");
+			payTv.setText("付款");
+			cancleTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.CANCLE_RODERS);
+				}
+			});
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context,PayModeActivity.class);
+					intent.putExtra("orderId", orderId);//订单编号
+					startActivity(intent);
+				}
+			});
+			break;
+		case 2:		//待发货订单
+			cancleTv.setText("提醒卖家发货");
+			payTv.setText("退款");
+			cancleTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					ToastUtil.show("已提醒卖家发货");
+				}
+			});
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					//退款页面
+				}
+			});
+			break;
+		case 3:	//待收货
+			cancleTv.setText("确认收货");
+			payTv.setText("退款");
+			cancleTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.RECEIVE_ORDERS);
+				}
+			});
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					//退款页面
+				}
+			});
+			break;
+		case 4: //交易成功(未评价)
+			cancleTv.setVisibility(View.INVISIBLE);
+			payTv.setBackgroundResource(R.color.opt_gray);
+			payTv.setText("删除订单");
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.REMOVE_ORDERS);
+				}
+			});
+			break;
+		case 5: //交易成功(已评价)
+			cancleTv.setVisibility(View.INVISIBLE);
+			payTv.setBackgroundResource(R.color.opt_gray);
+			payTv.setText("删除订单");
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.REMOVE_ORDERS);
+				}
+			});
+			break;
+		case 6:		//退款处理中
 			cancleTv.setVisibility(View.INVISIBLE);
 			payTv.setVisibility(View.INVISIBLE);
+			handlingTv.setVisibility(View.VISIBLE);
+			break;
+		case 7: 	//退款成功
+			cancleTv.setVisibility(View.INVISIBLE);
+			payTv.setBackgroundResource(R.color.opt_gray);
+			payTv.setText("删除订单");
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.REMOVE_ORDERS);
+				}
+			});
+		case 8:		//退款被拒
+			cancleTv.setVisibility(View.INVISIBLE);
+			payTv.setBackgroundResource(R.color.opt_gray);
+			payTv.setText("删除订单");
+			payTv.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					handleOrder(ServerConfig.REMOVE_ORDERS);
+				}
+			});
+			break;
+
+		default:
+			break;
 		}
 	}
 	
-	protected void cancleOrder() {
-		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.CANCLE_RODERS);
+	protected void handleOrder(String url) {
+		Request<JSONObject> request = new NyppJsonRequest(url);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", TApplication.getInstance().getUserSign());
 		postData.put("orderId", orderId);
@@ -240,29 +332,4 @@ public class OrderDetaiActivity extends BaseActivity {
 		}, false, true);		
 	}
 	
-	protected void removeOrder() {
-		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.REMOVE_ORDERS);
-		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("sign", TApplication.getInstance().getUserSign());
-		postData.put("orderId", orderId);
-		request.setRequestBody(new Gson().toJson(postData));
-		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
-			
-			@Override
-			public void onSucceed(int what, Response<JSONObject> response) {
-				JSONObject result = response.get();
-				 if("200".equals(result.optString("status"))) {
-					 EventBus.getDefault().post("getMyOrderList");
-					 OrderDetaiActivity.this.finish();
-                 } 
-				 ToastUtil.show(result.optString("declare", "未知错误"));
-			}
-			
-			@Override
-			public void onFailed(int what, String url, Object tag,
-					Exception exception, int responseCode, long networkMillis) {
-				
-			}
-		}, false, true);		
-	}
 }

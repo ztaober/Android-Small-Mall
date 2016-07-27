@@ -13,14 +13,18 @@ import android.view.View.OnClickListener;
 import com.google.gson.Gson;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
+import com.qws.nypp.activity.MainActivity;
 import com.qws.nypp.activity.settting.OrderDetaiActivity;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
+import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.utils.Util;
+import com.qws.nypp.view.dialog.FunctionDialog;
+import com.qws.nypp.view.dialog.MenuCallback;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -53,7 +57,6 @@ public class PayModeActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 		titleView.setTitle("选择支付方式");
-		EventBus.getDefault().register(this); 
 		orderId = getIntent().getStringExtra("orderId");
 	}
 
@@ -107,17 +110,39 @@ public class PayModeActivity extends BaseActivity {
 	}
 	
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		 EventBus.getDefault().unregister(this); 
+	protected boolean useEventBus() {
+		return true;
 	}
 	
 	/** 添加进货单之后收到这个事件 */
     public void onEventMainThread(String msg) {  
-        if (msg != null && "showOrderDetail".equals(msg)) {
-        	Intent intent = new Intent(context, OrderDetaiActivity.class);
-			intent.putExtra("orderId", orderId);//订单编号
-			startActivity(intent);
+        if (msg != null) {
+        	if("pay_success".equals(msg)){
+        		FunctionDialog.show(PayModeActivity.this, true,
+    					"支付成功", "", "回首页",
+    					"", "查看详情", new MenuCallback() {
+
+    						@Override
+    						public void onMenuResult(int menuType) {
+    							if (menuType == R.id.right_bt) {
+    								Intent intent = new Intent(context, OrderDetaiActivity.class);
+    				    			intent.putExtra("orderId", orderId);//订单编号
+    				    			startActivity(intent);
+    				    			AppManager.getAppManager().finishActivity(SureOrderActivity.class);
+    				    			AppManager.getAppManager().finishActivity(PayModeActivity.class);
+    							}
+    							if (menuType == R.id.left_bt) {
+    								EventBus.getDefault().post("goHomeFrag");
+    							}
+    						}
+    			});	
+        	}else if("pay_fail".equals(msg)){
+        		ToastUtil.show("支付失败，请重试");
+        		Intent intent = new Intent();
+    			intent.putExtra("orderId", orderId);
+        		setResult(4444,intent);
+        	}
+        	
         }
     }  
 

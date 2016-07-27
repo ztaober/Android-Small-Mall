@@ -23,6 +23,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
 import com.qws.nypp.activity.settting.AddrHandActivity;
+import com.qws.nypp.activity.settting.OrderDetaiActivity;
 import com.qws.nypp.adapter.CommAdapter;
 import com.qws.nypp.bean.AddressBean;
 import com.qws.nypp.bean.CommonResult;
@@ -159,7 +160,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 				if("200".equals(result.optString("status"))) {
 					Intent intent = new Intent(context,PayModeActivity.class);
 					intent.putExtra("orderId", result.optString("data"));//订单编号
-					startActivity(intent);
+					startActivityForResult(intent,SELECT_ADDR);
 		            EventBus.getDefault().post("getOrderData");
 				}else{
 	                String resultStr = result.optString("declare", "定单提交失败");
@@ -179,6 +180,12 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == SELECT_ADDR && resultCode == 4444 && data!=null){
+			Intent intent = new Intent(context, OrderDetaiActivity.class);
+			intent.putExtra("orderId", data.getStringExtra("orderId"));//订单编号
+			startActivity(intent);
+			this.finish();
+		}
 		if(requestCode == SELECT_ADDR && resultCode == SELECT_ADDR && data!=null){
 			AddressBean resultData = (AddressBean) data.getSerializableExtra("addrData");
 			if(resultData!=null){

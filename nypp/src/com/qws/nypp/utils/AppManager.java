@@ -3,6 +3,7 @@ package com.qws.nypp.utils;
 import java.util.Stack;
 
 import com.qws.nypp.activity.LoginActivity;
+import com.qws.nypp.activity.MainActivity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -92,6 +93,22 @@ public class AppManager {
 			Activity activity = activityStack.get(i);
 			if (null != activity) {
 				if (activity instanceof LoginActivity && !isContainLogin) {
+					continue;
+				}
+				activity.finish();
+			}
+		}
+		activityStack.clear();
+	}
+	
+	/**
+	 * 回到桌面 Activity
+	 */
+	public void goHomeActivity() {
+		for (int i = 0, size = activityStack.size(); i < size; i++) {
+			Activity activity = activityStack.get(i);
+			if (null != activity) {
+				if (activity instanceof LoginActivity || activity instanceof MainActivity) {
 					continue;
 				}
 				activity.finish();

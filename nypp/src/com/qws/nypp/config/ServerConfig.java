@@ -38,6 +38,10 @@ public class ServerConfig {
 	public static final String OPT_PRODUCT_LIST = base + "/optionalProduct";
 	/**	 产品详情获取*/
 	public static final String PRODUCT_DETAIL_PATH = base + "/getProductDetail";
+	/**	 产品评价列表*/
+	public static final String ACQUIRE_ALL_APPRAISE_BY_PROID = base + "/acquireAllAppraiseByProductId";
+	/**	 产品详情web获取*/
+	public static final String PRODUCT_DETAIL_PRE_PATH = base + "/getProductPresentation";
 	/** 产品收藏 */
 	public static final String PRODUCT_ADD_COLLECTION = base + "/addCollection";
 	/** 产品加入进货单 */
@@ -78,5 +82,9 @@ public class ServerConfig {
 	public static final String CANCLE_RODERS = base + "/cancelOrders";
 	/** 删除订单 */
 	public static final String REMOVE_ORDERS = base + "/removeOrders";
+	/** 确认收款 */
+	public static final String RECEIVE_ORDERS = base + "/receive";
+	/** 订单评价 */
+	public static final String APPRAISE_ORDERS = base + "/addAppraise";
 
 }

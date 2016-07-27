@@ -26,8 +26,12 @@ import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.SpUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.utils.Util;
+import com.qws.nypp.view.dialog.FunctionDialog;
+import com.qws.nypp.view.dialog.MenuCallback;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 登录界面
@@ -76,7 +80,6 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Login();
-				getContact();
 			}
 		});
 		findViewById(R.id.login_txt_prob).setOnClickListener(new OnClickListener() {
@@ -135,36 +138,27 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void getData() {
-
 	}
 	
-	private void getContact(){
-		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.CONTACT_US);
-		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
-
-			@Override
-			public void onSucceed(int what, Response<JSONObject> response) {
-                // 请求成功
-                JSONObject result = response.get();// 响应结果
-                if("200".equals(result.optString("status"))) {
-                	JSONArray data = result.optJSONArray("data");
-                	String chat = "";
-                	String call = "";
-					try {
-						chat = (String) data.get(0);
-						call = (String) data.get(1);
-					} catch (JSONException e) {
-					}
-					SpUtil.getSpUtil().putSPValue(SpConfig.CONTACT_CALL, call);
-            		SpUtil.getSpUtil().putSPValue(SpConfig.CONTACT_CHAT, chat);
-                } 
-			}
-
-			@Override
-			public void onFailed(int what, String url, Object tag,
-					Exception exception, int responseCode, long networkMillis) {
-				
-			}
-		}, false, false);
+	@Override
+	protected boolean useEventBus() {
+		return true;
 	}
+	
+	/** 挤下线弹框 清除密码 */
+    public void onEventMainThread(String msg) {  
+        if (msg != null && "LogonInvalid".equals(msg)) {
+        	FunctionDialog.show(LoginActivity.this, false,
+					"您的帐号在其他设备登录,注意帐号安全,可电话咨询客服人员", "", "",
+					getString(android.R.string.ok), "", new MenuCallback() {
+
+						@Override
+						public void onMenuResult(int menuType) {
+						}
+			});	
+        	login_edit_password.setText("");
+        	SpUtil.getSpUtil().putSPValue(SpConfig.USER_PWD, "");
+        }
+    }  
+
 }

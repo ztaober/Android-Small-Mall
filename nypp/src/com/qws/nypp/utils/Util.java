@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,6 +51,10 @@ public class Util {
 			}
 		}
 		return false;
+	}
+	
+	public static String getTime(long time){
+		return new SimpleDateFormat("yyyy.MM.dd").format(new Date(time));
 	}
 	
 	private static long lastClickTime;

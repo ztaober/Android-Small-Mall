@@ -23,7 +23,7 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 最高评价
 	 */
-//	public AppraiseBean appraise;
+	public AppraiseBean appraise;
 	/**
 	 * 标题
 	 */
@@ -31,7 +31,7 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 成交笔数
 	 */
-	public String soldQuantity;
+	public int soldQuantity;
 	/**
 	 * 库存
 	 */
@@ -59,6 +59,6 @@ public class GoodsDetailBean extends BaseBean {
 	/**
 	 * 评价数
 	 */
-	public String appraiseCount;
+	public int appraiseCount;
 
 }

@@ -1,6 +1,5 @@
 package com.qws.nypp.wxapi;
 
-import com.qws.nypp.activity.settting.OrderDetaiActivity;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.utils.ToastUtil;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -49,11 +48,13 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 			if(resp.errCode == 0){
-				ToastUtil.show("支付成功");
+//				ToastUtil.show("支付成功");
+				EventBus.getDefault().post("pay_success");
 			}else{
-				ToastUtil.show("支付失败，请重试");
+//				ToastUtil.show("支付失败，请重试");
+				EventBus.getDefault().post("pay_fail");
 			}
-			EventBus.getDefault().post("showOrderDetail");
+			
 			finish();
 		}
 	}

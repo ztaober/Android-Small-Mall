@@ -21,6 +21,7 @@
     <application
         android:name=".config.TApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -75,6 +76,34 @@
         <!-- 商品详情 -->
         <activity
             android:name=".activity.home.GoodsDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 多图浏览 -->
+        <activity
+            android:name=".activity.home.ImagePagerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 评价列表页面 -->
+        <activity
+            android:name=".activity.home.GoodsAppraiseActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- WEB商品详情 -->
+        <activity
+            android:name=".activity.home.WebDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 产品参数 -->
+        <activity
+            android:name=".activity.home.GoodsParamsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >

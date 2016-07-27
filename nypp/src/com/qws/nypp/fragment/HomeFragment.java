@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -31,6 +34,7 @@ import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.bean.CommonResult4List;
 import com.qws.nypp.bean.GoodsBean;
 import com.qws.nypp.config.ServerConfig;
+import com.qws.nypp.config.SpConfig;
 import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
@@ -38,6 +42,7 @@ import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.DisplayUtil;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
+import com.qws.nypp.utils.SpUtil;
 import com.qws.nypp.view.AdCarouselView;
 import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.qws.nypp.view.pullview.SpacesItemDecoration;
@@ -131,6 +136,9 @@ public class HomeFragment extends BaseFragment {
 		getData(1);
 		// 加载模式
 		mLoadingView.setLoadingMode(LoadingMode.LOADING);
+		
+		getContact();//获取联系人
+	
 	}
 	
 	private void getData(int i){
@@ -163,6 +171,36 @@ public class HomeFragment extends BaseFragment {
 				mPullRefreshRecyclerView.onRefreshComplete();
 				
 				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
+			}
+		}, false, false);
+	}
+	
+	private void getContact(){
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.CONTACT_US);
+		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+                // 请求成功
+                JSONObject result = response.get();// 响应结果
+                if("200".equals(result.optString("status"))) {
+                	JSONArray data = result.optJSONArray("data");
+                	String chat = "";
+                	String call = "";
+					try {
+						chat = (String) data.get(0);
+						call = (String) data.get(1);
+					} catch (JSONException e) {
+					}
+					SpUtil.getSpUtil().putSPValue(SpConfig.CONTACT_CALL, call);
+            		SpUtil.getSpUtil().putSPValue(SpConfig.CONTACT_CHAT, chat);
+                } 
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				
 			}
 		}, false, false);
 	}

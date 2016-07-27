@@ -41,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
 		context = getActivity();
 		view_Parent = getViews();
 		titleView = findViewById(R.id.view_title);
-		mLoadingView = findViewById(R.id.network_error);
+		mLoadingView = (LoadingView) findViewById(R.id.network_error);
 		findViews();
 		initData();
 		setListener();

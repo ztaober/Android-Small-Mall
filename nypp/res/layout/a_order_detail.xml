@@ -242,6 +242,7 @@
             android:background="@color/red"
             android:gravity="center"
             android:text="取消订单"
+            android:textSize="@dimen/font24"
             android:textColor="@color/white" />
 
         <TextView
@@ -253,19 +254,19 @@
             android:background="@color/red"
             android:gravity="center"
             android:text="付款"
+            android:textSize="@dimen/font24"
             android:textColor="@color/white" />
-        
-        <TextView
-            android:visibility="invisible"
-            android:id="@+id/order_detail_delete_order"
-            android:layout_width="100dp"
+         <TextView
+             android:visibility="gone"
+            android:id="@+id/order_detail_handling"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
-            android:background="@color/black"
             android:gravity="center"
-            android:text="删除订单"
-            android:textColor="@color/white" />
+            android:text="您的退款申请正在处理中，可电话咨询客服~"
+            android:textSize="@dimen/font24"/>
+        
     </RelativeLayout>
 
 </RelativeLayout>

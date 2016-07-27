@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.qws.nypp.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="货源类别"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text="现货"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="品牌"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text="茜维诗"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="货号"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text="000"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="是否支持贴牌"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text="支持"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="是否支持代工"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text="支持"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="面料名称"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text=""
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="主面料成份"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text=""
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="主面料成份含量"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text=""
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="里料成份"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text=""
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sline_view"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/trans30" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

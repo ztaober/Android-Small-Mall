@@ -1,8 +1,10 @@
 package com.qws.nypp.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
@@ -21,6 +23,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.home.GoodsDetailActivity;
+import com.qws.nypp.activity.home.ImagePagerActivity;
 import com.qws.nypp.bean.BannerBean;
 import com.qws.nypp.config.TApplication;
 import com.qws.nypp.utils.DisplayUtil;
@@ -36,6 +39,7 @@ import com.qws.nypp.utils.LogUtil;
  * @Copyright:
  */
 public class DetailsCarouselView extends RelativeLayout {
+	private Context context;
 	private List<String> adList;
 	/** ViewPager */
 	private ViewPager viewpager_ad;
@@ -68,6 +72,7 @@ public class DetailsCarouselView extends RelativeLayout {
 	}
 
 	private void init(Context context) {
+		this.context = context;
 		options = TApplication.getInstance().getAllOptions(R.drawable.bg_defualt_detail);
 		View view = View.inflate(context, R.layout.view_ad_carousel, null);
 		addView(view);
@@ -77,10 +82,10 @@ public class DetailsCarouselView extends RelativeLayout {
 	
 	public void initPicList(List<String> picList){
 		adList = picList;
-		initAd(getContext());
+		initAd();
 	}
 
-	private void initAd(Context context) {
+	private void initAd() {
 		if (adList.size() == 0) {
 			return;
 		}
@@ -127,7 +132,10 @@ public class DetailsCarouselView extends RelativeLayout {
 				case MotionEvent.ACTION_UP:
 				case MotionEvent.ACTION_CANCEL:
 					if (Math.abs(event.getX() - startX) < 10 && Math.abs(event.getY() - startY) < 10) {
-						LogUtil.t("gogogo"+flag);
+        				Intent intent = new Intent(context, ImagePagerActivity.class);
+        				intent.putStringArrayListExtra("path", (ArrayList<String>) adList);
+        				intent.putExtra("cur", flag);
+        				context.startActivity(intent);
 					}
 					break;
 				}

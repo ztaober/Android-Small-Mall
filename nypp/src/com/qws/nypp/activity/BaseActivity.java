@@ -14,6 +14,7 @@ import com.qws.nypp.R;
 import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.SystemBarTintManager;
 import com.qws.nypp.utils.Util;
+import com.qws.nypp.view.LoadingView;
 import com.qws.nypp.view.TitleView;
 
 import de.greenrobot.event.EventBus;
@@ -35,6 +36,8 @@ public abstract class BaseActivity extends Activity {
 	protected SystemBarTintManager mTintManager;
 	/** 标题 */
 	protected TitleView titleView;
+	/** 加载框View */
+	protected LoadingView mLoadingView;
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
@@ -47,6 +50,7 @@ public abstract class BaseActivity extends Activity {
 		}
 		setContentView(view);
 		titleView = (TitleView) findViewById(R.id.view_title);
+		mLoadingView = (LoadingView) findViewById(R.id.network_error);
 		findViews();
 		initData();
 		setListener();

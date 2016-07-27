@@ -17,7 +17,9 @@ import com.qws.nypp.fragment.HomeFragment;
 import com.qws.nypp.fragment.OptionalFragment;
 import com.qws.nypp.fragment.OrderFragment;
 import com.qws.nypp.fragment.SettingFragment;
+import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.IntentUtil;
+import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.MyRadioView;
 import com.qws.nypp.view.dialog.FunctionDialog;
@@ -84,6 +86,24 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 	protected void getData() {
 
 	}
+	
+	@Override
+	protected boolean useEventBus() {
+		return true;
+	}
+	
+	/** 切换页面 */
+    public void onEventMainThread(String msg) {  
+        if (msg != null) {
+        	if("goHomeFrag".equals(msg)){
+        		AppManager.getAppManager().goHomeActivity();
+//        		radio_home.performClick();
+        	}else if("goOrderFrag".equals(msg)){
+        		AppManager.getAppManager().goHomeActivity();
+//        		radio_order.performClick();
+        	}
+        }
+    }
 
 	public void chooseFragment(int position) {
 		FragmentTransaction beginTransaction = manager.beginTransaction();
@@ -164,13 +184,4 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 }

@@ -1,5 +1,8 @@
 package com.qws.nypp.activity.home;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,12 +10,18 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.provider.ContactsContract.Contacts.Data;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -27,14 +36,19 @@ import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
+import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.utils.Util;
 import com.qws.nypp.view.DetailSelectPopupWindow;
 import com.qws.nypp.view.DetailsCarouselView;
+import com.qws.nypp.view.LoadingView;
+import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 商品详情
@@ -58,8 +72,20 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 	private TextView priceTv;		//折扣前价格
 	private TextView logisticsTv;	//快递费
 	private TextView harbourTv;		//地址
+	private TextView appraiseNumTv;		//评价数目
+	
+	private TextView noAppraiseTv; //没有评价
+	private LinearLayout appraiseLl; //有评价
+	private RatingBar ratingBar; //评价人姓名
+	private TextView appraiseNameTv; //评价人姓名
+	private TextView appraiseContentTv; //评价内容
+	private TextView appraiseTimeTv; //评价时间
+	private TextView appraiseSizeTv; //评价大小
+	private TextView appraiseColorTv; //评价颜色
 	private Button addCart;
 	private DetailSelectPopupWindow selectPpw;
+	private PopupWindow mPopupWindow = null;
+	
 	@Override
 	protected int getContentViewId() {
 		return R.layout.a_goods_detail;
@@ -75,6 +101,16 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		priceTv = (TextView) findViewById(R.id.goods_detail_price);
 		logisticsTv = (TextView) findViewById(R.id.goods_detail_logistics);
 		harbourTv = (TextView) findViewById(R.id.goods_detail_harbour);
+		appraiseNumTv = (TextView) findViewById(R.id.goods_detail_appraise);
+		noAppraiseTv = (TextView) findViewById(R.id.goods_detail_no_appraise);
+		appraiseLl = (LinearLayout) findViewById(R.id.goods_detail_appraise_ll);
+		ratingBar = (RatingBar) findViewById(R.id.goods_detail_ratingbar);
+		appraiseNameTv = (TextView) findViewById(R.id.goods_detail_appraise_name);
+		appraiseContentTv = (TextView) findViewById(R.id.goods_detail_appraise_content);
+		appraiseTimeTv = (TextView) findViewById(R.id.goods_detail_appraise_time);
+		appraiseSizeTv = (TextView) findViewById(R.id.goods_detail_appraise_size);
+		appraiseColorTv = (TextView) findViewById(R.id.goods_detail_appraise_color);
+		initPopuWindow();
 	}
 
 	@Override
@@ -91,7 +127,34 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		findViewById(R.id.detail_collection).setOnClickListener(this);
 		findViewById(R.id.detail_add_cart).setOnClickListener(this);
 		findViewById(R.id.detail_buy).setOnClickListener(this);
+		findViewById(R.id.goods_detail_all_appraise).setOnClickListener(this);
+		findViewById(R.id.goods_detail_pro_detail).setOnClickListener(this);
+		findViewById(R.id.goods_detail_pro_param).setOnClickListener(this);
 		
+//		titleView.setRightBtn("呵呵还", new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				mPopupWindow.update();
+//				mPopupWindow.showAsDropDown(titleView,  Gravity.LEFT, Gravity.NO_GRAVITY);
+//			}
+//		}, R.drawable.ic_nav_more);
+//		titleView.setRightImgNewBtn(R.drawable.ic_nav_more, new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				mPopupWindow.update();
+//				mPopupWindow.showAsDropDown(titleView,  Gravity.LEFT, Gravity.NO_GRAVITY);
+//			}
+//		});
+		
+		// 重新加载按钮事件
+		mLoadingView.setReloadBtListenner(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getData();
+			}
+		});
 	}
 	
 	@Override
@@ -112,6 +175,21 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			selectPpw = new DetailSelectPopupWindow();
 			selectPpw.initPopupWindow(context, goodsDetailBean, 0, productId);
 			selectPpw.showAtLocation(addCart, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,0);
+			break;
+		case R.id.goods_detail_all_appraise://查看所有评价
+			Intent it1 = new Intent(context,GoodsAppraiseActivity.class);
+			it1.putExtra("productId", productId);
+			startActivity(it1);
+			break;
+		case R.id.goods_detail_pro_detail://商品详情
+			Intent intent = new Intent(context,WebDetailActivity.class);
+			intent.putExtra("productId", productId);
+			startActivity(intent);
+			break;
+		case R.id.goods_detail_pro_param://产品参数
+			Intent it = new Intent(context,GoodsParamsActivity.class);
+			it.putExtra("goodsDetailBean", goodsDetailBean);
+			startActivity(it);
 			break;
 
 		default:
@@ -154,6 +232,8 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	protected void getData() {
+		// 加载模式
+		mLoadingView.setLoadingMode(LoadingMode.LOADING);
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.PRODUCT_DETAIL_PATH);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", TApplication.getInstance().getUserSign());
@@ -179,14 +259,60 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
                 priceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
                 logisticsTv.setText("快递"+data.logistics+"元");
                 harbourTv.setText(data.harbour);
+                appraiseNumTv.setText("宝贝评价（"+data.appraiseCount+"）");
+                if(data.appraiseCount == 0){
+                	noAppraiseTv.setVisibility(View.VISIBLE);
+                	appraiseLl.setVisibility(View.GONE);
+                }else{
+                	noAppraiseTv.setVisibility(View.GONE);
+                	appraiseLl.setVisibility(View.VISIBLE);
+                	appraiseNameTv.setText(data.appraise.memberName);
+                	appraiseContentTv.setText(data.appraise.appraiseContent);
+                	appraiseTimeTv.setText(Util.getTime(data.appraise.appraiseDate));
+                	appraiseSizeTv.setText("尺码:"+data.appraise.appraiseSize);
+                	appraiseColorTv.setText("颜色:"+data.appraise.appraiseColor);
+                	ratingBar.setRating(data.appraise.appraiseLevel);
+                }
+                
+                mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
+                
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
 				
+				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
+				
 			}
-		}, false, true);
+		}, false, false);
+	}
+	
+	/**
+	 * 初始化Popuwindow[返回退出的popw]
+	 */
+	private void initPopuWindow() {
+		final View v = this.getLayoutInflater().inflate(R.layout.popup_window_cancle, null);
+		v.findViewById(R.id.popw_cancle_home).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EventBus.getDefault().post("goHomeFrag");
+			}
+		});
+		v.findViewById(R.id.popw_cancle_cart).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EventBus.getDefault().post("goOrderFrag");
+			}
+		});
+		
+		mPopupWindow = new PopupWindow(v, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, true);
+		mPopupWindow.setFocusable(true);
+		mPopupWindow.setTouchable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 	}
 
 }

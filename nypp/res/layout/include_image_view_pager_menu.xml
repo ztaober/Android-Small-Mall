@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_linear"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/view_pager_bg"
+    android:orientation="vertical"
+    android:visibility="visible" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingBottom="12dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:paddingTop="12dip" >
+
+        <TextView
+            android:id="@+id/save_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_defult_btn_bg"
+            android:gravity="center"
+            android:text="保存到相册"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/download_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_defult_btn_bg"
+            android:gravity="center"
+            android:text="下载原图"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/cancle"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_defult_btn_bg"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </LinearLayout>
+</LinearLayout>

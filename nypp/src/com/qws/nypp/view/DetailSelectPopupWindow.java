@@ -376,6 +376,7 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
             			bundle.putInt("quantity", currentSuk.getQuantity());
     					bundle.putSerializable("orderList", (Serializable)list);
     					IntentUtil.gotoActivity(context, SureOrderActivity.class, bundle);
+    					this.dismiss();
             		}
             	}else{
             		//添加到进货单

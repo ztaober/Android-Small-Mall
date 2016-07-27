@@ -1,10 +1,13 @@
 package com.qws.nypp.http;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.text.TextUtils;
 
+import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.ProcessDialogUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.dialog.WaitDialog;
@@ -19,6 +22,8 @@ import com.yolanda.nohttp.error.ServerError;
 import com.yolanda.nohttp.error.TimeoutError;
 import com.yolanda.nohttp.error.URLError;
 import com.yolanda.nohttp.error.UnKnownHostError;
+
+import de.greenrobot.event.EventBus;
 
 public class HttpResponseListener<T> implements OnResponseListener<T> {
 
@@ -99,8 +104,20 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
      */
     @Override
     public void onSucceed(int what, Response<T> response) {
-        if (callback != null)
-            callback.onSucceed(what, response);
+        if (callback != null){
+        	try{
+        		JSONObject json = (JSONObject) response.get();
+//        		挤下线功能
+            	if("204".equals(json.optString("status"))) {
+            		AppManager.getAppManager().AppExit(context, false);
+            		EventBus.getDefault().post("LogonInvalid");
+            		return;
+            	}
+        	}catch(Exception e){
+        	}
+        	callback.onSucceed(what, response);
+        }
+           
     }
 
     /**
