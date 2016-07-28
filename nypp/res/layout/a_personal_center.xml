@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical" >
+
+    <com.qws.nypp.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:layout_marginTop="15dp"
+        android:background="@color/trans30" />
+
+    <RelativeLayout
+        android:id="@+id/personal_img_rl"
+        android:layout_width="match_parent"
+        android:layout_height="56dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dip"
+            android:gravity="left|fill_vertical"
+            android:text="头像"
+            android:textSize="@dimen/font30" />
+        
+        <ImageView
+            android:id="@+id/personal_img_iv"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_defult_user_02" />
+
+        <TextView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dip"
+            android:background="@drawable/ic_list_into" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:layout_marginBottom="15dp"
+        android:background="@color/trans30" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:background="@color/trans30" />
+
+    <RelativeLayout
+        android:id="@+id/personal_name_rl"
+        android:layout_width="match_parent"
+        android:layout_height="46dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dip"
+            android:gravity="left|fill_vertical"
+            android:text="名字"
+            android:textSize="@dimen/font30" />
+        
+        <TextView
+            android:id="@+id/personal_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:gravity="left|fill_vertical"
+            android:text="名字"
+            android:textColor="@color/nypp_gray"
+            android:textSize="@dimen/font30" />
+
+        <TextView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dip"
+            android:background="@drawable/ic_list_into" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:layout_marginLeft="16dp"
+        android:background="@color/trans30" />
+
+    <RelativeLayout
+        android:id="@+id/personal_addr_rl"
+        android:layout_width="match_parent"
+        android:layout_height="46dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dip"
+            android:gravity="left|fill_vertical"
+            android:text="收货地址管理"
+            android:textSize="@dimen/font30" />
+
+        <TextView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dip"
+            android:background="@drawable/ic_list_into" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:layout_marginLeft="16dp"
+        android:background="@color/trans30" />
+
+    <RelativeLayout
+        android:id="@+id/personal_pwd_rl"
+        android:layout_width="match_parent"
+        android:layout_height="46dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dip"
+            android:gravity="left|fill_vertical"
+            android:text="修改登录密码"
+            android:textSize="@dimen/font30" />
+
+        <TextView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dip"
+            android:background="@drawable/ic_list_into" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:background="@color/trans30" />
+    
+    <TextView
+        android:id="@+id/personal_logout_tv"
+        style="@style/default_textview_btn"
+        android:background="@drawable/btn_pink"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:text="退出登录" />
+
+</LinearLayout>

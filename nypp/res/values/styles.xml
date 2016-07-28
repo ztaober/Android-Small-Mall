@@ -85,4 +85,9 @@
         <item name="android:minHeight">18dip</item>
         <item name="android:maxHeight">18dip</item>
     </style>
+    <style name="duefun_big_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/duefrn_big_rating_bar_progress</item>
+        <item name="android:minHeight">40dip</item>
+        <item name="android:maxHeight">40dip</item>
+    </style>
 </resources>

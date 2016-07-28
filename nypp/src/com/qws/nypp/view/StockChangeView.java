@@ -38,6 +38,7 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 	private TextView stockTv;
 	private int num = 1;
 	private int maxNum = 1;
+	private int minNum = 1;
 	private String warn = "";
 	private String detailId = "";
 	public StockChangeView(Context context) {
@@ -87,8 +88,9 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 	}
 	private OnNumChangeListenner listner;
 	//确认订单使用
-	public void notifyNum(int num, int maxNum , OnNumChangeListenner listner){
+	public void notifyNum(int num, int minNum, int maxNum , OnNumChangeListenner listner){
 		this.num = num;
+		this.minNum = minNum;
 		this.maxNum = maxNum;
 		this.listner = listner;
 		stockTv.setText(num+"");
@@ -119,7 +121,7 @@ public class StockChangeView extends LinearLayout implements View.OnClickListene
 				break;
 			}
 			num--;
-			if(num<1){
+			if(num<minNum){
 				num++;
 				break;
 			}

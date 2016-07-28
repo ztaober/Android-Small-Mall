@@ -36,6 +36,7 @@ public class TabIndicator extends RelativeLayout {
 	private int currentCheck = 0;
 	/** 动画操作的img */
 	private ImageView sliderImg;
+	private int LineSize = 30;
 
 	public TabIndicator(Context context) {
 		super(context);
@@ -71,6 +72,10 @@ public class TabIndicator extends RelativeLayout {
 		tabImgLinear = (LinearLayout) findViewById(R.id.tab_img_ll);
 	}
 	
+	public void setLineSize(int LineSize){
+		this.LineSize = LineSize;
+	}
+	
 	public void initData(String[] tabArgs) {
 		if (tabArgs.length == 0) {
 			return;
@@ -100,18 +105,19 @@ public class TabIndicator extends RelativeLayout {
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(c, 2), 1.0f);
 			if(i == 0){
 				sliderImg = new ImageView(c);
-				sliderImg.setPadding(DisplayUtil.dip2px(c, 30), 0, DisplayUtil.dip2px(c, 30), 0);
+				sliderImg.setPadding(DisplayUtil.dip2px(c, LineSize), 0, DisplayUtil.dip2px(c, LineSize), 0);
 				sliderImg.setImageResource(R.color.comm_color);
 				tabImgLinear.addView(sliderImg, i, params);
 			} else {
 				ImageView img = new ImageView(c);
-				img.setPadding(DisplayUtil.dip2px(c, 30), 0, DisplayUtil.dip2px(c, 30), 0);
+				img.setPadding(DisplayUtil.dip2px(c, LineSize), 0, DisplayUtil.dip2px(c, LineSize), 0);
 				tabImgLinear.addView(img, i, params);
 			}
 		}
 		
 		setListener();
 	}
+	
 
 	private void setListener() {
 		tabTextGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {

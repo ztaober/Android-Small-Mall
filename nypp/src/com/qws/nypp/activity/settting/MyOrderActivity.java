@@ -50,7 +50,7 @@ public class MyOrderActivity extends BaseActivity {
 	private DisplayImageOptions options;
 	/** 切换进度条 */
 	private TabIndicator viewTab;
-	private String[] items = new String[] { "全部", "待付款", "待发货", "待收货", "待评价"};
+	private String[] items = new String[] { "  全部  ", "待付款", "待发货", "待收货", "待评价"};
 	private int orderState;
 	private int page;
 	private int rows;
@@ -73,8 +73,9 @@ public class MyOrderActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 		titleView.setTitle("我的订单");
-		EventBus.getDefault().register(this); 
+		viewTab.setLineSize(10);
 		viewTab.initData(items);
+		
 	}
 
 	@Override
@@ -110,7 +111,7 @@ public class MyOrderActivity extends BaseActivity {
 					setText(convertView, R.id.item_order_info_status, "待收货");
 					break;
 				case 4:
-					setText(convertView, R.id.item_order_info_status, "交易成功(未评价)");
+					setText(convertView, R.id.item_order_info_status, "待评价");
 					break;
 				case 5:
 					setText(convertView, R.id.item_order_info_status, "交易成功");
@@ -195,9 +196,8 @@ public class MyOrderActivity extends BaseActivity {
 	
 	
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		 EventBus.getDefault().unregister(this); 
+	protected boolean useEventBus() {
+		return true;
 	}
 	
 	/** 添加进货单之后收到这个事件 */

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -18,8 +19,11 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.BaseActivity;
+import com.qws.nypp.activity.LoginProbActivity;
 import com.qws.nypp.activity.MainActivity;
+import com.qws.nypp.activity.home.GoodsDetailActivity;
 import com.qws.nypp.activity.home.PayModeActivity;
+import com.qws.nypp.activity.home.WebDetailActivity;
 import com.qws.nypp.adapter.CommAdapter;
 import com.qws.nypp.adapter.CommAdapter.AdapterListener;
 import com.qws.nypp.bean.AddressBean;
@@ -38,6 +42,8 @@ import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.SpUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AutoSizeListView;
+import com.qws.nypp.view.dialog.FunctionDialog;
+import com.qws.nypp.view.dialog.MenuCallback;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
 
@@ -64,7 +70,7 @@ public class OrderDetaiActivity extends BaseActivity {
 	private TextView logistTv;
 	private TextView moneyTv;
 	private TextView userMsgTv;
-	
+	private TextView callTv;
 	
 	private OrderDetailBean orderDetailBean;
 	private double allPrice;
@@ -92,6 +98,7 @@ public class OrderDetaiActivity extends BaseActivity {
 		logistTv  = (TextView) findViewById(R.id.order_detail_logist);
 		moneyTv  = (TextView) findViewById(R.id.order_detail_money);
 		userMsgTv  = (TextView) findViewById(R.id.order_detail_user_msg);
+		callTv  = (TextView) findViewById(R.id.order_detail_call);
 		orderList = (AutoSizeListView) findViewById(R.id.order_detail_listview);
 		
 		cancleTv  = (TextView) findViewById(R.id.order_detail_cancle);
@@ -114,23 +121,75 @@ public class OrderDetaiActivity extends BaseActivity {
 
 			@Override
 			public void onItemClick(int position, View v) {
-				
+				Bundle bundle = new Bundle();
+				bundle.putString("productId", detailsList.get(position).commodity);
+            	IntentUtil.gotoActivity(context, GoodsDetailActivity.class, bundle);
 			}
 		}) {
 
 			@Override
-			public void onGetView(int position, View convertView, OrderDetailSukBean data) {
+			public void onGetView(int position, View convertView, final OrderDetailSukBean data) {
 				ImageLoader.getInstance().displayImage(data.image, (ImageView)convertView.findViewById(R.id.item_order_suk_pic), options);
 				setText(convertView, R.id.item_order_suk_title_tv, data.title);
 				setText(convertView, R.id.item_order_suk_color_size, "颜色:"+data.colour+";尺寸:"+data.size);
 				setText(convertView, R.id.item_order_suk_price,data.preferentialPrice+"元");
 				setText(convertView, R.id.item_order_suk_num, "x"+data.quantity);
+				TextView appraiseTv = (TextView) convertView.findViewById(R.id.item_order_appraise);
+				if(data.appraise){
+					appraiseTv.setVisibility(View.VISIBLE);
+					appraiseTv.setText("已评价");
+					appraiseTv.setBackgroundDrawable(null);
+				}else if(orderDetailBean.orderStatus == 4){
+					appraiseTv.setVisibility(View.VISIBLE);
+					appraiseTv.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							Intent intent = new Intent(context,AppraiseActivity.class);
+							intent.putExtra("orderId", orderId);
+							intent.putExtra("sukBean", data);
+							startActivity(intent);
+						}
+					});
+				}
+			
 			}
 		};
 		
 		orderList.setAdapter(adapter);
 		
+		
+		callTv.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				final String call = SpUtil.getSpUtil().getSPValue(SpConfig.CONTACT_CALL, "");
+				FunctionDialog.show(OrderDetaiActivity.this, true,
+						"拨打卖家电话", call, getString(android.R.string.cancel),
+						"", getString(android.R.string.ok), new MenuCallback() {
+
+							@Override
+							public void onMenuResult(int menuType) {
+								if (menuType == R.id.right_bt) {
+									IntentUtil.goCallPhone(context, call);
+								}
+							}
+				});		
+			}
+		});
 	}
+	
+	@Override
+	protected boolean useEventBus() {
+		return true;
+	}
+	
+	/** 退款之后收到这个事件 */
+    public void onEventMainThread(String msg) {  
+        if (msg != null && "getOrderDetaildata".equals(msg)) {
+        	getData();
+        }
+    }  
 
 	@Override
 	protected void getData() {
@@ -227,6 +286,9 @@ public class OrderDetaiActivity extends BaseActivity {
 				@Override
 				public void onClick(View v) {
 					//退款页面
+					Intent intent = new Intent(context,RefundActivity.class);
+					intent.putExtra("orderId", orderId);
+					startActivity(intent);
 				}
 			});
 			break;
@@ -245,6 +307,9 @@ public class OrderDetaiActivity extends BaseActivity {
 				@Override
 				public void onClick(View v) {
 					//退款页面
+					Intent intent = new Intent(context,RefundActivity.class);
+					intent.putExtra("orderId", orderId);
+					startActivity(intent);
 				}
 			});
 			break;

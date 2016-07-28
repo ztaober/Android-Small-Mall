@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp" >
+
+    <ImageView
+        android:id="@+id/cart_pic_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/item_cart_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/cart_pic_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="@dimen/font26" />
+
+    <TextView
+        android:id="@+id/item_collect_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/cart_pic_img"
+        android:paddingBottom="13dp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/light_red"
+        android:textSize="@dimen/font28" />
+    
+    <View 
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:background="@color/trans30"/>
+
+</RelativeLayout>

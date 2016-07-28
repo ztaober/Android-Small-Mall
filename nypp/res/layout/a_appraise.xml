@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <com.qws.nypp.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/appraise_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
+        android:layout_margin="15dp" >
+
+        <ImageView
+            android:id="@+id/appraise_iv"
+            android:layout_width="85dp"
+	        android:layout_height="85dp"
+	        android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/appraise_pingfen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/appraise_iv"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="评分"
+            android:textSize="@dimen/font31" />
+
+        <RatingBar
+            android:id="@+id/appraise_rb"
+            style="@style/duefun_big_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appraise_pingfen"
+            android:layout_toRightOf="@+id/appraise_iv"
+            android:numStars="5" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/appraise_et"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/appraise_rl"
+        android:layout_margin="15dp"
+        android:gravity="left"
+        android:hint="亲，留下您最宝贵的评价吧！"
+        android:singleLine="false"
+        android:textColor="@color/nypp_gray"
+        android:textSize="@dimen/font28" />
+
+    <TextView
+        android:id="@+id/appraise_done"
+        style="@style/default_textview_btn"
+        android:layout_height="44dp"
+        android:layout_below="@+id/appraise_et"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="提交评价" />
+
+</RelativeLayout>

@@ -245,37 +245,39 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();// 响应结果
-                CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
-                GoodsDetailBean data = goodsDetial.getData();
-                goodsDetailBean = data;
-                carouselView.initPicList(data.figure);
-                
-                titleTv.setText(data.title);
-                soldTv.setText("成交"+data.soldQuantity+"笔");
-                stockTv.setText("库存"+data.quantity+"件");
-                miniTv.setText(data.minimum+"件起批");
-                prePriceTv.setText("¥"+data.preferentialPrice);
-                priceTv.setText("¥"+data.price);
-                priceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
-                logisticsTv.setText("快递"+data.logistics+"元");
-                harbourTv.setText(data.harbour);
-                appraiseNumTv.setText("宝贝评价（"+data.appraiseCount+"）");
-                if(data.appraiseCount == 0){
-                	noAppraiseTv.setVisibility(View.VISIBLE);
-                	appraiseLl.setVisibility(View.GONE);
-                }else{
-                	noAppraiseTv.setVisibility(View.GONE);
-                	appraiseLl.setVisibility(View.VISIBLE);
-                	appraiseNameTv.setText(data.appraise.memberName);
-                	appraiseContentTv.setText(data.appraise.appraiseContent);
-                	appraiseTimeTv.setText(Util.getTime(data.appraise.appraiseDate));
-                	appraiseSizeTv.setText("尺码:"+data.appraise.appraiseSize);
-                	appraiseColorTv.setText("颜色:"+data.appraise.appraiseColor);
-                	ratingBar.setRating(data.appraise.appraiseLevel);
-                }
-                
-                mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
-                
+				if("200".equals(result.optString("status"))) {
+					CommonResult<GoodsDetailBean> goodsDetial = CommonResult.fromJson(result.toString(), GoodsDetailBean.class);
+	                GoodsDetailBean data = goodsDetial.getData();
+	                goodsDetailBean = data;
+	                carouselView.initPicList(data.figure);
+	                
+	                titleTv.setText(data.title);
+	                soldTv.setText("成交"+data.soldQuantity+"笔");
+	                stockTv.setText("库存"+data.quantity+"件");
+	                miniTv.setText(data.minimum+"件起批");
+	                prePriceTv.setText("¥"+data.preferentialPrice);
+	                priceTv.setText("¥"+data.price);
+	                priceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
+	                logisticsTv.setText("快递"+data.logistics+"元");
+	                harbourTv.setText(data.harbour);
+	                appraiseNumTv.setText("宝贝评价（"+data.appraiseCount+"）");
+	                if(data.appraiseCount == 0){
+	                	noAppraiseTv.setVisibility(View.VISIBLE);
+	                	appraiseLl.setVisibility(View.GONE);
+	                }else{
+	                	noAppraiseTv.setVisibility(View.GONE);
+	                	appraiseLl.setVisibility(View.VISIBLE);
+	                	appraiseNameTv.setText(data.appraise.memberName);
+	                	appraiseContentTv.setText(data.appraise.appraiseContent);
+	                	appraiseTimeTv.setText(Util.getTime(data.appraise.appraiseDate));
+	                	appraiseSizeTv.setText("尺码:"+data.appraise.appraiseSize);
+	                	appraiseColorTv.setText("颜色:"+data.appraise.appraiseColor);
+	                	ratingBar.setRating(data.appraise.appraiseLevel);
+	                }
+	                mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
+				}else{
+					mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
+				}
 			}
 
 			@Override

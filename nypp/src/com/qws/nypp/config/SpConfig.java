@@ -23,4 +23,6 @@ public class SpConfig {
 	public static final String PORTRAIT_URL = "portrait_url";
 	/** 用户唯一标识 */
 	public static final String USER_SIGN = "user_sign";
+	/** 用户memberName*/
+	public static final String MEMBER_NAME = "memberName";
 }

@@ -15,11 +15,12 @@ import com.google.gson.Gson;
 import com.qws.nypp.R;
 import com.qws.nypp.activity.MainActivity;
 import com.qws.nypp.activity.settting.AddrHandActivity;
-import com.qws.nypp.activity.settting.MyCarActivity;
+import com.qws.nypp.activity.settting.MyContactActivity;
 import com.qws.nypp.activity.settting.MyCollectionActivity;
 import com.qws.nypp.activity.settting.MyOrderActivity;
 import com.qws.nypp.activity.settting.OpinionActivity;
 import com.qws.nypp.activity.settting.QRCodeActivity;
+import com.qws.nypp.activity.settting.center.PersonalCenterActivity;
 import com.qws.nypp.adapter.CommAdapter;
 import com.qws.nypp.adapter.CommAdapter.AdapterListener;
 import com.qws.nypp.config.ServerConfig;
@@ -43,7 +44,7 @@ import com.yolanda.nohttp.Response;
  * @author
  * @date 2015-12-31
  */
-public class SettingFragment extends BaseFragment implements AdapterListener {
+public class SettingFragment extends BaseFragment implements OnClickListener {
 	
 	private TextView unpaidTv;//待付款
 	private TextView nodeliveryTv;//待发货
@@ -72,6 +73,7 @@ public class SettingFragment extends BaseFragment implements AdapterListener {
 			
 			@Override
 			public void onClick(View v) {
+				IntentUtil.gotoActivity(context, PersonalCenterActivity.class);
 			}
 		}, 0);
 		titleView.setRightEnabled(false);
@@ -79,17 +81,49 @@ public class SettingFragment extends BaseFragment implements AdapterListener {
 
 	@Override
 	protected void setListener() {
-		findViewById(R.id.ic_set_my_order_ll).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				IntentUtil.gotoActivity(context, MyOrderActivity.class);
-			}
-		});
+		findViewById(R.id.ic_set_my_order_ll).setOnClickListener(this);
+		findViewById(R.id.f_settinf_collect_rl).setOnClickListener(this);
+		findViewById(R.id.f_settinf_opinion_rl).setOnClickListener(this);
+		findViewById(R.id.f_settinf_qrcode_rl).setOnClickListener(this);
+		findViewById(R.id.f_settinf_contact_rl).setOnClickListener(this);
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.ic_set_my_order_ll: 	//我的订单
+			IntentUtil.gotoActivity(context, MyOrderActivity.class);
+			break;
+		case R.id.f_settinf_collect_rl: //我的收藏
+			IntentUtil.gotoActivity(context, MyCollectionActivity.class);
+			break;
+		case R.id.f_settinf_opinion_rl: //意见反馈
+			IntentUtil.gotoActivity(context, OpinionActivity.class);
+			break;
+		case R.id.f_settinf_qrcode_rl:  //二维码
+			IntentUtil.gotoActivity(context, QRCodeActivity.class);
+			break;
+		case R.id.f_settinf_contact_rl: //服务咨询
+			IntentUtil.gotoActivity(context, MyContactActivity.class);
+			break;
+
+		default:
+			break;
+		}
 	}
 	
 	@Override
 	protected void getData() {
+		
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		getNum();
+	}
+	
+	private void getNum() {
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.GET_ORDERS_AMOUNT);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", TApplication.getInstance().getUserSign());
@@ -120,32 +154,4 @@ public class SettingFragment extends BaseFragment implements AdapterListener {
 		}, false, false);
 	}
 
-	@Override
-	public void onItemClick(int position, View v) {
-		switch (position) {
-		case 0:// 我的订单
-			IntentUtil.gotoActivity(context, MyOrderActivity.class);
-			break;
-		case 1:// 我的收货地址
-			IntentUtil.gotoActivity(context, AddrHandActivity.class);
-			break;
-		case 2:// 我的收藏
-			IntentUtil.gotoActivity(context, MyCollectionActivity.class);
-			break;
-		case 3:// 购物车
-			IntentUtil.gotoActivity(context, MyCarActivity.class);
-			break;
-		case 4:// 意见反馈
-			IntentUtil.gotoActivity(context, OpinionActivity.class);
-			break;
-		case 5:// 二维码
-			IntentUtil.gotoActivity(context, QRCodeActivity.class);
-			break;
-		case 6:// 版本更新
-
-			break;
-		default:
-			break;
-		}
-	}
 }

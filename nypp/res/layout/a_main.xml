@@ -63,9 +63,9 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:padding="3dp"
-            tab:img0="@drawable/ic_bottom_setting_unchose"
-            tab:img1="@drawable/ic_bottom_setting_chose"
-            tab:text="设置" />
+            tab:img0="@drawable/ic_bottom_my_unchose"
+            tab:img1="@drawable/ic_bottom_my_chose"
+            tab:text="我的" />
     </LinearLayout>
 
 </LinearLayout>

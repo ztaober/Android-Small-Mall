@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qws.nypp.R;
 import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.config.SpConfig;
@@ -42,7 +44,8 @@ import de.greenrobot.event.EventBus;
  */
 public class LoginActivity extends BaseActivity {
 	/** 头像 */
-	private ImageView login_img_head;
+	private ImageView headImg;
+	private DisplayImageOptions options;
 	/** 昵称 */
 	private TextView login_txt_nike;
 	/** 帐号 */
@@ -59,7 +62,7 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void findViews() {
-		login_img_head = (ImageView) findViewById(R.id.login_img_head);
+		headImg = (ImageView) findViewById(R.id.login_img_head);
 		login_txt_nike = (TextView) findViewById(R.id.login_txt_nike);
 		login_edit_uesrname = (EditText) findViewById(R.id.login_edit_uesrname);
 		login_edit_password = (EditText) findViewById(R.id.login_edit_password);
@@ -71,7 +74,10 @@ public class LoginActivity extends BaseActivity {
 		login_edit_password.setText(SpUtil.getSpUtil().getSPValue(SpConfig.USER_PWD, ""));
 		login_txt_nike.setText(SpUtil.getSpUtil().getSPValue(SpConfig.NICK_NAME, ""));
 		
-		SpUtil.getSpUtil().getSPValue(SpConfig.PORTRAIT_URL, "");
+		
+		options = TApplication.getInstance().getAllOptions(R.drawable.ic_default_user);
+		
+		ImageLoader.getInstance().displayImage(SpUtil.getSpUtil().getSPValue(SpConfig.PORTRAIT_URL, ""), headImg, options);
 	}
 
 	@Override
@@ -118,6 +124,7 @@ public class LoginActivity extends BaseActivity {
                 		SpUtil.getSpUtil().putSPValue(SpConfig.NICK_NAME, data.optString("nickname", ""));
                 		SpUtil.getSpUtil().putSPValue(SpConfig.PORTRAIT_URL, data.optString("portrait", ""));
                 		SpUtil.getSpUtil().putSPValue(SpConfig.USER_SIGN, data.optString("sign", ""));
+                		SpUtil.getSpUtil().putSPValue(SpConfig.MEMBER_NAME, data.optString("account", ""));
                 		
                 		TApplication.getInstance().setUserSign(data.optString("sign", ""));
                 		TApplication.getInstance().setMemberId(data.optString("memberId", ""));

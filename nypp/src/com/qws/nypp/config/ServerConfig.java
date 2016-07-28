@@ -84,7 +84,19 @@ public class ServerConfig {
 	public static final String REMOVE_ORDERS = base + "/removeOrders";
 	/** 确认收款 */
 	public static final String RECEIVE_ORDERS = base + "/receive";
+	/** 申请退款 */
+	public static final String APPLY_REFUND = base + "/applyRefund";
 	/** 订单评价 */
 	public static final String APPRAISE_ORDERS = base + "/addAppraise";
+	
+	/** 我的相关 */
+	/**  我的收藏 */
+	public static final String GET_MY_COLLECTION = base + "/selectCollectionAllByMemberId";
+	/**  意见反馈 */
+	public static final String COMMENTS_SUBMIT = base + "/commentsSubmitted";
+	/**  修改个人信息 */
+	public static final String UPDATE_MEMBER_BY_ID = base + "/updateMemberById";
+	/**  修改密码 */
+	public static final String UPDATE_PWD_BY_ID = base + "/updatePwdById";
 
 }

@@ -374,6 +374,7 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
             			
             			Bundle bundle = new Bundle();
             			bundle.putInt("quantity", currentSuk.getQuantity());
+            			bundle.putInt("minimum", detailBean.minimum);
     					bundle.putSerializable("orderList", (Serializable)list);
     					IntentUtil.gotoActivity(context, SureOrderActivity.class, bundle);
     					this.dismiss();

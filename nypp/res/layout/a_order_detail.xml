@@ -11,13 +11,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/order_detail_bottom_rl"
-        android:layout_below="@+id/view_title" >
+        android:layout_below="@+id/view_title"
+        android:background="@color/light_gray" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -112,6 +114,7 @@
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/font26" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,6 +138,7 @@
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/font26" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,6 +162,7 @@
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/font26" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -181,52 +186,43 @@
                     android:textColor="@color/light_red"
                     android:textSize="@dimen/font26" />
             </RelativeLayout>
-            
-            <RelativeLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/order_detail_user_msg"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginTop="18dp" >
-                
-                <ImageView 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                android:layout_margin="17dp"
+                android:drawableLeft="@drawable/ic_list_leave_letter02"
+                android:text="买家留言:"
+                android:textColor="@color/nypp_gray"
+                android:textSize="@dimen/font26" />
 
-                <TextView
-                    android:id="@+id/order_detail_user_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="买家留言:"
-                    android:textColor="@color/nypp_gray"
-                    android:textSize="@dimen/font26" />
-
-            </RelativeLayout>
-            
-            <View 
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/sline_view"
-                android:background="@color/trans30"/>
-            
-            <TextView 
-                android:id="@+id/order_detail_call"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="联系买家"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:textColor="@color/comm_color"
-                android:textSize="@dimen/font26"/>
+                android:background="@color/trans30" />
 
+            <TextView
+                android:id="@+id/order_detail_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:drawableLeft="@drawable/ic_contact_sale"
+                android:gravity="center"
+                android:text="联系买家"
+                android:textColor="@color/comm_color"
+                android:textSize="@dimen/font26" />
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/order_detail_bottom_rl"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_alignParentBottom="true" >
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" >
 
         <View
             android:layout_width="match_parent"
@@ -239,11 +235,11 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_toLeftOf="@+id/order_detail_pay"
-            android:background="@color/red"
+            android:background="@color/order_done_red"
             android:gravity="center"
             android:text="取消订单"
-            android:textSize="@dimen/font24"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/font24" />
 
         <TextView
             android:id="@+id/order_detail_pay"
@@ -251,13 +247,13 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
-            android:background="@color/red"
+            android:background="@color/order_done_red"
             android:gravity="center"
             android:text="付款"
-            android:textSize="@dimen/font24"
-            android:textColor="@color/white" />
-         <TextView
-             android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font24" />
+
+        <TextView
             android:id="@+id/order_detail_handling"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -265,8 +261,8 @@
             android:layout_margin="8dp"
             android:gravity="center"
             android:text="您的退款申请正在处理中，可电话咨询客服~"
-            android:textSize="@dimen/font24"/>
-        
+            android:textSize="@dimen/font24"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -4,7 +4,6 @@ public class OrderDetailSukBean extends BaseBean {
 	
 	public String title;
 	
-	
 	public String detailId;
 	public String ordersProductId;
 	public int quantity;
@@ -17,6 +16,6 @@ public class OrderDetailSukBean extends BaseBean {
 	public double preferentialPrice;
 	public String sukId;
 	public String cartDetailId;
-	public String appraise;
+	public boolean appraise;
 
 }

@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/item_home_goods_img"
         android:layout_width="match_parent"
-        android:layout_height="122dp"
+        android:layout_height="138dp"
         android:scaleType="fitXY" />
 
     <TextView
@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:textSize="@dimen/font22"
             android:textColor="@color/gray" />
 
         <TextView
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right"
+            android:textSize="@dimen/font22"
             android:textColor="@color/red" />
     </RelativeLayout>
 
@@ -60,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:textSize="@dimen/font22"
             android:textColor="@color/red" />
 
         <TextView
@@ -68,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_toRightOf="@+id/new_price_tv"
+            android:textSize="@dimen/font22"
             android:textColor="@color/gray" />
     </RelativeLayout>
 
@@ -85,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="优惠"
+            android:textSize="@dimen/font22"
             android:textColor="@color/red" />
 
         <TextView
@@ -93,6 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:text="拿货满3000元免邮哦"
+            android:textSize="@dimen/font22"
 			android:singleLine="true"            
             android:textColor="@color/gray" />
     </RelativeLayout>

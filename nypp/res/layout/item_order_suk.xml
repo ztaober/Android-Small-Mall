@@ -41,7 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:paddingTop="3dp"
-        android:layout_margin="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:text="12.00元"
         android:textColor="@color/black"
         android:textSize="@dimen/font_size_little" />
@@ -55,6 +56,21 @@
         android:layout_marginRight="10dp"
         android:text="x6"
         android:textColor="@color/nypp_gray"
+        android:textSize="@dimen/font_size_little" />
+    
+     <TextView
+        android:id="@+id/item_order_appraise"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/item_order_suk_num"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:background="@xml/shape1"
+        android:text="去评价"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="@dimen/font_size_little" />
 
     <View

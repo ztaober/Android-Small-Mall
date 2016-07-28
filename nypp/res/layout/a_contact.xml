@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical" >
+
+    <com.qws.nypp.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentTop="true"
+            android:background="@color/trans30" />
+
+        <ImageView
+            android:id="@+id/ic_help_chat_img"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/ic_help_chat" />
+
+        <TextView
+            android:id="@+id/ic_help_chat_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/ic_help_chat_img"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="微信帐号:"
+            android:textSize="@dimen/font26" />
+
+        <TextView
+            android:id="@+id/login_help_chat_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/ic_help_chat_txt"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textSize="@dimen/font26" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentBottom="true"
+            android:background="@color/trans30" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentTop="true"
+            android:background="@color/trans30" />
+
+        <ImageView
+            android:id="@+id/ic_help_call_img"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/ic_help_call" />
+
+        <TextView
+            android:id="@+id/ic_help_call_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/ic_help_call_img"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="联系方式:"
+            android:textSize="@dimen/font26" />
+
+        <TextView
+            android:id="@+id/login_help_call_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/ic_help_call_txt"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textColor="@color/nypp_help_text"
+            android:textSize="@dimen/font26" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sline_view"
+            android:layout_alignParentBottom="true"
+            android:background="@color/trans30" />
+    </RelativeLayout>
+
+</LinearLayout>

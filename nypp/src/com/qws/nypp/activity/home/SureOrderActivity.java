@@ -58,6 +58,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	public static final int SELECT_ADDR = 666;
 	private List<GoodsCartBean> cartList = new ArrayList<GoodsCartBean>();
 	private int quantity; //库存 详情页过来的可以修改 order页面过来的不可修改
+	private int minimum; //起批数 详情页过来的可以修改 order页面过来的不可修改
 	private AutoSizeListView orderLv;
 	private CommAdapter<GoodsCartBean> ordersAdapter;
 	private CommAdapter<GoodsCartSukBean> ordersSukAdapter;
@@ -202,18 +203,9 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		Bundle bundle = getIntent().getExtras();
 		cartList = (List<GoodsCartBean>) bundle.getSerializable("orderList");
 		quantity = bundle.getInt("quantity", 0);
-		double allPiece = 0;
-		for(GoodsCartBean cartBean : cartList){
-			logistics = cartBean.logistics;
-			for(GoodsCartSukBean sukBean : cartBean.sukList){
-				allPiece+= sukBean.preferentialPrice * sukBean.quantity;
-			}
-		}
-		allMoney = logistics+allPiece;
-		logisTv.setText("运费:¥"+logistics);
-		priceTv.setText("货款总计:¥"+allPiece);
-		allPriceTv.setText("合计:¥"+ allMoney);
+		minimum = bundle.getInt("minimum", 0);
 		
+		setMoney();
 		options = TApplication.getInstance().getAllOptionsNoAmi(R.drawable.bg_defualt_118);
 		ordersAdapter = new CommAdapter<GoodsCartBean>(context, cartList, R.layout.item_sure_order_cart) {
 			
@@ -242,11 +234,12 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 							stockCv.notifyNum(data.quantity,data.detailId);
 						}else{
 							stockCv.isChange(true);
-							stockCv.notifyNum(data.quantity,quantity, new OnNumChangeListenner() {
+							stockCv.notifyNum(data.quantity,minimum,quantity, new OnNumChangeListenner() {
 								
 								@Override
 								public void changeNum(int num) {
 									data.quantity = num;
+									setMoney();
 								}
 							});
 						}
@@ -262,6 +255,20 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		nameTv.setFocusable(true);  
 		nameTv.setFocusableInTouchMode(true);  
 		nameTv.requestFocus();  
+	}
+	
+	private void setMoney() {
+		double allPiece = 0;
+		for(GoodsCartBean cartBean : cartList){
+			logistics = cartBean.logistics;
+			for(GoodsCartSukBean sukBean : cartBean.sukList){
+				allPiece+= sukBean.preferentialPrice * sukBean.quantity;
+			}
+		}
+		allMoney = logistics+allPiece;
+		logisTv.setText("运费:¥"+logistics);
+		priceTv.setText("货款总计:¥"+allPiece);
+		allPriceTv.setText("合计:¥"+ allMoney);
 	}
 
 	@Override

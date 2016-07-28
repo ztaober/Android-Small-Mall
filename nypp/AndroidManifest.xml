@@ -156,9 +156,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >
         </activity>
-        <!-- 购物车-->
+        <!-- 咨询-->
         <activity
-            android:name=".activity.settting.MyCarActivity"
+            android:name=".activity.settting.MyContactActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >
@@ -173,6 +173,20 @@
         <!-- 我的订单-->
         <activity
             android:name=".activity.settting.MyOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 退款 -->
+        <activity
+            android:name=".activity.settting.RefundActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 评价 -->
+        <activity
+            android:name=".activity.settting.AppraiseActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >
@@ -194,6 +208,27 @@
         <!-- 二维码-->
         <activity
             android:name=".activity.settting.QRCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 个人中心-->
+        <activity
+            android:name=".activity.settting.center.PersonalCenterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 修改名字-->
+        <activity
+            android:name=".activity.settting.center.ChangeNameActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommActTheme" >
+        </activity>
+        <!-- 修改密码-->
+        <activity
+            android:name=".activity.settting.center.ChangePwdActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/CommActTheme" >

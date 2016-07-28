@@ -24,54 +24,57 @@ import com.yolanda.nohttp.Response;
 import de.greenrobot.event.EventBus;
 
 /**
- * 意见反馈
+ * 退款
  * 
  * @Description
  * @author
  * @date 2016-1-4
  */
-public class OpinionActivity extends BaseActivity {
+public class RefundActivity extends BaseActivity {
+	
+	private EditText refundEt;
+	private String orderId;
 
-	private EditText opinionEt;
 	@Override
 	protected int getContentViewId() {
-		return R.layout.a_opinion;
+		return R.layout.a_refund;
 	}
 
 	@Override
 	protected void findViews() {
-		opinionEt = (EditText) findViewById(R.id.opinion_et);
+		refundEt = (EditText) findViewById(R.id.refund_et);
 	}
 
 	@Override
 	protected void initData() {
-		titleView.setTitle("意见反馈");
+		titleView.setTitle("退款");
+		orderId = getIntent().getStringExtra("orderId");
 	}
 
 	@Override
 	protected void setListener() {
 		titleView.setBackBtn();
 		
-		findViewById(R.id.opinion_done).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.refund_done).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				String opinionStr = opinionEt.getText().toString().trim();
-				if ("".equals(opinionStr)) {
-					ToastUtil.show("内容不能未空~");
+				String refundStr = refundEt.getText().toString().trim();
+				if ("".equals(refundStr)) {
+					ToastUtil.show("亲，请输入您的退款原因");
 					return;
 				}
-				goOpinion(opinionStr);
+				goRefound(refundStr);
 			}
 		});
 	}
 	
-	private void goOpinion(String str) {
-		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.COMMENTS_SUBMIT);
+	private void goRefound(String str) {
+		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.APPLY_REFUND);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", TApplication.getInstance().getUserSign());
-		postData.put("member",  TApplication.getInstance().getMemberId());
-		postData.put("opinion", str);
+		postData.put("orderId", orderId);
+		postData.put("reason", str);
 		request.setRequestBody(new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 0, request,new HttpListener<JSONObject>() {
 
@@ -79,9 +82,12 @@ public class OpinionActivity extends BaseActivity {
 					public void onSucceed(int what,Response<JSONObject> response) {
 						JSONObject result = response.get();// 响应结果
 						if ("200".equals(result.optString("status"))) {
-							OpinionActivity.this.finish();
-						} 
-						ToastUtil.show(result.optString("declare", "未知错误"));
+							EventBus.getDefault().post("getOrderDetaildata");
+							RefundActivity.this.finish();
+							ToastUtil.show("申请已提交");
+						} else{
+							ToastUtil.show(result.optString("declare", "未知错误"));
+						}
 					}
 
 					@Override

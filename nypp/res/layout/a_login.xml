@@ -12,7 +12,7 @@
         android:layout_height="81dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="98dp"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/ic_default_user"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -22,7 +22,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="张小小"
         android:textSize="@dimen/font_size_middle"
         android:textColor="@color/all_txt_00" />
 
@@ -96,5 +95,6 @@
         android:text="登录遇到问题?"
         android:textColor="#5D4A91"
         android:textSize="@dimen/font_size_little" />
+    
 
 </LinearLayout>

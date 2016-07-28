@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.qws.nypp.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:layout_marginTop="15dp"
+        android:background="@color/trans30" />
+
+    <EditText
+        android:id="@+id/change_pwd_oldpwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入原密码"
+        android:password="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sline_view"
+        android:background="@color/trans30" />
+
+    <EditText
+        android:id="@+id/change_pwd_newpwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="输入新密码"
+        android:password="true" />
+
+    <EditText
+        android:id="@+id/change_pwd_renewpwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="再次输入新密码"
+        android:password="true" />
+
+    <TextView
+        android:id="@+id/change_pwd_done"
+        style="@style/default_textview_btn"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:text="确定" />
+
+</LinearLayout>

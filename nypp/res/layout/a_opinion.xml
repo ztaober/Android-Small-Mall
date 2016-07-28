@@ -7,5 +7,26 @@
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+    <EditText
+        android:id="@+id/opinion_et"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="15dp"
+        android:gravity="left"
+        android:hint="您的建议是对我们最大的支持！"
+        android:singleLine="false"
+        android:textColor="@color/nypp_gray"
+        android:textSize="@dimen/font28" />
+    
+    <TextView
+        android:id="@+id/opinion_done"
+        style="@style/default_textview_btn"
+        android:layout_height="44dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="提交" />
 
 </LinearLayout>
