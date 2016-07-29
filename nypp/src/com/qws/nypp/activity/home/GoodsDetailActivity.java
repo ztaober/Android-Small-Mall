@@ -131,14 +131,6 @@ public class GoodsDetailActivity extends BaseActivity implements OnClickListener
 		findViewById(R.id.goods_detail_pro_detail).setOnClickListener(this);
 		findViewById(R.id.goods_detail_pro_param).setOnClickListener(this);
 		
-//		titleView.setRightBtn("呵呵还", new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				mPopupWindow.update();
-//				mPopupWindow.showAsDropDown(titleView,  Gravity.LEFT, Gravity.NO_GRAVITY);
-//			}
-//		}, R.drawable.ic_nav_more);
 //		titleView.setRightImgNewBtn(R.drawable.ic_nav_more, new OnClickListener() {
 //			
 //			@Override

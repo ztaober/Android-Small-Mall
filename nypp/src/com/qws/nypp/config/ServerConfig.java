@@ -22,6 +22,8 @@ public class ServerConfig {
 	public static final String BASE_UPLOAD = base + "/upload";
 	/** 服务器文件下载 */
 	public static final String BASE_DOWNLOAD = base + "/download?filename=";
+	/**	 文件上传*/
+	public static final String UPLOAD_FILE = BASE_UPLOAD + "/uploadfile";
 	
 	
 	/**	 服务质询*/

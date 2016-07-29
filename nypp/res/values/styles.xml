@@ -90,4 +90,12 @@
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
+    
+       <!-- 分割线样式样式. -->
+    <style name="view_line_style">
+        <item name="android:background">@color/trans50</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.2dip</item>
+    </style>
+    
 </resources>

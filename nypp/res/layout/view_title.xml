@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@null"
             android:src="@drawable/img_title_go_right"
+            android:layout_marginRight="8dp"
             android:visibility="gone" />
     </LinearLayout>
 

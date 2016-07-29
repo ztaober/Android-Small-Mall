@@ -61,7 +61,7 @@ public class Util {
     
     public static boolean isFastDoubleClick() {
         long cur = System.currentTimeMillis();
-        if (cur - lastClickTime < 300) {
+        if (cur - lastClickTime < 500) {
             lastClickTime = cur;
         	return true;
         }
@@ -93,6 +93,13 @@ public class Util {
 	
 	public static String md5three(String plainText){
 		return md5(md5(md5(plainText)));
+	}
+	
+	public static boolean ExistSDCard() {
+		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			return true;
+		} else
+			return false;
 	}
 	
 	/**
