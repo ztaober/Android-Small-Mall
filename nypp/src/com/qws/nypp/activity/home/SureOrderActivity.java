@@ -76,6 +76,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	private AddressBean addrData;
 	private double logistics = 0; 
 	private double allMoney =0;
+	private double saleMoneyMax = 3000;
 	
 	@Override
 	protected int getContentViewId() {
@@ -161,6 +162,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 				if("200".equals(result.optString("status"))) {
 					Intent intent = new Intent(context,PayModeActivity.class);
 					intent.putExtra("orderId", result.optString("data"));//订单编号
+					intent.putExtra("orderMoney", allMoney);//订单价格
 					startActivityForResult(intent,SELECT_ADDR);
 		            EventBus.getDefault().post("getOrderData");
 				}else{
@@ -257,15 +259,28 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		nameTv.requestFocus();  
 	}
 	
+	/**
+	 * 规则1.如果所有货品的价格加起来>=3000元，就免邮   2. 如果有多件产品，拿最多的邮费作为最终统一的一次邮费
+	 * 
+	 * @updateTime 2016-7-29 上午11:16:13
+	 * @updateAuthor troy
+	 * @updateInfo
+	 */
 	private void setMoney() {
 		double allPiece = 0;
+		double logistics = 0;
 		for(GoodsCartBean cartBean : cartList){
-			logistics = cartBean.logistics;
+			if(logistics > cartBean.logistics){
+				logistics = cartBean.logistics; // 如果有多件产品，拿最多的邮费作为最终统一的一次邮费
+			}
 			for(GoodsCartSukBean sukBean : cartBean.sukList){
 				allPiece+= sukBean.preferentialPrice * sukBean.quantity;
 			}
 		}
-		allMoney = logistics+allPiece;
+		if(allPiece >= saleMoneyMax){ 
+			logistics = 0;//如果所有货品的价格加起来>=3000元，就免邮
+		}
+		allMoney = logistics + allPiece;
 		logisTv.setText("运费:¥"+logistics);
 		priceTv.setText("货款总计:¥"+allPiece);
 		allPriceTv.setText("合计:¥"+ allMoney);
