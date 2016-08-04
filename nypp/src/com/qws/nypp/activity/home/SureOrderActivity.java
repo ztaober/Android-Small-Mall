@@ -270,7 +270,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		double allPiece = 0;
 		double logistics = 0;
 		for(GoodsCartBean cartBean : cartList){
-			if(logistics > cartBean.logistics){
+			if(logistics < cartBean.logistics){
 				logistics = cartBean.logistics; // 如果有多件产品，拿最多的邮费作为最终统一的一次邮费
 			}
 			for(GoodsCartSukBean sukBean : cartBean.sukList){

@@ -10,8 +10,10 @@
     
     <EditText
         android:id="@+id/change_name_et" 
+        android:background="@drawable/nypp_normal_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_margin="5dp"
         />
 
 </LinearLayout>

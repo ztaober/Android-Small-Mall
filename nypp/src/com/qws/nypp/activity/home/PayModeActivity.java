@@ -86,7 +86,11 @@ public class PayModeActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				createWXPay();
+				if(Util.isWeixinAvilible(context)){
+					createWXPay();
+				}else{
+					ToastUtil.show("未找到微信，请安装微信后再使用");
+				}
 			}
 		});
 		findViewById(R.id.pay_mode_alipay_rl).setOnClickListener(new OnClickListener() {

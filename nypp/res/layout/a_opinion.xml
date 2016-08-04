@@ -14,6 +14,7 @@
         android:layout_height="200dp"
         android:layout_margin="15dp"
         android:gravity="left"
+        android:background="@drawable/nypp_normal_bg"
         android:hint="您的建议是对我们最大的支持！"
         android:singleLine="false"
         android:textColor="@color/nypp_gray"

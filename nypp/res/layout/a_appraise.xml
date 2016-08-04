@@ -44,6 +44,7 @@
 
     <EditText
         android:id="@+id/appraise_et"
+        android:background="@drawable/nypp_normal_bg"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_below="@+id/appraise_rl"

@@ -8,8 +8,10 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -30,8 +32,10 @@ import com.qws.nypp.config.TApplication;
 import com.qws.nypp.http.CallServer;
 import com.qws.nypp.http.HttpListener;
 import com.qws.nypp.http.NyppJsonRequest;
+import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AutoSizeListView;
 import com.qws.nypp.view.TabIndicator;
+import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.qws.nypp.view.TabIndicator.OnTabChangeListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
@@ -56,6 +60,7 @@ public class MyOrderActivity extends BaseActivity {
 	private int rows;
 	/** 上啦刷新下啦加载listview */
 	private PullToRefreshListView prListView;
+	private TextView noDataTv;
 	private CommAdapter<OrderInforBean> orderInfoAdapter;
 	private List<OrderInforBean> orderInforList = new ArrayList<OrderInforBean>();
 	
@@ -68,6 +73,7 @@ public class MyOrderActivity extends BaseActivity {
 	protected void findViews() {
 		viewTab = (TabIndicator) findViewById(R.id.view_tab);
 		prListView = (PullToRefreshListView) findViewById(R.id.order_refresh_listview);
+		noDataTv = (TextView) findViewById(R.id.order_no_data);
 	}
 
 	@Override
@@ -121,6 +127,7 @@ public class MyOrderActivity extends BaseActivity {
 					break;
 				case 7:
 					setText(convertView, R.id.item_order_info_status, "退款成功");
+					break;
 				case 8:
 					setText(convertView, R.id.item_order_info_status, "退款被驳回");
 					break;
@@ -183,6 +190,17 @@ public class MyOrderActivity extends BaseActivity {
 				getOrderList();
 			}
 		});
+		
+		// 重新加载按钮事件
+		mLoadingView.setReloadBtListenner(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				page = 1;
+				rows = 8;
+				orderInforList.clear();
+				getOrderList();
+			}
+		});
 	}
 
 	@Override
@@ -191,7 +209,7 @@ public class MyOrderActivity extends BaseActivity {
 		page = 1;
 		rows = 8;
 		getOrderList();
-		
+		mLoadingView.setLoadingMode(LoadingMode.LOADING);
 	}
 	
 	
@@ -254,13 +272,23 @@ public class MyOrderActivity extends BaseActivity {
                 	orderInforList.addAll(infoList);
                 	orderInfoAdapter.refreshList(orderInforList);
                 	prListView.onRefreshComplete();
-                } 
+                	if(orderInforList.size() == 0){
+                		noDataTv.setVisibility(View.VISIBLE);
+                	}else{
+                		noDataTv.setVisibility(View.GONE);
+                	}
+                	mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
+                } else{
+					ToastUtil.show(result.optString("declare", "未知错误"));
+					mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
+				}
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
 				prListView.onRefreshComplete();
+				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
 			}
 		}, false, true);
 	}

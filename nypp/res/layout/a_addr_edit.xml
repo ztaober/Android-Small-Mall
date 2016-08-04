@@ -11,29 +11,37 @@
 
     <EditText
         android:id="@+id/addr_edit_name"
+        android:background="@drawable/nypp_normal_bg"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:textSize="@dimen/font24"
         android:hint="收货人" />
 
     <EditText
         android:id="@+id/addr_edit_phone"
+        android:background="@drawable/nypp_normal_bg"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:textSize="@dimen/font24"
         android:hint="手机号码" />
 
     <EditText
         android:id="@+id/addr_edit_zip"
+        android:background="@drawable/nypp_normal_bg"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:textSize="@dimen/font24"
         android:hint="邮政编码" />
 
     <TextView
         android:id="@+id/addr_edit_city"
+        android:background="@drawable/nypp_normal_bg"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:textSize="@dimen/font24"
         style="@android:style/Widget.Holo.EditText"
         android:textColor="@color/opt_gray"
@@ -41,8 +49,10 @@
 
     <EditText
         android:id="@+id/addr_edit_address"
+        android:background="@drawable/nypp_normal_bg"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:textSize="@dimen/font24"
         android:hint="详细地址" />
 

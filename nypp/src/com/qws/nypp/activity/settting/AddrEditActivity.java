@@ -112,6 +112,7 @@ public class AddrEditActivity extends BaseActivity {
 
 	@Override
 	protected void setListener() {
+		titleView.setBackBtn();
 		cityTv.setOnTouchListener(new OnTouchListener() {
 			
 			@Override

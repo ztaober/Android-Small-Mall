@@ -25,23 +25,26 @@
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:button="@null"
                 android:gravity="center"
+                android:layout_marginLeft="18dp"
                 android:textSize="14sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:button="@null"
                 android:gravity="center"
+                android:layout_marginLeft="18dp"
                 android:textSize="14sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:button="@null"
                 android:gravity="center"
+                android:layout_marginLeft="18dp"
                 android:textSize="14sp" />
         </RadioGroup>
     </HorizontalScrollView>

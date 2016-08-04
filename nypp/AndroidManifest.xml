@@ -148,7 +148,7 @@
             android:name=".activity.settting.CityChooserActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/CommActTheme" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <!-- 管理收货地址-->
         <activity

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -42,6 +43,7 @@ import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.SpUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.view.AutoSizeListView;
+import com.qws.nypp.view.LoadingView.LoadingMode;
 import com.qws.nypp.view.dialog.FunctionDialog;
 import com.qws.nypp.view.dialog.MenuCallback;
 import com.yolanda.nohttp.Request;
@@ -177,6 +179,14 @@ public class OrderDetaiActivity extends BaseActivity {
 				});		
 			}
 		});
+		
+		// 重新加载按钮事件
+		mLoadingView.setReloadBtListenner(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getData();
+			}
+		});
 	}
 	
 	@Override
@@ -193,38 +203,48 @@ public class OrderDetaiActivity extends BaseActivity {
 
 	@Override
 	protected void getData() {
+		mLoadingView.setLoadingMode(LoadingMode.LOADING);
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.UNIQUE_ORDER);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", TApplication.getInstance().getUserSign());
 		postData.put("orderId", orderId);
 		request.setRequestBody(new Gson().toJson(postData));
-		CallServer.getRequestInstance().add(context, 0, request, new HttpListener<JSONObject>() {
+		Log.i("taotao", "go~"+new Gson().toJson(postData));
+		CallServer.getRequestInstance().add(context, 2333, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();
-				CommonResult<OrderDetailBean> commonResult = CommonResult.fromJson(result.toString(), OrderDetailBean.class);
-				orderDetailBean = commonResult.getData();
-				
-				for(OrderProductsDetailBean orderProBean : orderDetailBean.ordersProducts){
-					String title = orderProBean.title;
-					for(OrderDetailSukBean orderDetailSukBean : orderProBean.details){
-						orderDetailSukBean.title = title;
-						allPrice = allPrice + (orderDetailSukBean.preferentialPrice * orderDetailSukBean.quantity);
-						orderDetailBean.newDetails.add(orderDetailSukBean);
+				Log.i("taotao", "data=="+result.toString());
+				if("200".equals(result.optString("status"))) {
+					CommonResult<OrderDetailBean> commonResult = CommonResult.fromJson(result.toString(), OrderDetailBean.class);
+					orderDetailBean = commonResult.getData();
+					
+					for(OrderProductsDetailBean orderProBean : orderDetailBean.ordersProducts){
+						String title = orderProBean.title;
+						for(OrderDetailSukBean orderDetailSukBean : orderProBean.details){
+							orderDetailSukBean.title = title;
+							allPrice = allPrice + (orderDetailSukBean.preferentialPrice * orderDetailSukBean.quantity);
+							orderDetailBean.newDetails.add(orderDetailSukBean);
+						}
 					}
+					detailsList = orderDetailBean.newDetails;
+					adapter.refreshList(detailsList);
+					showData();
+					mLoadingView.setLoadingMode(LoadingMode.LOADING_SUCCESS);
+				}else{
+					ToastUtil.show(result.optString("declare", "未知错误"));
+					mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
 				}
-				detailsList = orderDetailBean.newDetails;
-				adapter.refreshList(detailsList);
-				showData();
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
-				
+				Log.i("taotao", "data==ff");
+				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
 			}
-		}, false, true);
+		}, false, false);
 	}
 
 	protected void showData() {
@@ -371,7 +391,7 @@ public class OrderDetaiActivity extends BaseActivity {
 		}
 	}
 	
-	protected void handleOrder(String url) {
+	protected void handleOrder(final String url) {
 		Request<JSONObject> request = new NyppJsonRequest(url);
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("sign", TApplication.getInstance().getUserSign());
@@ -383,8 +403,12 @@ public class OrderDetaiActivity extends BaseActivity {
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();
 				 if("200".equals(result.optString("status"))) {
-					 getData();
 					 EventBus.getDefault().post("getMyOrderList");
+					 if(ServerConfig.REMOVE_ORDERS.equals(url)){
+						 OrderDetaiActivity.this.finish();
+						 return;
+					 }
+					 getData();
                 } 
 				 ToastUtil.show(result.optString("declare", "未知错误"));
 			}

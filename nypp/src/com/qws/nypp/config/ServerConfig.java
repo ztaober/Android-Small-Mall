@@ -94,6 +94,8 @@ public class ServerConfig {
 	/** 我的相关 */
 	/**  我的收藏 */
 	public static final String GET_MY_COLLECTION = base + "/selectCollectionAllByMemberId";
+	/**  取消收藏 */
+	public static final String CANCLE_COLLECTION = base + "/cancelCollection";
 	/**  意见反馈 */
 	public static final String COMMENTS_SUBMIT = base + "/commentsSubmitted";
 	/**  修改个人信息 */

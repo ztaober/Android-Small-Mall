@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/white">
-    
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
     <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/refund_warning"
-        android:layout_below="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/view_title"
         android:layout_margin="15dp"
+        android:text="退款说明：如果您收到货品，您需要填写退货单，并与货品一起寄回，我们才好第一时间处理您的退款申请!"
         android:textColor="@color/nypp_gray"
-        android:textSize="@dimen/font24"
-        android:text="退款说明：如果您收到货品，您需要填写退货单，并与货品一起寄回，我们才好第一时间处理您的退款申请!"/>
+        android:textSize="@dimen/font24" />
 
-    <EditText 
+    <EditText
         android:id="@+id/refund_et"
-        android:layout_below="@+id/refund_warning"
-        android:layout_margin="15dp"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:textSize="@dimen/font28"
+        android:layout_below="@+id/refund_warning"
+        android:layout_margin="15dp"
+        android:background="@drawable/nypp_normal_bg"
+        android:gravity="left"
+        android:hint="请输入退款原因"
         android:singleLine="false"
-android:gravity="left"
-        android:hint="请输入退款原因"/>
-    
-    <TextView 
+        android:textSize="@dimen/font28" />
+
+    <TextView
         android:id="@+id/refund_done"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
-        android:textSize="@dimen/font30"
-        android:text="提交申请"
+        android:background="@color/order_done_red"
         android:gravity="center"
+        android:text="提交申请"
         android:textColor="@color/white"
-        android:background="@color/order_done_red"/>
-    
+        android:textSize="@dimen/font30" />
+
 </RelativeLayout>

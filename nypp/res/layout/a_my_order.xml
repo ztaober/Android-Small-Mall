@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
@@ -11,12 +10,14 @@
 
     <com.qws.nypp.view.TabIndicator
         android:id="@+id/view_tab"
+        android:layout_below="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/order_refresh_listview"
+        android:layout_below="@+id/view_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000"
@@ -31,5 +32,23 @@
         ptr:ptrAnimationStyle="flip"
         ptr:ptrHeaderTextAppearance="@android:attr/textAppearanceMedium"
         ptr:ptrMode="both" />
+    
+    <TextView 
+        android:visibility="gone"
+        android:id="@+id/order_no_data"
+        android:layout_below="@+id/view_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:textSize="@dimen/font30"
+        android:textColor="@color/text_gray"
+        android:text="~~暂无数据~~"/>
+    
+    <com.qws.nypp.view.LoadingView
+        android:id="@+id/network_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_title" />
 
-</LinearLayout>
+</RelativeLayout>

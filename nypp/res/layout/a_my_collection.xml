@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/collection_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/view_title"
         android:divider="@null"
+        android:background="@color/light_gray"
         android:listSelector="#00000000" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/collect_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_title"
+        android:background="@color/light_gray"
+        android:gravity="center"
+        android:text="~~暂无收藏~~"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/font32"
+        android:visibility="gone" />
+
+    <com.qws.nypp.view.LoadingView
+        android:id="@+id/network_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_title" />
+
+</RelativeLayout>

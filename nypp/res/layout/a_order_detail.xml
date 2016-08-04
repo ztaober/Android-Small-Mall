@@ -264,5 +264,11 @@
             android:textSize="@dimen/font24"
             android:visibility="gone" />
     </RelativeLayout>
+    
+    <com.qws.nypp.view.LoadingView
+        android:id="@+id/network_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_title" />
 
 </RelativeLayout>

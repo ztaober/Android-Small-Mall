@@ -121,7 +121,6 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 		mPullRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_listview);
 		categoryHintTv = (TextView)findViewById(R.id.hint_tv);
 	}
-	
 
 	@Override
 	protected void initData() {
@@ -132,6 +131,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 		for(int i=0; i<categoryRg.getChildCount(); i++){
 			RadioButton button = (RadioButton)categoryRg.getChildAt(i);
 			button.setText(list.get(i).getGoodsType());
+			button.setTextColor(getResources().getColor(R.color.opt_gray));
 			button.setId(i);
 			button.setBackgroundResource(R.drawable.category_label_unselect_n);
 		}
@@ -147,8 +147,10 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 						if(!selectedType.equals("")){
 							button.setText(selectedType);
 							button.setBackgroundResource(R.drawable.category_sub_label_selected);
+							button.setTextColor(getResources().getColor(R.color.comm_color));
 						}else{
 							button.setBackgroundResource(R.drawable.category_label_unselect_n);
+							button.setTextColor(getResources().getColor(R.color.opt_gray));
 						}
 					}
 					categoryHs.setBackgroundResource(R.drawable.category_line_unselect);
@@ -162,6 +164,7 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 								list.get(checkedId).setSelectedType("");
 								clickButton.setText(list.get(checkedId).getGoodsType());
 								clickButton.setBackgroundResource(R.drawable.category_label_unselect_n);
+								clickButton.setTextColor(getResources().getColor(R.color.opt_gray));
 								closeChoser();
 								switch (checkedId) {
 								case 0:
@@ -185,11 +188,14 @@ public class OptionalFragment extends BaseFragment implements AdapterListener {
 									String selectedT = list.get(i).getSelectedType();
 									if(!selectedT.equals("")){
 										button.setBackgroundResource(R.drawable.category_sub_label_selected_s);
+										button.setTextColor(getResources().getColor(R.color.comm_color));
 									}else{
 										button.setBackgroundResource(R.drawable.category_label_unselect_s);
+										button.setTextColor(getResources().getColor(R.color.opt_gray));
 									}
 								}
 								clickButton.setBackgroundResource(R.drawable.category_label_selected);
+								clickButton.setTextColor(getResources().getColor(R.color.comm_color));
 								categoryHs.setBackgroundResource(R.drawable.category_line_selected);
 								openChoser(checkedId);
 							}

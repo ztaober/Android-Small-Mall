@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@null"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_nav_back"
+            android:src="@drawable/ic_sz_back02"
             android:visibility="gone" />
 
         <TextView
