@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <com.qws.nypp.view.TitleView
+    android:layout_height="match_parent" >
+
+    <com.qws.nypp.view.TitleView
         android:id="@+id/view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/qrcode_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/download_url" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/qrcode_img"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="@dimen/font30"
+        android:textColor="@color/nypp_gray"
+        android:text="扫一扫即可下载我们的产品咯！" />
+
+</RelativeLayout>

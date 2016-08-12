@@ -68,7 +68,7 @@ public class SettingFragment extends BaseFragment implements OnClickListener {
 
 	@Override
 	protected void initData() {
-		titleView.setTitle("设置");
+		titleView.setTitle("我");
 		titleView.setRightBtn("个人中心", new OnClickListener() {
 			
 			@Override

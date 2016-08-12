@@ -114,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_margin="5dp"
+                android:textSize="@dimen/font26"
                 android:hint="给卖家留言" />
         </LinearLayout>
     </ScrollView>

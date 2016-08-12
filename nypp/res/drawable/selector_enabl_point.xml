@@ -2,14 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_enabled="true"><shape android:shape="oval">
-            <size android:height="15dp" android:width="15dp" />
+            <size android:height="8dp" android:width="8dp" />
 
-            <solid android:color="#FF0000" />
+            <solid android:color="@color/comm_color" />
         </shape></item>
     <item android:state_enabled="false"><shape android:shape="oval">
-            <size android:height="15dp" android:width="15dp" />
+            <size android:height="8dp" android:width="8dp" />
 
-            <solid android:color="#FFFFFF" />
+            <solid android:color="@color/light_gray" />
         </shape></item>
 
 </selector>

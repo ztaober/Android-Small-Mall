@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -115,6 +116,10 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	private void submitOrders(){
+		if(addrData == null){
+			ToastUtil.show("请您去选择收货地址");
+			return;
+		}
 		Request<JSONObject> request = new NyppJsonRequest(ServerConfig.SUBMIT_ORDERS);
 		JSONObject postJson = null;
 		try {
@@ -304,11 +309,15 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
+				
 				JSONObject result = response.get();
-				CommonResult<AddressBean> addressBean = CommonResult.fromJson(result.toString(), AddressBean.class);
-				addrData = addressBean.getData();
-				defaultTv.setVisibility(View.GONE);
-				setAddr();
+				if("200".equals(result.optString("status"))) {
+					CommonResult<AddressBean> addressBean = CommonResult.fromJson(result.toString(), AddressBean.class);
+					addrData = addressBean.getData();
+					if(addrData != null){
+						setAddr();
+					}
+				}
 			}
 
 			@Override
@@ -320,6 +329,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	}
 
 	protected void setAddr() {
+		defaultTv.setVisibility(View.GONE);
 		nameTv.setText("收货人："+addrData.name);
 		phoneTv.setText(addrData.mobile);
 		addressTv.setText("收货地址:"+addrData.province+addrData.city+addrData.district+addrData.address);

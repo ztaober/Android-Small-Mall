@@ -171,7 +171,7 @@ public class AdCarouselView extends RelativeLayout {
 		for (int i = 0; i < adList.size(); i++) {
 			View point = new View(context);
 			point.setBackgroundResource(R.drawable.selector_enabl_point);
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 10), DisplayUtil.dip2px(context, 10));
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 8), DisplayUtil.dip2px(context, 8));
 			params.leftMargin = DisplayUtil.dip2px(context, 4);
 			params.rightMargin = 0;
 			point.setEnabled(i == 0);
