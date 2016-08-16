@@ -9,13 +9,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -57,6 +60,7 @@ import de.greenrobot.event.EventBus;
 public class SureOrderActivity extends BaseActivity implements OnClickListener {
 
 	public static final int SELECT_ADDR = 666;
+	private PopupWindow mPopupWindow = null;
 	private List<GoodsCartBean> cartList = new ArrayList<GoodsCartBean>();
 	private int quantity; //库存 详情页过来的可以修改 order页面过来的不可修改
 	private int minimum; //起批数 详情页过来的可以修改 order页面过来的不可修改
@@ -78,6 +82,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 	private double logistics = 0; 
 	private double allMoney =0;
 	private double saleMoneyMax = 3000;
+	
 	
 	@Override
 	protected int getContentViewId() {
@@ -296,6 +301,15 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		titleView.setBackBtn();
 		findViewById(R.id.sure_order_address_rl).setOnClickListener(this);
 		findViewById(R.id.sure_detail_done).setOnClickListener(this);
+		
+		titleView.setRightImgNewBtn(R.drawable.ic_nav_more, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mPopupWindow.update();
+				mPopupWindow.showAsDropDown(titleView,  Gravity.LEFT, Gravity.NO_GRAVITY);
+			}
+		});
 	}
 
 	@Override
@@ -335,4 +349,31 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		addressTv.setText("收货地址:"+addrData.province+addrData.city+addrData.district+addrData.address);
 	}
 
+	/**
+	 * 初始化Popuwindow[返回退出的popw]
+	 */
+	private void initPopuWindow() {
+		final View v = this.getLayoutInflater().inflate(R.layout.popup_window_cancle, null);
+		v.findViewById(R.id.popw_cancle_home).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EventBus.getDefault().post("goHomeFrag");
+			}
+		});
+		v.findViewById(R.id.popw_cancle_cart).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EventBus.getDefault().post("goOrderFrag");
+			}
+		});
+		
+		mPopupWindow = new PopupWindow(v, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, true);
+		mPopupWindow.setFocusable(true);
+		mPopupWindow.setTouchable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+	}
+	
 }

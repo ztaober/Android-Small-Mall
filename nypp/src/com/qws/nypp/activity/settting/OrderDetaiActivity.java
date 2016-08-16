@@ -8,11 +8,14 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -60,6 +63,7 @@ import de.greenrobot.event.EventBus;
  */
 public class OrderDetaiActivity extends BaseActivity {
 	
+	private PopupWindow mPopupWindow = null;
 	private DisplayImageOptions options;
 	private String orderId;
 	
@@ -106,6 +110,7 @@ public class OrderDetaiActivity extends BaseActivity {
 		cancleTv  = (TextView) findViewById(R.id.order_detail_cancle);
 		payTv  = (TextView) findViewById(R.id.order_detail_pay);
 		handlingTv  = (TextView) findViewById(R.id.order_detail_handling);
+		initPopuWindow();
 	}
 
 	@Override
@@ -177,6 +182,15 @@ public class OrderDetaiActivity extends BaseActivity {
 								}
 							}
 				});		
+			}
+		});
+		
+		titleView.setRightImgNewBtn(R.drawable.ic_nav_more, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mPopupWindow.update();
+				mPopupWindow.showAsDropDown(titleView,  Gravity.LEFT, Gravity.NO_GRAVITY);
 			}
 		});
 		
@@ -420,5 +434,33 @@ public class OrderDetaiActivity extends BaseActivity {
 			}
 		}, false, true);		
 	}
+	
+	/**
+	 * 初始化Popuwindow[返回退出的popw]
+	 */
+	private void initPopuWindow() {
+		final View v = this.getLayoutInflater().inflate(R.layout.popup_window_cancle, null);
+		v.findViewById(R.id.popw_cancle_home).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EventBus.getDefault().post("goHomeFrag");
+			}
+		});
+		v.findViewById(R.id.popw_cancle_cart).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EventBus.getDefault().post("goOrderFrag");
+			}
+		});
+		
+		mPopupWindow = new PopupWindow(v, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, true);
+		mPopupWindow.setFocusable(true);
+		mPopupWindow.setTouchable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+	}
+
 	
 }

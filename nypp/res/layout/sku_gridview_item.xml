@@ -16,7 +16,7 @@
             android:id="@+id/ItemText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font22" >
+            android:textSize="10sp" >
         </TextView>
     </LinearLayout>
 

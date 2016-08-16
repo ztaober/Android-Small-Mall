@@ -1,6 +1,7 @@
 package com.qws.nypp.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -96,11 +97,11 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
     public void onEventMainThread(String msg) {  
         if (msg != null) {
         	if("goHomeFrag".equals(msg)){
-        		AppManager.getAppManager().goHomeActivity();
-//        		radio_home.performClick();
+        		AppManager.getAppManager().goHomeActivity();//关掉所有页面到主页
+        		radio_home.performClick();
         	}else if("goOrderFrag".equals(msg)){
         		AppManager.getAppManager().goHomeActivity();
-//        		radio_order.performClick();
+        		radio_order.performClick();
         	}
         }
     }
@@ -133,7 +134,7 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 				beginTransaction.hide(fragments[i]);
 			}
 		}
-		beginTransaction.commit();
+		beginTransaction.commitAllowingStateLoss();
 	}
 
 	@Override
