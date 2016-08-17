@@ -79,7 +79,7 @@ public class OrderDetaiActivity extends BaseActivity {
 	private TextView callTv;
 	
 	private OrderDetailBean orderDetailBean;
-	private double allPrice;
+//	private double allPrice;
 	private List<OrderDetailSukBean> detailsList = new ArrayList<OrderDetailSukBean>();
 	private AutoSizeListView orderList;
 	private CommAdapter<OrderDetailSukBean> adapter;
@@ -223,13 +223,11 @@ public class OrderDetaiActivity extends BaseActivity {
 		postData.put("sign", TApplication.getInstance().getUserSign());
 		postData.put("orderId", orderId);
 		request.setRequestBody(new Gson().toJson(postData));
-		Log.i("taotao", "go~"+new Gson().toJson(postData));
 		CallServer.getRequestInstance().add(context, 2333, request, new HttpListener<JSONObject>() {
 
 			@Override
 			public void onSucceed(int what, Response<JSONObject> response) {
 				JSONObject result = response.get();
-				Log.i("taotao", "data=="+result.toString());
 				if("200".equals(result.optString("status"))) {
 					CommonResult<OrderDetailBean> commonResult = CommonResult.fromJson(result.toString(), OrderDetailBean.class);
 					orderDetailBean = commonResult.getData();
@@ -238,7 +236,7 @@ public class OrderDetaiActivity extends BaseActivity {
 						String title = orderProBean.title;
 						for(OrderDetailSukBean orderDetailSukBean : orderProBean.details){
 							orderDetailSukBean.title = title;
-							allPrice = allPrice + (orderDetailSukBean.preferentialPrice * orderDetailSukBean.quantity);
+//							allPrice = allPrice + (orderDetailSukBean.preferentialPrice * orderDetailSukBean.quantity);
 							orderDetailBean.newDetails.add(orderDetailSukBean);
 						}
 					}
@@ -255,7 +253,6 @@ public class OrderDetaiActivity extends BaseActivity {
 			@Override
 			public void onFailed(int what, String url, Object tag,
 					Exception exception, int responseCode, long networkMillis) {
-				Log.i("taotao", "data==ff");
 				mLoadingView.setLoadingMode(LoadingMode.LOADING_FAILED);
 			}
 		}, false, false);
@@ -266,10 +263,10 @@ public class OrderDetaiActivity extends BaseActivity {
 		phoneTv.setText(orderDetailBean.contactPhone);		
 		addressTv.setText(orderDetailBean.provinceName + orderDetailBean.cityName + orderDetailBean.districtName + orderDetailBean.address);		
 		orderNoTv.setText("订单编号:"+orderDetailBean.orderNo);
-		salePriceTv.setText("¥ "+orderDetailBean.discountAmount);
-		allPriceTv.setText("¥ "+allPrice);
-		logistTv.setText("¥ "+orderDetailBean.logisticsFees);
-		moneyTv.setText("¥ "+ (orderDetailBean.orderAmount + orderDetailBean.logisticsFees));
+		salePriceTv.setText("¥ "+(orderDetailBean.orderAmount - orderDetailBean.discountAmount));//优惠
+		allPriceTv.setText("¥ "+orderDetailBean.orderAmount);//货品总价
+		logistTv.setText("¥ "+orderDetailBean.logisticsFees);//运费
+		moneyTv.setText("¥ "+ (orderDetailBean.discountAmount + orderDetailBean.logisticsFees));//实付款
 		userMsgTv.setText("买家留言:"+orderDetailBean.message);
 		
 		switch (orderDetailBean.orderStatus) {

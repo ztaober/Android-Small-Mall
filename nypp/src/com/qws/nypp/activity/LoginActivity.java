@@ -73,11 +73,15 @@ public class LoginActivity extends BaseActivity {
 	protected void initData() {
 		login_edit_uesrname.setText(SpUtil.getSpUtil().getSPValue(SpConfig.USER_NAME, ""));
 		login_edit_password.setText(SpUtil.getSpUtil().getSPValue(SpConfig.USER_PWD, ""));
-		login_txt_nike.setText(SpUtil.getSpUtil().getSPValue(SpConfig.NICK_NAME, ""));
-		
 		
 		options = TApplication.getInstance().getAllOptions(R.drawable.ic_default_user);
 		
+	}
+	
+	@Override
+	protected void onResume(boolean isBack) {
+		super.onResume(isBack);
+		login_txt_nike.setText(SpUtil.getSpUtil().getSPValue(SpConfig.NICK_NAME, ""));
 		ImageLoader.getInstance().displayImage(SpUtil.getSpUtil().getSPValue(SpConfig.PORTRAIT_URL, ""), headImg, options);
 	}
 

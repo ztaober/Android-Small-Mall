@@ -102,7 +102,7 @@ public class MyOrderActivity extends BaseActivity {
 			@Override
 			public void onGetView(int position, View convertView, final OrderInforBean data) {
 				setText(convertView, R.id.item_order_info_logis,"总金额(含运费"+data.logisticsFees+"元)" );
-				setText(convertView, R.id.item_order_info_pices, " ¥ "+(data.orderAmount + data.logisticsFees) );
+				setText(convertView, R.id.item_order_info_pices, " ¥ "+(data.discountAmount + data.logisticsFees) );
 				switch (data.orderStatus) {
 				case 0:
 					setText(convertView, R.id.item_order_info_status, "已取消订单");

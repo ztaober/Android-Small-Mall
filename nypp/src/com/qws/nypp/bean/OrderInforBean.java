@@ -37,6 +37,7 @@ public class OrderInforBean extends BaseBean {
 	 * 订单金额
 	 */
 	public double orderAmount;
+	public double discountAmount;
 	
 	/**
 	 * 产品列表

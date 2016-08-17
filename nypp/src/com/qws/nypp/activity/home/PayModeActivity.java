@@ -60,6 +60,7 @@ public class PayModeActivity extends BaseActivity {
 	
 	private String orderId;
 	private double orderMoney;
+	private int resultNum = 4444;
 
 	@Override
 	protected int getContentViewId() {
@@ -150,23 +151,31 @@ public class PayModeActivity extends BaseActivity {
     								Intent intent = new Intent(context, OrderDetaiActivity.class);
     				    			intent.putExtra("orderId", orderId);//订单编号
     				    			startActivity(intent);
+    				    			resultNum = 0;
     				    			AppManager.getAppManager().finishActivity(SureOrderActivity.class);
     				    			AppManager.getAppManager().finishActivity(PayModeActivity.class);
     							}
     							if (menuType == R.id.left_bt) {
+    								resultNum = 0;
     								EventBus.getDefault().post("goHomeFrag");
     							}
     						}
     			});	
         	}else if("pay_fail".equals(msg)){
 //        		ToastUtil.show("支付失败，请重试");
-        		Intent intent = new Intent();
-    			intent.putExtra("orderId", orderId);
-        		setResult(4444,intent);
+        		resultNum = 4444;
         	}
         	
         }
     }  
+    
+   @Override
+	public void finish() {
+	    Intent intent = new Intent();
+		intent.putExtra("orderId", orderId);
+		setResult(resultNum,intent); //支付页面后生成订单详情页面
+		super.finish();
+	}
 
 	@Override
 	protected void getData() {

@@ -386,7 +386,6 @@ public class OrderFragment extends BaseFragment implements AdapterListener {
 				}
 				notifyOrderData();
 				ordersAdapter.notifyDataSetChanged();
-				LogUtil.t("==="+cartList.size());
 				if(cartList.size() == 0){
 					noOrder.setVisibility(View.VISIBLE);
 				}else{
