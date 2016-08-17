@@ -26,6 +26,8 @@ public class ServerConfig {
 	public static final String UPLOAD_FILE = BASE_UPLOAD + "/uploadfile";
 	
 	
+	/**	 版本更新*/
+	public static final String GET_APK_PATH = base + "/getApkPath";
 	/**	 服务质询*/
 	public static final String CONTACT_US = base + "/contactUs";
 	/**	 登录接口*/

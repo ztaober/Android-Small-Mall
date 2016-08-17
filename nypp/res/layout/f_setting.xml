@@ -324,6 +324,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/sline_view"
             android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/ic_set_server_img"
             android:background="@color/trans30" />
 
         <TextView
@@ -344,10 +345,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/f_settinf_version_rl"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white"
-        android:visibility="gone" >
+        android:background="@color/white" >
 
         <ImageView
             android:id="@+id/ic_set_edition_img"
@@ -369,7 +370,7 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/ic_set_edition_img"
             android:text="版本更新"
-            android:textColor="@color/gray"
+            android:textColor="#000"
             android:textSize="@dimen/font28" />
 
         <ImageView

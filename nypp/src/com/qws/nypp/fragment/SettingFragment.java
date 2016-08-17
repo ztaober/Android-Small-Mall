@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
@@ -34,6 +35,8 @@ import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.SpUtil;
 import com.qws.nypp.utils.ToastUtil;
 import com.qws.nypp.utils.Util;
+import com.qws.nypp.view.dialog.FunctionDialog;
+import com.qws.nypp.view.dialog.MenuCallback;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.Response;
 
@@ -86,6 +89,7 @@ public class SettingFragment extends BaseFragment implements OnClickListener {
 		findViewById(R.id.f_settinf_opinion_rl).setOnClickListener(this);
 		findViewById(R.id.f_settinf_qrcode_rl).setOnClickListener(this);
 		findViewById(R.id.f_settinf_contact_rl).setOnClickListener(this);
+		findViewById(R.id.f_settinf_version_rl).setOnClickListener(this);
 	}
 	
 	@Override
@@ -105,6 +109,10 @@ public class SettingFragment extends BaseFragment implements OnClickListener {
 			break;
 		case R.id.f_settinf_contact_rl: //服务咨询
 			IntentUtil.gotoActivity(context, MyContactActivity.class);
+			break;
+		case R.id.f_settinf_version_rl: //版本检测
+//			IntentUtil.gotoActivity(context, MyContactActivity.class);
+			checkVersion();
 			break;
 
 		default:
@@ -153,5 +161,56 @@ public class SettingFragment extends BaseFragment implements OnClickListener {
 			}
 		}, false, false);
 	}
+	
+    /**
+     * 版本检测
+     * 
+     * @updateTime 2016-8-17 上午11:31:11
+     * @updateAuthor troy
+     * @updateInfo 
+     * @return
+     */
+    public void checkVersion(){
+    	Request<JSONObject> request = new NyppJsonRequest(ServerConfig.GET_APK_PATH);
+		Map<String, String> postData = new HashMap<String, String>();
+		postData.put("sign", Util.getDevId(context));
+		request.setRequestBody(new Gson().toJson(postData));
+		CallServer.getRequestInstance().add(context, 6666, request, new HttpListener<JSONObject>() {
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+                // 请求成功
+                JSONObject result = response.get();// 响应结果
+                if("200".equals(result.optString("status"))) {
+                	JSONObject data = result.optJSONObject("data");
+                	String newVersion = data.optString("version");
+                	String oldVersion = Util.getSoftVersion(context);
+                	final String url = data.optString("apkPath");
+                	if(!newVersion.equalsIgnoreCase(oldVersion)){
+                		FunctionDialog.show(context, true,
+        						"温馨提示", "尊敬的用户,软件有新版本是否更新？", getString(android.R.string.cancel),
+        						"", getString(android.R.string.ok), new MenuCallback() {
+
+        							@Override
+        							public void onMenuResult(int menuType) {
+        								if (menuType == R.id.right_bt) {
+        									Util util = new Util();
+        									util.startNotiUpdateTask(context, url, url.substring(url.lastIndexOf("/") + 1, url.length()));
+        								}
+        							}
+        				});
+                	}else{
+                		ToastUtil.show("您的版本已经是最新!");
+                	}
+                }
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				
+			}
+		}, false, true);
+    }
 
 }

@@ -1,10 +1,16 @@
 package com.qws.nypp.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,19 +18,27 @@ import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.google.gson.Gson;
 import com.qws.nypp.R;
+import com.qws.nypp.config.ServerConfig;
 import com.qws.nypp.fragment.BaseFragment;
 import com.qws.nypp.fragment.HomeFragment;
 import com.qws.nypp.fragment.OptionalFragment;
 import com.qws.nypp.fragment.OrderFragment;
 import com.qws.nypp.fragment.SettingFragment;
+import com.qws.nypp.http.CallServer;
+import com.qws.nypp.http.HttpListener;
+import com.qws.nypp.http.NyppJsonRequest;
 import com.qws.nypp.utils.AppManager;
 import com.qws.nypp.utils.IntentUtil;
 import com.qws.nypp.utils.LogUtil;
 import com.qws.nypp.utils.ToastUtil;
+import com.qws.nypp.utils.Util;
 import com.qws.nypp.view.MyRadioView;
 import com.qws.nypp.view.dialog.FunctionDialog;
 import com.qws.nypp.view.dialog.MenuCallback;
+import com.yolanda.nohttp.Request;
+import com.yolanda.nohttp.Response;
 
 public class MainActivity extends BaseFragmentActivity implements OnClickListener {
 	/** Fragment管理 */
@@ -85,7 +99,7 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 
 	@Override
 	protected void getData() {
-
+		checkVersion();
 	}
 	
 	@Override
@@ -184,5 +198,58 @@ public class MainActivity extends BaseFragmentActivity implements OnClickListene
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	
+	 
+    /**
+     * 版本检测
+     * 
+     * @updateTime 2016-8-17 上午11:31:11
+     * @updateAuthor troy
+     * @updateInfo 
+     * @return
+     */
+    public void checkVersion(){
+    	Request<JSONObject> request = new NyppJsonRequest(ServerConfig.GET_APK_PATH);
+		Map<String, String> postData = new HashMap<String, String>();
+		postData.put("sign", Util.getDevId(context));
+		request.setRequestBody(new Gson().toJson(postData));
+		CallServer.getRequestInstance().add(context, 6666, request, new HttpListener<JSONObject>() {
+
+			@Override
+			public void onSucceed(int what, Response<JSONObject> response) {
+                // 请求成功
+                JSONObject result = response.get();// 响应结果
+//              {"apkPath":"http:\/\/121.42.204.196:80\/\/upload\/20160817\/20160817112136304.apk","version":"1.1"}
+                if("200".equals(result.optString("status"))) {
+                	JSONObject data = result.optJSONObject("data");
+                	String newVersion = data.optString("version");
+                	String oldVersion = Util.getSoftVersion(context);
+                	final String url = data.optString("apkPath");
+                	Log.i("taotao", newVersion+"=="+oldVersion);
+                	if(!newVersion.equalsIgnoreCase(oldVersion)){
+                		FunctionDialog.show(MainActivity.this, true,
+        						"温馨提示", "尊敬的用户,软件有新版本是否更新？", getString(android.R.string.cancel),
+        						"", getString(android.R.string.ok), new MenuCallback() {
+
+        							@Override
+        							public void onMenuResult(int menuType) {
+        								if (menuType == R.id.right_bt) {
+        									Util util = new Util();
+        									util.startNotiUpdateTask(context, url, url.substring(url.lastIndexOf("/") + 1, url.length()));
+        								}
+        							}
+        				});
+                	}
+                }
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag,
+					Exception exception, int responseCode, long networkMillis) {
+				
+			}
+		}, false, false);
+    }
 	
 }

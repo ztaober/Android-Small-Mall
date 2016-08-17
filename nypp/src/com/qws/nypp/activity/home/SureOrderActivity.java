@@ -101,6 +101,7 @@ public class SureOrderActivity extends BaseActivity implements OnClickListener {
 		logisTv  = (TextView) findViewById(R.id.sure_detail_logistics);
 		priceTv  = (TextView) findViewById(R.id.sure_detail_price);
 		allPriceTv  = (TextView) findViewById(R.id.sure_detail_allmoney);
+		initPopuWindow();
 	}
 	
 	@Override
