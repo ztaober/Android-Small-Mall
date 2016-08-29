@@ -111,10 +111,11 @@ public class AppManager {
 				if (activity instanceof LoginActivity || activity instanceof MainActivity) {
 					continue;
 				}
+				activityStack.remove(activity);
 				activity.finish();
 			}
 		}
-		activityStack.clear();
+//		activityStack.clear();
 	}
 
 	/**
