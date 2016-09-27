@@ -2,6 +2,8 @@ package com.qws.nypp.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -160,6 +162,8 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
     		SukTypeBean sizeBean = new SukTypeBean(size,"1");
     		mSizeList.add(sizeBean);
     	}
+    	//增加对size的排序
+    	Collections.sort(mSizeList, new SortByColor());
 	}
 
 	private void initFlowlayoutView() {
@@ -445,5 +449,46 @@ public class DetailSelectPopupWindow extends PopupWindow implements View.OnClick
 		lp.alpha = bgAlpha; // 0.0-1.0
 		((Activity)context).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 		((Activity)context).getWindow().setAttributes(lp);
+	}
+	
+	/**
+	 * 颜色排序 S M L XL XXL XXXL
+	 */
+	public class SortByColor implements Comparator<SukTypeBean> {
+
+		@Override
+		public int compare(SukTypeBean color1, SukTypeBean color2) {
+			int c1 = color2Int(color1.getName());
+			int c2 = color2Int(color2.getName());
+			if(c1 > c2){
+				return 1;
+			}else if(c1 < c2){
+				return -1;
+			}else{
+				return 0;
+		    }
+		}
+
+		private int color2Int(String c) {
+			switch (c) {
+			case "S":
+				return 0;
+			case "M":
+				return 1;
+			case "L":
+				return 2;
+			case "XL":
+				return 3;
+			case "XXL":
+				return 4;
+			case "XXXL":
+				return 5;
+
+			default:
+				return 99;
+			}
+			
+		}
+		
 	}
 }

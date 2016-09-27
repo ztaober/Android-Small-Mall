@@ -60,5 +60,9 @@ public class GoodsDetailBean extends BaseBean {
 	 * 评价数
 	 */
 	public int appraiseCount;
+	/**
+	 * 货号
+	 */
+	public String atrNo;
 
 }
